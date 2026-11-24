@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -5,311 +6,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#111111">
 <title>Liga Prime Level Up</title>
-<a href="#admin">Administração</a>
+
 <style>
 :root {
-  --bg: #090909;
-  --panel: #171717;
-  --red: #e32636;
-  --silver: #c7cbd1;
-  --muted: #9b9b9b;
+  --bg:#090909;
+  --panel:#171717;
+  --red:#e32636;
+  --silver:#c7cbd1;
+  --muted:#999;
 }
-
-* {
-  box-sizing: border-box;
-}
-
+* {box-sizing:border-box}
 body {
-  margin: 0;
-  background: linear-gradient(145deg, #090909, #1a1012);
-  color: #f5f5f5;
-  font: 16px/1.5 Arial, sans-serif;
+  margin:0;
+  background:linear-gradient(145deg,#090909,#1a1012);
+  color:#f5f5f5;
+  font:16px/1.5 Arial,sans-serif;
 }
-
 header {
-  padding: 28px 6%;
-  border-bottom: 1px solid #393939;
-  background: #0d0d0df2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  padding:22px 6%;
+  border-bottom:1px solid #393939;
+  background:#0d0d0df2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
 }
-
-.brand {
-  font-weight: 900;
-  letter-spacing: 1px;
-  font-size: clamp(20px, 4vw, 30px);
-}
-
-.brand span {
-  color: var(--red);
-}
-
-nav {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-a {
-  color: var(--silver);
-  text-decoration: none;
-}
-
-a:hover {
-  color: #fff;
-}
-
-.language {
-  background: #171717;
-  color: white;
-  border: 1px solid #777;
-  padding: 10px;
-  border-radius: 5px;
-}
-
+.brand {font-weight:900;font-size:25px;letter-spacing:1px}
+.brand span,.hero h1 span {color:var(--red)}
+nav {display:flex;gap:14px;flex-wrap:wrap}
+a {color:var(--silver);text-decoration:none}
+a:hover {color:white}
 .hero {
-  padding: 76px 6% 60px;
-  text-align: center;
-  background: radial-gradient(
-    ellipse at center,
-    #50151c 0%,
-    #171011 42%,
-    transparent 75%
-  );
+  padding:70px 20px;
+  text-align:center;
+  background:radial-gradient(ellipse at center,#50151c 0%,#171011 45%,transparent 75%);
 }
-
-.kicker {
-  color: var(--silver);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-size: 12px;
-}
-
-.hero h1 {
-  font-size: clamp(36px, 7vw, 70px);
-  line-height: 1.02;
-  margin: 14px 0;
-}
-
-.hero h1 span {
-  color: var(--red);
-}
-
-.hero p {
-  color: #ddd;
-  margin: 12px auto 24px;
-  max-width: 650px;
-}
-
-.btn {
-  display: inline-block;
-  border: 0;
-  background: var(--red);
-  color: white;
-  padding: 13px 20px;
-  border-radius: 5px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-<section id="admin" class="card">
-  <h2>ADMINISTRAÇÃO</h2>
-  <p>Painel de gestão da Liga Prime Level Up</p>
-
-  <div id="adminLogin">
-    <h3>Acesso reservado</h3>
-    <input id="adminPassword" type="password"
-      placeholder="Palavra-passe de demonstração">
-    <button class="btn" onclick="loginAdmin()">
-      ENTRAR
-    </button>
-    <p id="loginError"></p>
-  </div>
-
-  <div id="adminPanel" hidden>
-    <button onclick="logoutAdmin()">Terminar sessão</button>
-
-    <hr>
-    <h3>1. Criar uma liga</h3>
-    <input id="leagueName" placeholder="Nome da liga">
-    <input id="leagueSeason" placeholder="Época (ex.: 2026/2027)">
-    <button onclick="addLeague()">Criar liga</button>
-    <div id="leagueList"></div>
-
-    <hr>
-    <h3>2. Gerir equipas</h3>
-    <input id="teamName" placeholder="Nome da equipa">
-    <input id="teamLeague" placeholder="Nome da liga">
-    <input id="teamCaptain" placeholder="Capitão">
-    <button onclick="addTeam()">Adicionar equipa</button>
-    <div id="teamList"></div>
-
-    <hr>
-    <h3>3. Gerir jogadores</h3>
-    <input id="playerName" placeholder="Nickname do jogador">
-    <input id="playerPosition" placeholder="Posição">
-    <input id="playerTeam" placeholder="Equipa">
-    <button onclick="addPlayer()">Adicionar jogador</button>
-    <div id="playerList"></div>
-
-    <hr>
-    <h3>4. Contratos</h3>
-    <input id="contractPlayer" placeholder="Jogador">
-    <input id="contractTeam" placeholder="Equipa">
-    <input id="contractEnd" type="date">
-    <select id="contractStatus">
-      <option value="Ativo">Ativo</option>
-      <option value="Em renovação">Em renovação</option>
-      <option value="Terminado">Terminado</option>
-    </select>
-    <button onclick="addContract()">Registar contrato</button>
-    <div id="contractList"></div>
-
-    <hr>
-    <h3>5. Mercado de transferências</h3>
-    <input id="transferPlayer" placeholder="Jogador">
-    <input id="transferFrom" placeholder="Equipa de origem">
-    <input id="transferTo" placeholder="Nova equipa">
-    <select id="transferType">
-      <option>Transferência definitiva</option>
-      <option>Empréstimo</option>
-      <option>Agente livre</option>
-    </select>
-    <button onclick="addTransfer()">Registar transferência</button>
-    <div id="transferList"></div>
-
-    <hr>
-    <h3>6. Próximas funcionalidades</h3>
-    <p>Resultados, classificações automáticas, calendário,
-    inscrições, notícias, suspensões e gestão de árbitros.</p>
-  </div>
-</section>
-
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 30px 20px;
-}
-
-.section-title {
-  font-size: 26px;
-  margin: 10px 0 18px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 16px;
-}
-
+.kicker {color:var(--silver);letter-spacing:4px;font-size:12px}
+.hero h1 {font-size:clamp(38px,7vw,70px);line-height:1.05}
+.hero p {color:#ddd;max-width:650px;margin:15px auto 25px}
+main {max-width:1100px;margin:auto;padding:25px 18px}
+.section {margin:35px 0}
+.section-title {font-size:26px}
+.grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
 .card {
-  background: linear-gradient(150deg, #202020, #111);
-  border: 1px solid #3b3b3b;
-  border-top: 3px solid var(--red);
-  border-radius: 9px;
-  padding: 20px;
+  background:linear-gradient(150deg,#202020,#111);
+  border:1px solid #3b3b3b;
+  border-top:3px solid var(--red);
+  border-radius:9px;
+  padding:20px;
+  margin-bottom:12px;
 }
-
-.card h3 {
-  margin: 0 0 8px;
+.btn {
+  display:inline-block;
+  border:0;
+  background:var(--red);
+  color:white;
+  padding:12px 18px;
+  border-radius:5px;
+  font-weight:bold;
+  cursor:pointer;
 }
-
-.muted {
-  color: var(--muted);
+.btn.secondary {background:#292929;border:1px solid #777}
+.btn.danger {background:#7e1822}
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  border-radius:5px;
+  border:1px solid #555;
+  background:#0c0c0c;
+  color:white;
+  margin-top:5px;
 }
-
-.tag {
-  display: inline-block;
-  color: var(--silver);
-  border: 1px solid #777;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #151515;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #333;
-}
-
-th {
-  color: var(--silver);
-  background: #222;
-}
-
-form {
-  display: grid;
-  gap: 12px;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 12px;
-  border-radius: 5px;
-  border: 1px solid #555;
-  background: #0c0c0c;
-  color: #fff;
-  font: inherit;
-  resize: vertical;
-}
-
-label {
-  font-size: 14px;
-  color: #ddd;
-  display: grid;
-  gap: 6px;
-}
-
+textarea {resize:vertical}
+label {display:block;font-size:14px;color:#ddd;margin-bottom:12px}
+form {display:grid;gap:8px}
+.muted {color:var(--muted)}
 .notice {
-  padding: 12px;
-  background: #241216;
-  border-left: 3px solid var(--red);
-  color: #ddd;
-  border-radius: 4px;
+  padding:12px;
+  background:#241216;
+  border-left:3px solid var(--red);
+  border-radius:4px;
+  color:#ddd;
 }
-
+.tag {
+  display:inline-block;
+  color:var(--silver);
+  border:1px solid #777;
+  padding:3px 8px;
+  border-radius:20px;
+  font-size:12px;
+}
+table {width:100%;border-collapse:collapse;background:#151515}
+th,td {text-align:left;padding:11px;border-bottom:1px solid #333}
+th {color:var(--silver);background:#222}
+.admin-item {
+  background:#222;
+  padding:12px;
+  border-radius:6px;
+  margin:8px 0;
+  overflow-wrap:anywhere;
+}
+.admin-item button {margin:5px 5px 0 0}
+.admin-title {color:var(--red)}
 footer {
-  text-align: center;
-  padding: 28px;
-  color: #888;
-  border-top: 1px solid #333;
-  margin-top: 30px;
+  text-align:center;
+  padding:28px;
+  color:#888;
+  border-top:1px solid #333;
+  margin-top:30px;
 }
-
-@media (max-width: 600px) {
-  header {
-    padding: 20px;
-  }
-
-  nav {
-    gap: 10px;
-    font-size: 14px;
-  }
-
-  .hero {
-    padding: 55px 20px;
-  }
-
-  th,
-  td {
-    padding: 9px;
-    font-size: 14px;
-  }
+[hidden] {display:none!important}
+@media(max-width:600px) {
+  header {padding:18px}
+  nav {gap:10px;font-size:13px}
+  .hero {padding:45px 15px}
+  th,td {padding:8px;font-size:13px}
 }
 </style>
 </head>
@@ -318,665 +130,706 @@ footer {
 
 <header>
   <div class="brand">LIGA PRIME <span>LEVEL UP</span></div>
-
   <nav>
-    <a href="#torneios" data-i18n="tournaments">Torneios</a>
-    <a href="#classificacao" data-i18n="ranking">Classificação</a>
-    <a href="#calendario" data-i18n="calendar">Calendário</a>
-    <a href="#inscricao" data-i18n="registration">Inscrição</a>
-    <a href="#contacto" data-i18n="contact">Contacto</a>
+    <a href="#torneios">Torneios</a>
+    <a href="#classificacao">Classificação</a>
+    <a href="#mercado">Transferências</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#admin">Admin</a>
   </nav>
-
-  <select class="language" id="languageSelector" aria-label="Idioma">
-    <option value="pt">🇵🇹 Português</option>
-    <option value="fr">🇫🇷 Français</option>
-    <option value="en">🇬🇧 English</option>
-    <option value="es">🇪🇸 Español</option>
-    <option value="it">🇮🇹 Italiano</option>
-  </select>
 </header>
 
 <section class="hero">
-  <div class="kicker" data-i18n="competition">EA SPORTS FC 27 • Competição</div>
-
-  <h1>
-    <span data-i18n="play">JOGA.</span>
-    <span data-i18n="compete">COMPETE.</span>
-    <br>
-    <span data-i18n="evolve">EVOLUI.</span>
-  </h1>
-
-  <p data-i18n="heroText">
-    Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.
-  </p>
-
-  <a class="btn" href="#inscricao" data-i18n="join">INSCREVER-ME</a>
+  <div class="kicker">EA SPORTS FC 27 • COMPETIÇÃO</div>
+  <h1>JOGA. <span>COMPETE.</span><br>EVOLUI.</h1>
+  <p>Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.</p>
+  <a class="btn" href="#torneios">DESCOBRIR AS LIGAS</a>
 </section>
 
 <main>
 
-<section id="torneios">
-  <h2 class="section-title" data-i18n="tournaments">Torneios</h2>
-
-  <div class="grid">
+<section id="torneios" class="section">
+  <h2 class="section-title">As nossas competições</h2>
+  <div id="publicLeagues" class="grid">
     <article class="card">
       <span class="tag">1 contra 1</span>
-      <h3 data-i18n="tournament1">Torneio 1v1</h3>
-      <p class="muted" data-i18n="description1">
-        Compete individualmente e conquista o topo da classificação.
-      </p>
+      <h3>Torneio 1v1</h3>
+      <p class="muted">Compete individualmente e conquista o topo.</p>
     </article>
-
     <article class="card">
       <span class="tag">2 contra 2</span>
-      <h3 data-i18n="tournament2">Torneio 2v2</h3>
-      <p class="muted" data-i18n="description2">
-        Forma a tua dupla, combina estratégias e vence em equipa.
-      </p>
-    </article>
-
-    <article class="card">
-      <span class="tag" data-i18n="season">Temporada</span>
-      <h3 data-i18n="league">Liga competitiva</h3>
-      <p class="muted" data-i18n="description3">
-        Acompanha os resultados e luta pela melhor posição.
-      </p>
+      <h3>Torneio 2v2</h3>
+      <p class="muted">Forma a tua dupla e vence em equipa.</p>
     </article>
   </div>
 </section>
 
-<section id="classificacao" style="margin-top:38px">
-  <h2 class="section-title" data-i18n="ranking">Classificação</h2>
-
-  <div class="notice" data-i18n="rankingNotice">
-    A classificação será atualizada quando a organização registar resultados oficiais.
+<section id="classificacao" class="section">
+  <h2 class="section-title">Classificação</h2>
+  <div class="notice">
+    As classificações oficiais serão atualizadas pela organização.
   </div>
-
-  <table style="margin-top:12px">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th data-i18n="playerTeam">Jogador / Equipa</th>
-        <th>J</th>
-        <th data-i18n="wins">V</th>
-        <th>Pts</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>1</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
-      <tr><td>2</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
-      <tr><td>3</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section id="calendario" style="margin-top:38px">
-  <h2 class="section-title" data-i18n="calendar">Calendário</h2>
-
-  <div class="card">
-    <h3 data-i18n="nextMatches">Próximos jogos</h3>
-    <p class="muted" data-i18n="calendarNotice">
-      Os jogos e horários serão anunciados pela organização após a abertura das inscrições.
-    </p>
+  <div id="publicResults" class="card">
+    Ainda não existem resultados registados.
   </div>
 </section>
 
-<section id="inscricao" style="margin-top:38px">
-  <h2 class="section-title" data-i18n="registration">Pré-inscrição</h2>
+<section id="equipas" class="section">
+  <h2 class="section-title">Equipas participantes</h2>
+  <div id="publicTeams" class="grid">
+    <p class="muted">Equipas a anunciar.</p>
+  </div>
+</section>
 
+<section id="mercado" class="section">
+  <h2 class="section-title">Mercado de transferências</h2>
+  <div id="publicTransfers">
+    <p class="muted">As movimentações oficiais serão anunciadas aqui.</p>
+  </div>
+</section>
+
+<section id="contacto" class="section">
+  <h2 class="section-title">Contacta a Liga Prime</h2>
   <div class="card">
-    <p class="muted" data-i18n="formNotice">
-      Preenche os dados para manifestar interesse em participar.
+    <p class="muted">
+      Tens dúvidas sobre as competições, equipas ou jogadores?
+      Fala diretamente com a organização.
     </p>
 
-    <form id="signup">
-      <label>
-        <span data-i18n="nickname">Nome de jogador</span>
-        <input name="player" required
-          data-i18n-placeholder="nicknamePlaceholder"
-          placeholder="O teu nickname">
+    <form id="whatsappForm">
+      <label>Nome / Nickname
+        <input id="contactName" required placeholder="O teu nickname">
       </label>
 
-      <label>
-        <span>Email</span>
-        <input name="email" type="email" required
-          data-i18n-placeholder="emailPlaceholder"
-          placeholder="nome@email.com">
+      <label>Email
+        <input id="contactEmail" type="email" required placeholder="O teu email">
       </label>
 
-      <label>
-        <span data-i18n="competitionType">Tipo de competição</span>
-        <select name="mode">
-          <option>1v1</option>
-          <option>2v2</option>
+      <label>Assunto
+        <select id="contactSubject" required>
+          <option value="">Escolher assunto</option>
+          <option>Informações sobre ligas</option>
+          <option>Equipas e jogadores</option>
+          <option>Mercado de transferências</option>
+          <option>Problemas ou reclamações</option>
+          <option>Outro assunto</option>
         </select>
       </label>
 
-      <label>
-        <span data-i18n="platform">Plataforma</span>
-        <select name="platform">
-          <option>PlayStation</option>
-          <option>Xbox</option>
-          <option>PC</option>
-        </select>
+      <label>Mensagem
+        <textarea id="contactMessage" rows="5" required placeholder="Escreve a tua mensagem"></textarea>
       </label>
 
-      <button class="btn" type="submit" data-i18n="send">
-        Enviar pré-inscrição
-      </button>
-
-      <div id="message" class="muted" aria-live="polite"></div>
+      <button class="btn" type="submit">ENVIAR PELO WHATSAPP</button>
     </form>
   </div>
 </section>
 
-<section id="contacto" class="card" style="margin-top:38px">
-  <h2 data-i18n="contactTitle">CONTACTA A LIGA PRIME</h2>
-  <p class="muted" data-i18n="contactIntro">
-    Tens dúvidas ou queres falar com a organização?
-    Envia-nos uma mensagem pelo WhatsApp.
-  </p>
+<!-- ADMINISTRAÇÃO -->
 
-  <form id="whatsappForm">
-    <label>
-      <span data-i18n="contactNameLabel">Nome / Nickname</span>
-      <input id="contactName" required
-        data-i18n-placeholder="contactNamePlaceholder"
-        placeholder="O teu nome ou nickname">
+<section id="admin" class="section">
+  <h2 class="section-title">Administração</h2>
+
+  <div class="notice">
+    Área de demonstração para testar a gestão da Liga Prime Level Up.
+  </div>
+
+  <div class="card" id="adminLogin">
+    <h3>Acesso de administrador</h3>
+    <label>Palavra-passe de demonstração
+      <input id="adminPassword" type="password" placeholder="Introduzir palavra-passe">
     </label>
+    <button class="btn" id="loginButton">ENTRAR NO PAINEL</button>
+    <p id="loginError" class="muted"></p>
+  </div>
 
-    <label>
-      <span>Email</span>
-      <input id="contactEmail" type="email" required
-        data-i18n-placeholder="contactEmailPlaceholder"
-        placeholder="O teu email">
-    </label>
+  <div id="adminPanel" hidden>
 
-    <label>
-      <span data-i18n="subjectLabel">Assunto</span>
-      <select id="contactSubject" required>
-        <option value="" data-i18n="subjectPlaceholder">Escolher assunto</option>
-        <option data-i18n="subjectLeague">Informações sobre ligas</option>
-        <option data-i18n="subjectTeams">Equipas e jogadores</option>
-        <option data-i18n="subjectTransfers">Mercado de transferências</option>
-        <option data-i18n="subjectProblems">Problemas ou reclamações</option>
-        <option data-i18n="subjectOther">Outro assunto</option>
-      </select>
-    </label>
+    <div class="card">
+      <h3 class="admin-title">Painel de controlo</h3>
+      <p class="muted">Gestão da Liga Prime Level Up</p>
+      <button class="btn secondary" id="logoutButton">TERMINAR SESSÃO</button>
+    </div>
 
-    <label>
-      <span data-i18n="messageLabel">Mensagem</span>
-      <textarea id="contactMessage" required
-        data-i18n-placeholder="contactMessagePlaceholder"
-        placeholder="Escreve aqui a tua mensagem..."
-        rows="5"></textarea>
-    </label>
+    <!-- LIGAS -->
+    <div class="card">
+      <h3>1. Gestão de ligas</h3>
+      <form id="leagueForm">
+        <label>Nome da liga
+          <input id="leagueName" required placeholder="Ex.: Liga One">
+        </label>
+        <label>Época
+          <input id="leagueSeason" placeholder="2026/2027">
+        </label>
+        <label>Formato
+          <select id="leagueFormat">
+            <option>1v1</option>
+            <option>2v2</option>
+            <option>Pro Clubs 11v11</option>
+          </select>
+        </label>
+        <button class="btn">CRIAR LIGA</button>
+      </form>
+      <div id="leagueList"></div>
+    </div>
 
-    <button class="btn" type="submit" data-i18n="sendWhatsApp">
-      ENVIAR PELO WHATSAPP
-    </button>
-  </form>
+    <!-- EQUIPAS -->
+    <div class="card">
+      <h3>2. Gestão de equipas</h3>
+      <form id="teamForm">
+        <label>Nome da equipa
+          <input id="teamName" required placeholder="Nome do clube">
+        </label>
+        <label>Liga
+          <select id="teamLeague"></select>
+        </label>
+        <label>Capitão
+          <input id="teamCaptain" placeholder="Nickname do capitão">
+        </label>
+        <button class="btn">ADICIONAR EQUIPA</button>
+      </form>
+      <div id="teamList"></div>
+    </div>
+
+    <!-- JOGADORES -->
+    <div class="card">
+      <h3>3. Gestão de jogadores</h3>
+      <form id="playerForm">
+        <label>Nickname
+          <input id="playerName" required placeholder="Nickname do jogador">
+        </label>
+        <label>Posição
+          <input id="playerPosition" placeholder="Ex.: PL, MDC, GR">
+        </label>
+        <label>Equipa
+          <select id="playerTeam"></select>
+        </label>
+        <button class="btn">ADICIONAR JOGADOR</button>
+      </form>
+      <div id="playerList"></div>
+    </div>
+
+    <!-- CONTRATOS -->
+    <div class="card">
+      <h3>4. Gestão de contratos</h3>
+      <form id="contractForm">
+        <label>Jogador
+          <select id="contractPlayer"></select>
+        </label>
+        <label>Equipa
+          <select id="contractTeam"></select>
+        </label>
+        <label>Data de início
+          <input id="contractStart" type="date">
+        </label>
+        <label>Data de fim
+          <input id="contractEnd" type="date">
+        </label>
+        <label>Estado
+          <select id="contractStatus">
+            <option>Ativo</option>
+            <option>Em renovação</option>
+            <option>Terminado</option>
+          </select>
+        </label>
+        <button class="btn">REGISTAR CONTRATO</button>
+      </form>
+      <div id="contractList"></div>
+    </div>
+
+    <!-- TRANSFERÊNCIAS -->
+    <div class="card">
+      <h3>5. Mercado de transferências</h3>
+      <form id="transferForm">
+        <label>Jogador
+          <select id="transferPlayer"></select>
+        </label>
+        <label>Equipa de origem
+          <select id="transferFrom"></select>
+        </label>
+        <label>Nova equipa
+          <select id="transferTo"></select>
+        </label>
+        <label>Tipo de movimento
+          <select id="transferType">
+            <option>Transferência definitiva</option>
+            <option>Empréstimo</option>
+            <option>Agente livre</option>
+          </select>
+        </label>
+        <label>Estado
+          <select id="transferStatus">
+            <option>Em análise</option>
+            <option>Confirmada</option>
+            <option>Cancelada</option>
+          </select>
+        </label>
+        <button class="btn">REGISTAR MOVIMENTO</button>
+      </form>
+      <div id="transferList"></div>
+    </div>
+
+    <!-- RESULTADOS -->
+    <div class="card">
+      <h3>6. Gestão de resultados</h3>
+      <form id="resultForm">
+        <label>Equipa da casa
+          <select id="resultHome"></select>
+        </label>
+        <label>Golos da equipa da casa
+          <input id="scoreHome" type="number" min="0" required>
+        </label>
+        <label>Equipa visitante
+          <select id="resultAway"></select>
+        </label>
+        <label>Golos da equipa visitante
+          <input id="scoreAway" type="number" min="0" required>
+        </label>
+        <button class="btn">REGISTAR RESULTADO</button>
+      </form>
+      <div id="resultList"></div>
+    </div>
+
+  </div>
 </section>
 
 </main>
 
-<footer data-i18n="footer">
-  © 2026 Liga Prime Level Up • Preto, vermelho e prateado
+<footer>
+  © <span id="year"></span> Liga Prime Level Up
+  <br>JOGA. COMPETE. EVOLUI.
 </footer>
 
 <script>
-const translations = {
+/*
+  DEMONSTRAÇÃO LOCAL.
+  Não é autenticação segura para um site público.
+*/
+const DEMO_PASSWORD = "LPLU2026";
 
-pt:{
-  contact:"Contacto",
-  tournaments:"Torneios",
-  ranking:"Classificação",
-  calendar:"Calendário",
-  registration:"Pré-inscrição",
-  competition:"EA SPORTS FC 27 • Competição",
-  play:"JOGA.",
-  compete:"COMPETE.",
-  evolve:"EVOLUI.",
-  heroText:"Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.",
-  join:"INSCREVER-ME",
-  tournament1:"Torneio 1v1",
-  tournament2:"Torneio 2v2",
-  description1:"Compete individualmente e conquista o topo da classificação.",
-  description2:"Forma a tua dupla, combina estratégias e vence em equipa.",
-  season:"Temporada",
-  league:"Liga competitiva",
-  description3:"Acompanha os resultados e luta pela melhor posição.",
-  rankingNotice:"A classificação será atualizada quando a organização registar resultados oficiais.",
-  playerTeam:"Jogador / Equipa",
-  wins:"V",
-  nextMatches:"Próximos jogos",
-  calendarNotice:"Os jogos e horários serão anunciados pela organização após a abertura das inscrições.",
-  formNotice:"Preenche os dados para manifestar interesse em participar.",
-  nickname:"Nome de jogador",
-  nicknamePlaceholder:"O teu nickname",
-  emailPlaceholder:"nome@email.com",
-  competitionType:"Tipo de competição",
-  platform:"Plataforma",
-  send:"Enviar pré-inscrição",
-  footer:"© 2026 Liga Prime Level Up • Preto, vermelho e prateado",
-  success:"Demonstração: os dados não foram enviados nem guardados.",
-  contactTitle:"CONTACTA A LIGA PRIME",
-  contactIntro:"Tens dúvidas ou queres falar com a organização? Envia-nos uma mensagem pelo WhatsApp.",
-  contactNameLabel:"Nome / Nickname",
-  contactNamePlaceholder:"O teu nome ou nickname",
-  contactEmailPlaceholder:"O teu email",
-  subjectLabel:"Assunto",
-  subjectPlaceholder:"Escolher assunto",
-  subjectLeague:"Informações sobre ligas",
-  subjectTeams:"Equipas e jogadores",
-  subjectTransfers:"Mercado de transferências",
-  subjectProblems:"Problemas ou reclamações",
-  subjectOther:"Outro assunto",
-  messageLabel:"Mensagem",
-  contactMessagePlaceholder:"Escreve aqui a tua mensagem...",
-  sendWhatsApp:"ENVIAR PELO WHATSAPP"
-},
+const STORAGE_KEY = "lplu_admin_data_v1";
 
-fr:{
-  contact:"Contact",
-  tournaments:"Tournois",
-  ranking:"Classement",
-  calendar:"Calendrier",
-  registration:"Pré-inscription",
-  competition:"EA SPORTS FC 27 • Compétition",
-  play:"JOUE.",
-  compete:"CONCURRE.",
-  evolve:"ÉVOLUE.",
-  heroText:"Entre sur le terrain, défie les meilleurs et prouve ta valeur dans la Liga Prime Level Up.",
-  join:"M'INSCRIRE",
-  tournament1:"Tournoi 1v1",
-  tournament2:"Tournoi 2v2",
-  description1:"Affronte tes adversaires individuellement et atteins le sommet du classement.",
-  description2:"Forme ton duo, combine tes stratégies et gagne en équipe.",
-  season:"Saison",
-  league:"Ligue compétitive",
-  description3:"Suis les résultats et bats-toi pour la meilleure position.",
-  rankingNotice:"Le classement sera mis à jour lorsque l'organisation enregistrera les résultats officiels.",
-  playerTeam:"Joueur / Équipe",
-  wins:"V",
-  nextMatches:"Prochains matchs",
-  calendarNotice:"Les matchs et les horaires seront annoncés après l'ouverture des inscriptions.",
-  formNotice:"Remplis les informations pour manifester ton intérêt.",
-  nickname:"Nom du joueur",
-  nicknamePlaceholder:"Ton pseudo",
-  emailPlaceholder:"nom@email.com",
-  competitionType:"Type de compétition",
-  platform:"Plateforme",
-  send:"Envoyer la pré-inscription",
-  footer:"© 2026 Liga Prime Level Up",
-  success:"Démonstration : les données n'ont pas été envoyées ni enregistrées.",
-  contactTitle:"CONTACTER LA LIGA PRIME",
-  contactIntro:"Tu as des questions ou tu veux parler à l'organisation ? Envoie-nous un message sur WhatsApp.",
-  contactNameLabel:"Nom / Pseudo",
-  contactNamePlaceholder:"Ton nom ou pseudo",
-  contactEmailPlaceholder:"Ton email",
-  subjectLabel:"Sujet",
-  subjectPlaceholder:"Choisir un sujet",
-  subjectLeague:"Informations sur les ligues",
-  subjectTeams:"Équipes et joueurs",
-  subjectTransfers:"Marché des transferts",
-  subjectProblems:"Problèmes ou réclamations",
-  subjectOther:"Autre sujet",
-  messageLabel:"Message",
-  contactMessagePlaceholder:"Écris ton message ici...",
-  sendWhatsApp:"ENVOYER SUR WHATSAPP"
-},
-
-en:{
-  contact:"Contact",
-  tournaments:"Tournaments",
-  ranking:"Rankings",
-  calendar:"Calendar",
-  registration:"Registration",
-  competition:"EA SPORTS FC 27 • Competition",
-  play:"PLAY.",
-  compete:"COMPETE.",
-  evolve:"EVOLVE.",
-  heroText:"Enter the field, challenge the best and prove your worth in Liga Prime Level Up.",
-  join:"JOIN NOW",
-  tournament1:"1v1 Tournament",
-  tournament2:"2v2 Tournament",
-  description1:"Compete individually and reach the top of the rankings.",
-  description2:"Build your duo, combine strategies and win as a team.",
-  season:"Season",
-  league:"Competitive League",
-  description3:"Follow the results and fight for the best position.",
-  rankingNotice:"The rankings will be updated when the organization records official results.",
-  playerTeam:"Player / Team",
-  wins:"W",
-  nextMatches:"Upcoming matches",
-  calendarNotice:"Matches and schedules will be announced after registration opens.",
-  formNotice:"Fill in your details to express your interest in participating.",
-  nickname:"Player name",
-  nicknamePlaceholder:"Your nickname",
-  emailPlaceholder:"name@email.com",
-  competitionType:"Competition type",
-  platform:"Platform",
-  send:"Submit registration",
-  footer:"© 2026 Liga Prime Level Up",
-  success:"Demo: your information has not been sent or saved.",
-  contactTitle:"CONTACT LIGA PRIME",
-  contactIntro:"Have questions or want to speak with the organization? Send us a message on WhatsApp.",
-  contactNameLabel:"Name / Nickname",
-  contactNamePlaceholder:"Your name or nickname",
-  contactEmailPlaceholder:"Your email",
-  subjectLabel:"Subject",
-  subjectPlaceholder:"Choose a subject",
-  subjectLeague:"League information",
-  subjectTeams:"Teams and players",
-  subjectTransfers:"Transfer market",
-  subjectProblems:"Problems or complaints",
-  subjectOther:"Other subject",
-  messageLabel:"Message",
-  contactMessagePlaceholder:"Write your message here...",
-  sendWhatsApp:"SEND VIA WHATSAPP"
-},
-
-es:{
-  contact:"Contacto",
-  tournaments:"Torneos",
-  ranking:"Clasificación",
-  calendar:"Calendario",
-  registration:"Inscripción",
-  competition:"EA SPORTS FC 27 • Competición",
-  play:"JUEGA.",
-  compete:"COMPITE.",
-  evolve:"EVOLUCIONA.",
-  heroText:"Entra al campo, desafía a los mejores y demuestra tu valor en Liga Prime Level Up.",
-  join:"INSCRIBIRME",
-  tournament1:"Torneo 1v1",
-  tournament2:"Torneo 2v2",
-  description1:"Compite individualmente y alcanza el primer puesto de la clasificación.",
-  description2:"Forma tu pareja, combina estrategias y gana en equipo.",
-  season:"Temporada",
-  league:"Liga competitiva",
-  description3:"Sigue los resultados y lucha por la mejor posición.",
-  rankingNotice:"La clasificación se actualizará cuando la organización registre los resultados oficiales.",
-  playerTeam:"Jugador / Equipo",
-  wins:"V",
-  nextMatches:"Próximos partidos",
-  calendarNotice:"Los partidos y horarios se anunciarán después de abrir las inscripciones.",
-  formNotice:"Completa tus datos para mostrar tu interés en participar.",
-  nickname:"Nombre de jugador",
-  nicknamePlaceholder:"Tu apodo",
-  emailPlaceholder:"nombre@email.com",
-  competitionType:"Tipo de competición",
-  platform:"Plataforma",
-  send:"Enviar preinscripción",
-  footer:"© 2026 Liga Prime Level Up",
-  success:"Demostración: los datos no se han enviado ni guardado.",
-  contactTitle:"CONTACTA CON LIGA PRIME",
-  contactIntro:"¿Tienes dudas o quieres hablar con la organización? Envianos un mensaje por WhatsApp.",
-  contactNameLabel:"Nombre / Apodo",
-  contactNamePlaceholder:"Tu nombre o apodo",
-  contactEmailPlaceholder:"Tu email",
-  subjectLabel:"Asunto",
-  subjectPlaceholder:"Elegir asunto",
-  subjectLeague:"Información sobre ligas",
-  subjectTeams:"Equipos y jugadores",
-  subjectTransfers:"Mercado de fichajes",
-  subjectProblems:"Problemas o reclamaciones",
-  subjectOther:"Otro asunto",
-  messageLabel:"Mensaje",
-  contactMessagePlaceholder:"Escribe tu mensaje aquí...",
-  sendWhatsApp:"ENVIAR POR WHATSAPP"
-},
-
-it:{
-  contact:"Contatto",
-  tournaments:"Tornei",
-  ranking:"Classifica",
-  calendar:"Calendario",
-  registration:"Iscrizione",
-  competition:"EA SPORTS FC 27 • Competizione",
-  play:"GIOCA.",
-  compete:"COMPETI.",
-  evolve:"EVOLVI.",
-  heroText:"Entra in campo, sfida i migliori e dimostra il tuo valore nella Liga Prime Level Up.",
-  join:"ISCRIVITI",
-  tournament1:"Torneo 1v1",
-  tournament2:"Torneo 2v2",
-  description1:"Competi individualmente e raggiungi la vetta della classifica.",
-  description2:"Forma la tua coppia, combina le strategie e vinci in squadra.",
-  season:"Stagione",
-  league:"Lega competitiva",
-  description3:"Segui i risultati e lotta per la migliore posizione.",
-  rankingNotice:"La classifica verrà aggiornata quando l'organizzazione registrerà i risultati ufficiali.",
-  playerTeam:"Giocatore / Squadra",
-  wins:"V",
-  nextMatches:"Prossime partite",
-  calendarNotice:"Le partite e gli orari saranno annunciati dopo l'apertura delle iscrizioni.",
-  formNotice:"Inserisci i tuoi dati per manifestare il tuo interesse a partecipare.",
-  nickname:"Nome giocatore",
-  nicknamePlaceholder:"Il tuo nickname",
-  emailPlaceholder:"nome@email.com",
-  competitionType:"Tipo di competizione",
-  platform:"Piattaforma",
-  send:"Invia pre-iscrizione",
-  footer:"© 2026 Liga Prime Level Up",
-  success:"Demo: i dati non sono stati inviati né salvati.",
-  contactTitle:"CONTATTARE LIGA PRIME",
-  contactIntro:"Hai domande o vuoi parlare con l'organizzazione? Inviaci un messaggio su WhatsApp.",
-  contactNameLabel:"Nome / Nickname",
-  contactNamePlaceholder:"Il tuo nome o nickname",
-  contactEmailPlaceholder:"La tua email",
-  subjectLabel:"Oggetto",
-  subjectPlaceholder:"Scegli un oggetto",
-  subjectLeague:"Informazioni sui campionati",
-  subjectTeams:"Squadre e giocatori",
-  subjectTransfers:"Mercato dei trasferimenti",
-  subjectProblems:"Problemi o reclami",
-  subjectOther:"Altro",
-  messageLabel:"Messaggio",
-  contactMessagePlaceholder:"Scrivi qui il tuo messaggio...",
-  sendWhatsApp:"INVIA VIA WHATSAPP"
-}
-
+const emptyData = {
+  leagues: [],
+  teams: [],
+  players: [],
+  contracts: [],
+  transfers: [],
+  results: []
 };
 
-function changeLanguage(lang) {
-  if (!translations[lang]) lang = "pt";
-  document.documentElement.lang = lang;
-
-  document.querySelectorAll("[data-i18n]").forEach(element => {
-    const key = element.dataset.i18n;
-    if (translations[lang][key]) {
-      element.textContent = translations[lang][key];
-    }
-  });
-
-  document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
-    const key = element.dataset.i18nPlaceholder;
-    if (translations[lang][key]) {
-      element.placeholder = translations[lang][key];
-    }
-  });
-
-  document.getElementById("message").textContent = "";
-
+function loadData() {
   try {
-    localStorage.setItem("siteLanguage", lang);
-  } catch (error) {}
+    return {
+      ...emptyData,
+      ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}")
+    };
+  } catch {
+    return {...emptyData};
+  }
 }
 
-const selector = document.getElementById("languageSelector");
-let savedLanguage = null;
+let data = loadData();
 
-try {
-  savedLanguage = localStorage.getItem("siteLanguage");
-} catch (error) {}
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  renderAll();
+}
 
-const browserLanguage =
-  (navigator.language || "pt").slice(0, 2).toLowerCase();
+function makeId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+}
 
-const initialLanguage =
-  savedLanguage && translations[savedLanguage]
-    ? savedLanguage
-    : translations[browserLanguage]
-      ? browserLanguage
-      : "pt";
+function getValue(id) {
+  return document.getElementById(id).value.trim();
+}
 
-selector.value = initialLanguage;
-changeLanguage(initialLanguage);
+function addOption(select, value, label) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  select.appendChild(option);
+}
 
-selector.addEventListener("change", function() {
-  changeLanguage(this.value);
-});
+function fillSelect(id, items, labelFunction, emptyLabel) {
+  const select = document.getElementById(id);
+  const previous = select.value;
+  select.replaceChildren();
 
-document.getElementById("signup").addEventListener("submit", function(e) {
-  e.preventEventDefault;
-  e.preventDefault();
+  addOption(select, "", emptyLabel);
 
-  const lang = selector.value;
-  document.getElementById("message").textContent =
-    translations[lang].success;
-});
-
-document.getElementById("whatsappForm")
-  .addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const nome = document.getElementById("contactName").value;
-    const email = document.getElementById("contactEmail").value;
-    const assunto = document.getElementById("contactSubject").value;
-    const mensagem = document.getElementById("contactMessage").value;
-
-    const texto =
-      "LIGA PRIME LEVEL UP\n\n" +
-      "Nome: " + nome + "\n" +
-      "Email: " + email + "\n" +
-      "Assunto: " + assunto + "\n" +
-      "Mensagem: " + mensagem;
-
-    const url = "https://wa.me/33695872856?text=" +
-      encodeURIComponent(texto);
-
-    window.open(url, "_blank");
+  items.forEach(item => {
+    addOption(select, item.id, labelFunction(item));
   });
-const ADMIN_DEMO_PASSWORD = "LPLU2026";
 
-let adminData = JSON.parse(
-  localStorage.getItem("lplu_admin_data") ||
-  '{"leagues":[],"teams":[],"players":[],"contracts":[],"transfers":[]}'
-);
-
-function saveAdmin() {
-  localStorage.setItem("lplu_admin_data", JSON.stringify(adminData));
-  renderAdmin();
+  if (items.some(item => item.id === previous)) {
+    select.value = previous;
+  }
 }
 
-function loginAdmin() {
-  if (document.getElementById("adminPassword").value === ADMIN_DEMO_PASSWORD) {
+function showList(id, items, formatter, collection) {
+  const container = document.getElementById(id);
+  container.replaceChildren();
+
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "Ainda não existem registos.";
+    container.appendChild(empty);
+    return;
+  }
+
+  items.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "admin-item";
+
+    const text = document.createElement("div");
+    text.textContent = formatter(item);
+
+    const edit = document.createElement("button");
+    edit.className = "btn secondary";
+    edit.textContent = "Editar";
+    edit.onclick = () => editItem(collection, item.id);
+
+    const remove = document.createElement("button");
+    remove.className = "btn danger";
+    remove.textContent = "Eliminar";
+    remove.onclick = () => deleteItem(collection, item.id);
+
+    row.append(text, edit, remove);
+    container.appendChild(row);
+  });
+}
+
+function editItem(collection, id) {
+  const item = data[collection].find(x => x.id === id);
+  if (!item) return;
+
+  const fields = Object.keys(item).filter(k => k !== "id");
+  const updated = {};
+
+  for (const field of fields) {
+    const answer = prompt("Editar " + field + ":", item[field] ?? "");
+    if (answer === null) return;
+    updated[field] = answer;
+  }
+
+  Object.assign(item, updated);
+  saveData();
+}
+
+function deleteItem(collection, id) {
+  if (!confirm("Tens a certeza de que queres eliminar este registo?")) return;
+  data[collection] = data[collection].filter(x => x.id !== id);
+  saveData();
+}
+
+function renderAll() {
+  showList("leagueList", data.leagues,
+    x => `${x.name} | ${x.season} | ${x.format}`, "leagues");
+
+  showList("teamList", data.teams,
+    x => `${x.name} | Liga: ${x.leagueName} | Capitão: ${x.captain}`, "teams");
+
+  showList("playerList", data.players,
+    x => `${x.name} | ${x.position} | ${x.teamName}`, "players");
+
+  showList("contractList", data.contracts,
+    x => `${x.playerName} | ${x.teamName} | ${x.start || "Sem início"} até ${x.end || "Sem fim"} | ${x.status}`, "contracts");
+
+  showList("transferList", data.transfers,
+    x => `${x.playerName}: ${x.fromName} → ${x.toName} | ${x.type} | ${x.status}`, "transfers");
+
+  showList("resultList", data.results,
+    x => `${x.homeName} ${x.homeScore} - ${x.awayScore} ${x.awayName}`, "results");
+
+  fillSelect("teamLeague", data.leagues,
+    x => x.name, "Escolher liga");
+
+  fillSelect("playerTeam", data.teams,
+    x => x.name, "Escolher equipa");
+
+  fillSelect("contractPlayer", data.players,
+    x => x.name, "Escolher jogador");
+
+  fillSelect("contractTeam", data.teams,
+    x => x.name, "Escolher equipa");
+
+  fillSelect("transferPlayer", data.players,
+    x => x.name, "Escolher jogador");
+
+  fillSelect("transferFrom", data.teams,
+    x => x.name, "Equipa de origem");
+
+  fillSelect("transferTo", data.teams,
+    x => x.name, "Nova equipa");
+
+  fillSelect("resultHome", data.teams,
+    x => x.name, "Equipa da casa");
+
+  fillSelect("resultAway", data.teams,
+    x => x.name, "Equipa visitante");
+
+  renderPublic();
+}
+
+function renderPublic() {
+  const leagues = document.getElementById("publicLeagues");
+  leagues.replaceChildren();
+
+  if (!data.leagues.length) {
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = "Novas competições serão anunciadas em breve.";
+    leagues.appendChild(p);
+  }
+
+  data.leagues.forEach(x => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = x.format;
+
+    const title = document.createElement("h3");
+    title.textContent = x.name;
+
+    const season = document.createElement("p");
+    season.className = "muted";
+    season.textContent = "Época: " + x.season;
+
+    card.append(tag, title, season);
+    leagues.appendChild(card);
+  });
+
+  const teams = document.getElementById("publicTeams");
+  teams.replaceChildren();
+
+  if (!data.teams.length) {
+    teams.textContent = "Equipas a anunciar.";
+  }
+
+  data.teams.forEach(x => {
+    const card = document.createElement("article");
+    card.className = "card";
+    const title = document.createElement("h3");
+    title.textContent = x.name;
+    const details = document.createElement("p");
+    details.className = "muted";
+    details.textContent = x.leagueName + " | Capitão: " + x.captain;
+    card.append(title, details);
+    teams.appendChild(card);
+  });
+
+  const transfers = document.getElementById("publicTransfers");
+  transfers.replaceChildren();
+
+  const confirmed = data.transfers.filter(x => x.status === "Confirmada");
+
+  if (!confirmed.length) {
+    transfers.textContent = "As movimentações oficiais serão anunciadas aqui.";
+  }
+
+  confirmed.forEach(x => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.textContent = `${x.playerName}: ${x.fromName} → ${x.toName} (${x.type})`;
+    transfers.appendChild(card);
+  });
+
+  const results = document.getElementById("publicResults");
+  results.replaceChildren();
+
+  if (!data.results.length) {
+    results.textContent = "Ainda não existem resultados registados.";
+  }
+
+  data.results.forEach(x => {
+    const p = document.createElement("p");
+    p.textContent = `${x.homeName} ${x.homeScore} - ${x.awayScore} ${x.awayName}`;
+    results.appendChild(p);
+  });
+}
+
+/* LOGIN DE DEMONSTRAÇÃO */
+
+document.getElementById("loginButton").onclick = () => {
+  if (getValue("adminPassword") === DEMO_PASSWORD) {
     document.getElementById("adminLogin").hidden = true;
     document.getElementById("adminPanel").hidden = false;
-    renderAdmin();
+    document.getElementById("loginError").textContent = "";
+    renderAll();
   } else {
     document.getElementById("loginError").textContent =
       "Palavra-passe incorreta.";
   }
-}
+};
 
-function logoutAdmin() {
-  document.getElementById("adminLogin").hidden = false;
+document.getElementById("adminPassword").addEventListener("keydown", e => {
+  if (e.key === "Enter") document.getElementById("loginButton").click();
+});
+
+document.getElementById("logoutButton").onclick = () => {
   document.getElementById("adminPanel").hidden = true;
+  document.getElementById("adminLogin").hidden = false;
   document.getElementById("adminPassword").value = "";
-}
+};
 
-function value(id) {
-  return document.getElementById(id).value.trim();
-}
+/* CRIAR LIGA */
 
-function addLeague() {
-  if (!value("leagueName")) return alert("Indica o nome da liga.");
-  adminData.leagues.push({
-    name: value("leagueName"),
-    season: value("leagueSeason")
+document.getElementById("leagueForm").onsubmit = e => {
+  e.preventDefault();
+
+  data.leagues.push({
+    id: makeId(),
+    name: getValue("leagueName"),
+    season: getValue("leagueSeason"),
+    format: getValue("leagueFormat")
   });
-  document.getElementById("leagueName").value = "";
-  document.getElementById("leagueSeason").value = "";
-  saveAdmin();
-}
 
-function addTeam() {
-  if (!value("teamName")) return alert("Indica o nome da equipa.");
-  adminData.teams.push({
-    name: value("teamName"),
-    league: value("teamLeague"),
-    captain: value("teamCaptain")
+  e.target.reset();
+  saveData();
+};
+
+/* CRIAR EQUIPA */
+
+document.getElementById("teamForm").onsubmit = e => {
+  e.preventDefault();
+
+  const league = data.leagues.find(x => x.id === getValue("teamLeague"));
+  if (!league) return alert("Cria ou escolhe primeiro uma liga.");
+
+  data.teams.push({
+    id: makeId(),
+    name: getValue("teamName"),
+    leagueId: league.id,
+    leagueName: league.name,
+    captain: getValue("teamCaptain")
   });
-  saveAdmin();
-}
 
-function addPlayer() {
-  if (!value("playerName")) return alert("Indica o jogador.");
-  adminData.players.push({
-    name: value("playerName"),
-    position: value("playerPosition"),
-    team: value("playerTeam")
+  e.target.reset();
+  saveData();
+};
+
+/* CRIAR JOGADOR */
+
+document.getElementById("playerForm").onsubmit = e => {
+  e.preventDefault();
+
+  const team = data.teams.find(x => x.id === getValue("playerTeam"));
+  if (!team) return alert("Cria ou escolhe primeiro uma equipa.");
+
+  data.players.push({
+    id: makeId(),
+    name: getValue("playerName"),
+    position: getValue("playerPosition"),
+    teamId: team.id,
+    teamName: team.name
   });
-  saveAdmin();
-}
 
-function addContract() {
-  if (!value("contractPlayer")) return alert("Indica o jogador.");
-  adminData.contracts.push({
-    player: value("contractPlayer"),
-    team: value("contractTeam"),
-    end: value("contractEnd"),
-    status: value("contractStatus")
+  e.target.reset();
+  saveData();
+};
+
+/* CONTRATOS */
+
+document.getElementById("contractForm").onsubmit = e => {
+  e.preventDefault();
+
+  const player = data.players.find(x => x.id === getValue("contractPlayer"));
+  const team = data.teams.find(x => x.id === getValue("contractTeam"));
+
+  if (!player || !team) return alert("Escolhe um jogador e uma equipa.");
+
+  data.contracts.push({
+    id: makeId(),
+    playerId: player.id,
+    playerName: player.name,
+    teamId: team.id,
+    teamName: team.name,
+    start: getValue("contractStart"),
+    end: getValue("contractEnd"),
+    status: getValue("contractStatus")
   });
-  saveAdmin();
-}
 
-function addTransfer() {
-  if (!value("transferPlayer")) return alert("Indica o jogador.");
-  adminData.transfers.push({
-    player: value("transferPlayer"),
-    from: value("transferFrom"),
-    to: value("transferTo"),
-    type: value("transferType")
+  e.target.reset();
+  saveData();
+};
+
+/* TRANSFERÊNCIAS */
+
+document.getElementById("transferForm").onsubmit = e => {
+  e.preventDefault();
+
+  const player = data.players.find(x => x.id === getValue("transferPlayer"));
+  const from = data.teams.find(x => x.id === getValue("transferFrom"));
+  const to = data.teams.find(x => x.id === getValue("transferTo"));
+
+  if (!player || !from || !to) return alert("Escolhe o jogador e as equipas.");
+  if (from.id === to.id) return alert("As equipas têm de ser diferentes.");
+
+  data.transfers.push({
+    id: makeId(),
+    playerId: player.id,
+    playerName: player.name,
+    fromId: from.id,
+    fromName: from.name,
+    toId: to.id,
+    toName: to.name,
+    type: getValue("transferType"),
+    status: getValue("transferStatus")
   });
-  saveAdmin();
-}
 
-function renderAdmin() {
-  const sections = [
-    ["leagueList", "leagues", x => `${x.name} — ${x.season}`],
-    ["teamList", "teams", x => `${x.name} — ${x.league} — Capitão: ${x.captain}`],
-    ["playerList", "players", x => `${x.name} — ${x.position} — ${x.team}`],
-    ["contractList", "contracts", x => `${x.player} — ${x.team} — Até ${x.end} — ${x.status}`],
-    ["transferList", "transfers", x => `${x.player}: ${x.from} → ${x.to} (${x.type})`]
-  ];
+  e.target.reset();
+  saveData();
+};
 
-  sections.forEach(([elementId, key, format]) => {
-    const container = document.getElementById(elementId);
-    container.replaceChildren();
+/* RESULTADOS */
 
-    adminData[key].forEach((item, index) => {
-      const line = document.createElement("p");
-      const label = document.createElement("span");
-      label.textContent = format(item) + " ";
+document.getElementById("resultForm").onsubmit = e => {
+  e.preventDefault();
 
-      const remove = document.createElement("button");
-      remove.textContent = "Eliminar";
-      remove.onclick = () => {
-        if (confirm("Queres eliminar este registo?")) {
-          adminData[key].splice(index, 1);
-          saveAdmin();
-        }
-      };
+  const home = data.teams.find(x => x.id === getValue("resultHome"));
+  const away = data.teams.find(x => x.id === getValue("resultAway"));
 
-      line.append(label, remove);
-      container.appendChild(line);
-    });
+  if (!home || !away) return alert("Escolhe as duas equipas.");
+  if (home.id === away.id) return alert("Escolhe duas equipas diferentes.");
+
+  data.results.push({
+    id: makeId(),
+    homeName: home.name,
+    awayName: away.name,
+    homeScore: Number(getValue("scoreHome")),
+    awayScore: Number(getValue("scoreAway"))
   });
-}
 
+  e.target.reset();
+  saveData();
+};
+
+/* WHATSAPP OFICIAL */
+
+document.getElementById("whatsappForm").onsubmit = e => {
+  e.preventDefault();
+
+  const message =
+    "LIGA PRIME LEVEL UP\n\n" +
+    "Nome: " + getValue("contactName") + "\n" +
+    "Email: " + getValue("contactEmail") + "\n" +
+    "Assunto: " + getValue("contactSubject") + "\n" +
+    "Mensagem: " + getValue("contactMessage");
+
+  const url =
+    "https://wa.me/33695872856?text=" +
+    encodeURIComponent(message);
+
+  window.open(url, "_blank");
+};
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+renderAll();
 </script>
 
 </body>
