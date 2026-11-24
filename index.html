@@ -1,421 +1,280 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#08080c">
 <title>Liga Prime Level Up</title>
-
 <style>
-:root {
---bg: #101218;
---panel: #252A33;
---red: #F20D32;
---silver: #E8EDF4;
---white: #FFFFFF;
---muted: #AEB5C0;
+:root{--red:#f20d32;--red2:#bd001f;--white:#fff;--silver:#d9dce3;--muted:#aeb3bd;--panel:rgba(5,6,10,.88);--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:95px}
+body{margin:0;color:var(--white);font:16px/1.45 Arial,Helvetica,sans-serif;background:#08080c radial-gradient(ellipse at 50% 25%, #35101b 0%, #111018 48%, #08080c 100%) center 80px/cover fixed no-repeat;position:relative}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(4,4,8,.88),rgba(5,5,10,.35) 55%,rgba(4,4,8,.35)),linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.22) 55%,rgba(0,0,0,.72))}
+a{color:inherit}
+header{height:82px;position:sticky;top:0;z-index:100;background:rgba(4,5,9,.94);border-bottom:1px solid #9d0924;box-shadow:0 8px 28px #000b;display:flex;align-items:center;justify-content:space-between;padding:7px max(4%,calc((100% - 1330px)/2));gap:22px}
+.brand-link{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:265px}
+.logo-lplu{width:76px;height:76px;object-fit:contain}
+.brand{font-weight:1000;font-style:italic;font-size:clamp(18px,2vw,27px);line-height:1.02;letter-spacing:.4px}
+.brand span{display:block;color:var(--red);text-shadow:0 0 15px #f20d3270}
+nav{display:flex;align-items:center;justify-content:flex-end;gap:4px;flex-wrap:wrap}
+nav a{padding:12px 10px;text-decoration:none;font-size:14px;color:#e2e3e8;border-bottom:2px solid transparent;white-space:nowrap}
+nav a:hover,nav a.active{color:var(--red);border-color:var(--red)}
+.admin-nav{background:var(--red);border-radius:22px;padding:9px 17px;color:white;font-weight:bold}
+.hero{max-width:1370px;min-height:380px;margin:auto;padding:60px 32px 34px;display:flex;align-items:center;position:relative;isolation:isolate}
+.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.85),rgba(0,0,0,.48) 43%,transparent 76%);pointer-events:none}
+.hero-copy{max-width:610px}
+.kicker{font-size:15px;font-weight:800;font-style:italic;letter-spacing:1.2px;color:#f0f0f4;text-transform:uppercase}
+.hero h1{font-size:clamp(44px,6vw,76px);line-height:.98;font-weight:1000;font-style:italic;letter-spacing:-2px;margin:12px 0}
+.hero h1 span{display:block;color:var(--red);font-size:1.12em;text-shadow:0 0 25px #f20d3266}
+.hero p{font-size:20px;line-height:1.35;max-width:470px;margin:12px 0 22px;color:#f0f0f2}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;background:linear-gradient(135deg,#ff173b,#d50027);color:white;text-decoration:none;padding:12px 22px;border-radius:9px;font-weight:900;cursor:pointer;box-shadow:0 6px 22px #f20d3250;transition:.2s}
+.btn:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.btn.secondary{background:#30333d;border:1px solid #777}
+.btn.danger{background:#97001d}
+main{max-width:1370px;margin:0 auto;padding:0 24px 35px}
+.dashboard{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:-2px;position:relative;z-index:2}
+.panel,.card{background:linear-gradient(145deg,rgba(5,6,10,.94),rgba(13,13,18,.88));border:1px solid rgba(255,255,255,.18);border-left:2px solid var(--red);border-radius:15px;box-shadow:0 14px 32px #0009;overflow:hidden}
+.panel{min-height:225px;padding:15px 17px}
+.panel h2{font-size:20px;font-style:italic;margin:0 0 10px;padding-bottom:9px;border-bottom:1px solid #ffffff20;text-transform:uppercase}
+.panel h2 .symbol{color:var(--red);margin-right:10px}
+.tournament-row{display:flex;align-items:center;gap:13px;padding:10px 3px;border-bottom:1px solid #ffffff16}
+.tournament-row:last-child{border:0}
+.shield{width:62px;height:62px;border:3px solid var(--red);clip-path:polygon(50% 0,95% 17%,88% 75%,50% 100%,12% 75%,5% 17%);display:grid;place-items:center;font-size:23px;font-weight:900;background:#17151a}
+.tournament-row strong{display:block;font-size:17px}
+.tournament-row small{color:#c8c8cf;font-size:14px}
+.arrow{margin-left:auto;color:var(--red);font-size:28px}
+.table-wrap{width:100%;overflow-x:auto}
+.panel table{width:100%;border-collapse:collapse;font-size:14px;background:rgba(0,0,0,.22)}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid #ffffff18}
+th{color:#fff;background:#17171d}
+td{color:#f0f0f2}
+.panel .btn{display:flex;width:max-content;margin:10px auto 0;padding:7px 15px;font-size:13px}
+.calendar-empty{display:flex;align-items:center;gap:20px;padding:18px 8px}
+.calendar-icon{font-size:58px;color:#777}
+.calendar-empty strong{font-size:18px}
+.calendar-empty p{margin:3px 0;color:#c2c2ca;font-size:14px}
+.signup-wrap{display:grid;grid-template-columns:3fr 1fr;gap:0;margin:20px 0 26px}
+.signup{padding:16px 20px}
+.signup h2,.section-title{margin:0 0 6px;font-size:21px;font-style:italic;text-transform:uppercase}
+.signup p{margin:0 0 12px;color:#c8c8ce}
+.signup-form{display:grid;grid-template-columns:1.2fr 1.2fr .65fr .8fr;gap:12px}
+.signup-form input,.signup-form select{margin:0;background:#24232a;border:1px solid #48454e;border-radius:8px;color:#fff;padding:10px;min-width:0}
+.signup-form .btn{grid-column:1/-1;width:100%;margin-top:4px}
+.promo{padding:18px;background:linear-gradient(140deg,rgba(10,10,14,.85),rgba(20,8,13,.95));display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--red);font-style:italic}
+.promo .star{font-size:42px;color:var(--red)}
+.promo strong{font-size:24px;line-height:1.05}
+.promo p{font-size:15px;color:#eee;margin:7px 0}
+.radio{position:fixed;right:14px;bottom:14px;width:300px;z-index:90;border:1px solid var(--red);border-radius:14px;background:rgba(5,5,8,.96);box-shadow:0 0 25px #f20d3240;overflow:hidden}
+.radio-head{display:flex;align-items:center;gap:9px;padding:10px;background:#08080b;font-size:13px}
+.radio-head .gamepad{font-size:24px;color:var(--red)}
+.radio-head strong{display:block}
+.radio-head small{color:#bbb}
+.radio-body{height:95px;background:linear-gradient(135deg,#17151b,#08080b);display:flex;align-items:end;padding:10px;gap:14px}
+.radio-body button{background:#222;border:0;color:white;border-radius:5px;padding:7px 12px;cursor:pointer}
+.radio-foot{font-size:11px;padding:7px 10px;color:#bbb;display:flex;justify-content:space-between}
+.section{margin:38px 0}
+.section-title{font-size:26px;border-left:5px solid var(--red);padding-left:13px;margin-bottom:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{padding:20px;margin-bottom:14px}
+.card h3{margin:8px 0;color:#fff;font-size:20px}
+.card p{color:var(--muted)}
+.modality-card{display:block;text-decoration:none;min-height:160px}
+.tag{display:inline-block;color:white;background:#f20d3225;border:1px solid var(--red);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.notice{padding:14px;background:#40101e;border-left:4px solid var(--red);border-radius:8px}
+label{display:block;font-size:14px;color:#e1e1e7;margin-bottom:12px;font-weight:bold}
+input,select,textarea{width:100%;padding:12px;border-radius:7px;border:1px solid #555;background:#17171d;color:white;margin-top:6px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--red)}
+form{display:grid;gap:8px}
+textarea{resize:vertical}
+.admin-item{background:#252630;padding:14px;border:1px solid #ffffff20;border-radius:8px;margin:10px 0;overflow-wrap:anywhere}
+.admin-item button{margin:5px 5px 0 0}
+.admin-title{color:var(--red)}
+[hidden]{display:none!important}
+footer{padding:24px 4%;border-top:2px solid #ffffff20;background:rgba(4,5,9,.94);display:flex;justify-content:space-between;align-items:center;color:#c4c4ca;font-size:13px}
+@media(max-width:1050px){
+header{height:auto;min-height:80px;flex-wrap:wrap;padding:8px 3%}
+.brand-link{min-width:220px}
+nav{justify-content:center}
+.dashboard{grid-template-columns:1fr 1fr}
+.dashboard .panel:last-child{grid-column:1/-1}
+.radio{width:260px}
+.signup-wrap{grid-template-columns:1fr}
+.promo{border-left:0;border-top:1px solid var(--red);min-height:140px}
 }
-
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-margin: 0;
-background:
-radial-gradient(ellipse at 50% -15%, #4a1522 0%, transparent 48%),
-linear-gradient(135deg, #101218, #20242d);
-color: var(--white);
-font: 16px/1.6 Arial, sans-serif;
+@media(max-width:650px){
+body{background-attachment:scroll}
+header{position:relative;justify-content:center}
+.brand-link{justify-content:center}
+.logo-lplu{width:58px;height:58px}
+nav{gap:2px}
+nav a{font-size:11px;padding:7px 6px}
+.hero{min-height:350px;padding:48px 20px}
+.hero h1{font-size:48px}
+.hero p{font-size:17px}
+.dashboard{grid-template-columns:1fr}
+.dashboard .panel:last-child{grid-column:auto}
+main{padding:0 12px 25px}
+.signup-form{grid-template-columns:1fr 1fr}
+.signup-form .btn{grid-column:1/-1}
+.radio{position:relative;right:auto;bottom:auto;width:auto;margin:15px 12px}
+footer{display:block;text-align:center}
+.section-title{font-size:22px}
 }
-
-header {
-position: sticky;
-top: 0;
-z-index: 100;
-padding: 16px 5%;
-background: rgba(16,18,24,.96);
-border-bottom: 2px solid var(--red);
-box-shadow: 0 5px 25px #0008;
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 18px;
-flex-wrap: wrap;
-}
-
-.brand {
-font-size: clamp(20px, 3vw, 29px);
-font-weight: 900;
-letter-spacing: 1.5px;
-}
-
-.brand span,
-.hero h1 span {
-color: var(--red);
-text-shadow: 0 0 18px #F20D3270;
-}
-
-nav {
-display: flex;
-gap: 10px;
-flex-wrap: wrap;
-}
-
-nav a {
-color: var(--silver);
-text-decoration: none;
-font-size: 13px;
-font-weight: 800;
-padding: 9px 13px;
-border-radius: 6px;
-transition: .2s;
-}
-
-nav a:hover {
-background: var(--red);
-color: white;
-}
-
-.hero {
-padding: 90px 20px;
-text-align: center;
-background:
-linear-gradient(120deg, #171a22dd, #50101ddd),
-radial-gradient(circle at center, #F20D3250, transparent 65%);
-border-bottom: 1px solid #ffffff20;
-}
-
-.kicker {
-color: var(--silver);
-letter-spacing: 5px;
-font-size: 12px;
-font-weight: bold;
-}
-
-.hero h1 {
-font-size: clamp(42px, 8vw, 82px);
-line-height: 1.05;
-font-weight: 1000;
-margin: 22px 0;
-}
-
-.hero p {
-color: #E0E3E9;
-max-width: 650px;
-margin: 15px auto 28px;
-}
-
-main {
-max-width: 1250px;
-margin: auto;
-padding: 35px 20px;
-}
-
-.section {
-margin: 48px 0;
-}
-
-.section-title {
-font-size: clamp(23px, 4vw, 32px);
-font-weight: 900;
-border-left: 5px solid var(--red);
-padding-left: 15px;
-text-transform: uppercase;
-letter-spacing: .5px;
-}
-
-.grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-gap: 20px;
-}
-
-.card {
-background: linear-gradient(145deg, #303641, #1b1f27);
-border: 1px solid #69717e70;
-border-top: 4px solid var(--red);
-border-radius: 13px;
-padding: 23px;
-margin-bottom: 15px;
-box-shadow: 0 12px 28px #0005;
-transition: transform .2s, border-color .2s;
-}
-
-.card:hover {
-transform: translateY(-4px);
-border-color: var(--red);
-}
-
-.card h3 {
-color: var(--silver);
-font-size: 20px;
-}
-
-.btn {
-display: inline-block;
-border: 0;
-background: linear-gradient(135deg, #FF3150, #D90029);
-color: white;
-padding: 13px 20px;
-border-radius: 7px;
-font-weight: 900;
-cursor: pointer;
-box-shadow: 0 5px 18px #F20D3245;
-transition: .2s;
-}
-
-.btn:hover {
-transform: translateY(-2px);
-filter: brightness(1.15);
-}
-
-.btn.secondary {
-background: #414956;
-border: 1px solid #AEB5C0;
-box-shadow: none;
-}
-
-.btn.danger {
-background: #A90020;
-}
-
-input,
-select,
-textarea {
-width: 100%;
-padding: 13px;
-border-radius: 7px;
-border: 1px solid #626b79;
-background: #171b23;
-color: white;
-margin-top: 6px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-outline: 2px solid var(--red);
-border-color: var(--red);
-}
-
-textarea { resize: vertical; }
-
-label {
-display: block;
-font-size: 14px;
-color: var(--silver);
-margin-bottom: 13px;
-font-weight: bold;
-}
-
-form {
-display: grid;
-gap: 9px;
-}
-
-.muted { color: var(--muted); }
-
-.notice {
-padding: 15px;
-background: #421522;
-border-left: 4px solid var(--red);
-border-radius: 7px;
-color: white;
-}
-
-.tag {
-display: inline-block;
-color: var(--white);
-background: #F20D3220;
-border: 1px solid var(--red);
-padding: 5px 11px;
-border-radius: 20px;
-font-size: 12px;
-font-weight: bold;
-}
-
-table {
-width: 100%;
-border-collapse: collapse;
-background: #1b1f27;
-border-radius: 9px;
-overflow: hidden;
-}
-
-th,
-td {
-text-align: left;
-padding: 13px;
-border-bottom: 1px solid #ffffff20;
-}
-
-th {
-color: white;
-background: #B80C2B;
-}
-
-.admin-item {
-background: #303641;
-padding: 15px;
-border: 1px solid #ffffff20;
-border-radius: 8px;
-margin: 10px 0;
-overflow-wrap: anywhere;
-}
-
-.admin-item button {
-margin: 5px 5px 0 0;
-}
-
-.admin-title { color: var(--red); }
-
-footer {
-text-align: center;
-padding: 35px;
-color: var(--muted);
-border-top: 2px solid var(--red);
-margin-top: 40px;
-background: #101218;
-}
-
-[hidden] { display: none !important; }
-
-@media(max-width: 650px) {
-header {
-justify-content: center;
-padding: 15px;
-}
-
-nav {
-justify-content: center;
-gap: 5px;
-}
-
-nav a {
-padding: 8px;
-font-size: 12px;
-}
-
-.hero { padding: 55px 15px; }
-
-main { padding: 20px 13px; }
-
-.card { padding: 17px; }
-
-th,
-td {
-padding: 8px;
-font-size: 12px;
-}
-}
-
-.brand-link {
-display: flex;
-align-items: center;
-gap: 12px;
-color: inherit;
-text-decoration: none;
-}
-
-.logo-lplu {
-width: 110px;
-height: 110px;
-object-fit: contain;
-display: block;
-}
-
-.modality-card {
-display: block;
-color: inherit;
-text-decoration: none;
-min-height: 175px;
-}
-
-.modality-card:hover { text-decoration: none; }
-
-.table-wrap {
-width: 100%;
-overflow-x: auto;
-}
-
-.table-wrap table { min-width: 520px; }
 </style>
 </head>
-
 <body>
 
 <header id="topo">
-
-<a class="brand-link" href="#inicio" aria-label="Liga Prime Level Up - início">
-
-<img src="logo-lplu.png"
-alt="Liga Prime Level Up"
-class="logo-lplu">
-
-<div class="brand">
-LIGA PRIME <span>LEVEL UP</span>
-</div>
-
+<a class="brand-link" href="#inicio" aria-label="Liga Prime Level Up">
+<svg class="logo-lplu" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+<path d="M60 4 L72 17 L101 22 L101 76 L60 113 L19 76 L19 22 L48 17 Z" fill="#09090d" stroke="#f20d32" stroke-width="5"/>
+<path d="M60 4 L72 17 L48 17 Z" fill="#f20d32"/>
+<path d="M60 8 L65 18 L77 20 L68 28 L70 40 L60 34 L50 40 L52 28 L43 20 L55 18 Z" fill="#f5c52b"/>
+<text x="60" y="64" text-anchor="middle" fill="white" font-size="31" font-weight="900">LPLU</text>
+<path d="M60 72 L70 91 L60 86 L50 91 Z" fill="white"/>
+</svg>
+<div class="brand">LIGA PRIME <span>LEVEL UP</span></div>
 </a>
 
 <nav aria-label="Navegação principal">
-<a href="#inicio">Início</a>
-<a href="#proclubs">Pro Clubs 11v11</a>
-<a href="#liga1x1">Liga 1x1</a>
-<a href="#liga2x2">Liga 2x2</a>
-<a href="#cod">Call of Duty</a>
-<a href="#classificacoes">Classificações</a>
-<a href="#mercado">Transferências</a>
-<a href="#contacto">Contacto</a>
-<a href="#admin">Admin</a>
+<a href="#inicio">⌂ Início</a>
+<a href="#torneios">🏆 Torneios</a>
+<a href="#classificacoes">▥ Classificação</a>
+<a href="#resultados">▦ Calendário</a>
+<a href="#preinscricao">♟ Inscrição</a>
+<a href="#contacto">ⓘ Sobre</a>
+<a class="admin-nav" href="#admin">♟ Painel Admin</a>
 </nav>
-
 </header>
 
 <section class="hero" id="inicio">
-<div class="kicker">EA SPORTS FC 27 • COMPETIÇÃO</div>
-
-<h1>JOGA. <span>COMPETE.</span><br>EVOLUI.</h1>
-
-<p>
-Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.
-</p>
-
-<a class="btn" href="#torneios">DESCOBRIR AS LIGAS</a>
+<div class="hero-copy">
+<div class="kicker">EA SPORTS FC 27 • CALL OF DUTY • E-SPORTS</div>
+<h1>JOGA. COMPETE.<span>EVOLUI.</span></h1>
+<p>Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.</p>
+<a class="btn" href="#preinscricao">🎮 INSCREVER-ME</a>
+</div>
 </section>
 
 <main>
 
-<section id="torneios" class="section">
-<h2 class="section-title">Competições em destaque</h2>
+<section class="dashboard" id="torneios">
 
-<div class="grid">
+<div class="panel">
+<h2><span class="symbol">🏆</span> TORNEIOS</h2>
 
-<a class="card modality-card" href="#proclubs">
-<span class="tag">11 contra 11</span>
-<h3>Pro Clubs 11v11</h3>
-<p class="muted">Competições oficiais por equipas.</p>
+<a class="tournament-row" href="#liga1x1" style="text-decoration:none">
+<div class="shield">1v1</div>
+<div>
+<strong>Torneio 1v1</strong>
+<small>Compete individualmente<br>e conquista o topo.</small>
+</div>
+<span class="arrow">›</span>
 </a>
 
-<a class="card modality-card" href="#liga1x1">
-<span class="tag">1 contra 1</span>
-<h3>Liga 1x1</h3>
-<p class="muted">Duelo individual. Um vencedor.</p>
+<a class="tournament-row" href="#liga2x2" style="text-decoration:none">
+<div class="shield">2v2</div>
+<div>
+<strong>Torneio 2v2</strong>
+<small>Forma a tua dupla e vence<br>em equipa.</small>
+</div>
+<span class="arrow">›</span>
 </a>
+</div>
 
-<a class="card modality-card" href="#liga2x2">
-<span class="tag">2 contra 2</span>
-<h3>Liga 2x2</h3>
-<p class="muted">Forma a tua dupla e compete.</p>
-</a>
+<div class="panel">
+<h2><span class="symbol">▥</span> CLASSIFICAÇÃO</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Jogador / Equipa</th>
+<th>J</th>
+<th>V</th>
+<th>Pts</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>2</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>3</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
+</tbody>
+</table>
+</div>
+<a class="btn" href="#classificacoes">Ver Classificação →</a>
+</div>
 
-<a class="card modality-card" href="#cod">
-<span class="tag">FPS • Esports</span>
-<h3>Call of Duty</h3>
-<p class="muted">Torneios, equipas e resultados.</p>
-</a>
+<div class="panel">
+<h2><span class="symbol">▦</span> CALENDÁRIO</h2>
+<div class="calendar-empty">
+<div class="calendar-icon">▦◷</div>
+<div>
+<strong>Próximos jogos</strong>
+<p>Os jogos e horários serão anunciados em breve.</p>
+</div>
+</div>
+<a class="btn" href="#resultados">Ver Calendário →</a>
+</div>
 
+</section>
+
+<section class="signup-wrap" id="preinscricao">
+
+<div class="panel signup">
+<h2>♟ PRÉ-INSCRIÇÃO</h2>
+<p>Preenche os dados para manifestar interesse na Liga Prime Level Up.</p>
+
+<form class="signup-form" id="preRegistrationForm">
+
+<input id="preName" required placeholder="Nome de jogador">
+
+<input id="preEmail" type="email" required placeholder="Email">
+
+<select id="preType" required>
+<option value="1v1">Tipo: 1v1</option>
+<option value="2v2">Tipo: 2v2</option>
+<option value="Pro Clubs 11v11">Pro Clubs 11v11</option>
+<option value="Call of Duty">Call of Duty</option>
+</select>
+
+<select id="prePlatform" required>
+<option value="PlayStation">Plataforma: PlayStation</option>
+<option value="Xbox">Xbox</option>
+<option value="PC">PC</option>
+</select>
+
+<button class="btn" type="submit">➤ Enviar Pré-inscrição</button>
+
+</form>
+</div>
+
+<div class="promo">
+<div class="star">★</div>
+<strong>FAZ PARTE<br>DA LIGA!</strong>
+<p>Mostra o teu talento, conquista o teu lugar.</p>
+</div>
+
+</section>
+
+<section class="radio">
+<div class="radio-head">
+<span class="gamepad">🎮</span>
+<div>
+<strong>LPLU GAMING RADIO</strong>
+<small>Gaming Music Playlist</small>
+</div>
+</div>
+<div class="radio-body">
+<button type="button" onclick="alert('Adiciona o link da tua playlist ou vídeo YouTube para ativar a rádio.')">▶</button>
+<span>🔊</span>
+<small>00:00 / 00:00</small>
+</div>
+<div class="radio-foot">
+<span>🔴 A tocar no YouTube</span>
+<strong>POWERED BY YOUTUBE</strong>
 </div>
 </section>
 
@@ -437,16 +296,13 @@ Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.
 <section id="cod" class="section">
 <h2 class="section-title">Call of Duty</h2>
 <div id="publicLeaguesCOD" class="grid"></div>
-
 <div class="notice">
 Área Call of Duty preparada para apresentar competições.
-A gestão dedicada de partidas e classificações será uma fase própria.
 </div>
 </section>
 
 <section id="resultados" class="section">
 <h2 class="section-title">Últimos resultados</h2>
-
 <div id="publicResults" class="card">
 <p class="muted">Ainda não existem resultados registados.</p>
 </div>
@@ -456,28 +312,28 @@ A gestão dedicada de partidas e classificações será uma fase própria.
 <h2 class="section-title">Classificações por modalidade</h2>
 
 <div class="card">
-<h3>Pro Clubs 11v11</h3>
+<h3>🏆 Pro Clubs 11v11</h3>
 <div id="standings11" class="table-wrap">
 Ainda não existem resultados suficientes.
 </div>
 </div>
 
 <div class="card">
-<h3>Liga 1x1</h3>
+<h3>🥇 Liga 1x1</h3>
 <div id="standings1" class="table-wrap">
 Ainda não existem resultados suficientes.
 </div>
 </div>
 
 <div class="card">
-<h3>Liga 2x2</h3>
+<h3>🥈 Liga 2x2</h3>
 <div id="standings2" class="table-wrap">
 Ainda não existem resultados suficientes.
 </div>
 </div>
 
 <div class="card">
-<h3>Call of Duty</h3>
+<h3>🎮 Call of Duty</h3>
 <div id="standingsCOD" class="notice">
 Classificações a anunciar.
 </div>
@@ -486,7 +342,6 @@ Classificações a anunciar.
 
 <section id="equipas" class="section">
 <h2 class="section-title">Equipas participantes</h2>
-
 <div id="publicTeams" class="grid">
 <p class="muted">Equipas a anunciar.</p>
 </div>
@@ -494,7 +349,6 @@ Classificações a anunciar.
 
 <section id="mercado" class="section">
 <h2 class="section-title">Mercado de transferências</h2>
-
 <div id="publicTransfers">
 <p class="muted">As movimentações oficiais serão anunciadas aqui.</p>
 </div>
@@ -504,7 +358,6 @@ Classificações a anunciar.
 <h2 class="section-title">Contacta a Liga Prime</h2>
 
 <div class="card">
-
 <p class="muted">
 Tens dúvidas sobre as competições, equipas ou jogadores?
 Fala diretamente com a organização.
@@ -536,7 +389,6 @@ Fala diretamente com a organização.
 </label>
 
 <button class="btn" type="submit">ENVIAR PELO WHATSAPP</button>
-
 </form>
 </div>
 </section>
@@ -544,16 +396,17 @@ Fala diretamente com a organização.
 <!-- ADMINISTRAÇÃO -->
 
 <section id="admin" class="section">
-<h2 class="section-title">Administração</h2>
+<h2 class="section-title">Painel de Administração</h2>
 
 <div class="notice">
-Área de demonstração para testar a gestão da Liga Prime Level Up.
+Área de gestão da Liga Prime Level Up.
+Acede para gerir as competições, equipas, jogadores e resultados.
 </div>
 
 <div class="card" id="adminLogin">
-<h3>Acesso de administrador</h3>
+<h3>🔐 Acesso de administrador</h3>
 
-<label>Palavra-passe de demonstração
+<label>Palavra-passe
 <input id="adminPassword" type="password" placeholder="Introduzir palavra-passe">
 </label>
 
@@ -564,12 +417,12 @@ Fala diretamente com a organização.
 <div id="adminPanel" hidden>
 
 <div class="card">
-<h3 class="admin-title">Painel de controlo</h3>
+<h3 class="admin-title">PAINEL DE CONTROLO</h3>
 <p class="muted">Gestão da Liga Prime Level Up</p>
 <button class="btn secondary" id="logoutButton">TERMINAR SESSÃO</button>
 </div>
 
-<!-- LIGAS -->
+<!-- 1. GESTÃO DE LIGAS -->
 
 <div class="card">
 <h3>1. Gestão de ligas</h3>
@@ -599,7 +452,7 @@ Fala diretamente com a organização.
 <div id="leagueList"></div>
 </div>
 
-<!-- EQUIPAS -->
+<!-- 2. GESTÃO DE EQUIPAS -->
 
 <div class="card">
 <h3>2. Gestão de equipas</h3>
@@ -624,7 +477,7 @@ Fala diretamente com a organização.
 <div id="teamList"></div>
 </div>
 
-<!-- JOGADORES -->
+<!-- 3. GESTÃO DE JOGADORES -->
 
 <div class="card">
 <h3>3. Gestão de jogadores</h3>
@@ -649,7 +502,7 @@ Fala diretamente com a organização.
 <div id="playerList"></div>
 </div>
 
-<!-- CONTRATOS -->
+<!-- 4. CONTRATOS -->
 
 <div class="card">
 <h3>4. Gestão de contratos</h3>
@@ -686,7 +539,7 @@ Fala diretamente com a organização.
 <div id="contractList"></div>
 </div>
 
-<!-- TRANSFERÊNCIAS -->
+<!-- 5. TRANSFERÊNCIAS -->
 
 <div class="card">
 <h3>5. Mercado de transferências</h3>
@@ -727,7 +580,7 @@ Fala diretamente com a organização.
 <div id="transferList"></div>
 </div>
 
-<!-- RESULTADOS -->
+<!-- 6. RESULTADOS -->
 
 <div class="card">
 <h3>6. Gestão de resultados</h3>
@@ -762,665 +615,697 @@ Fala diretamente com a organização.
 </main>
 
 <footer>
-© <span id="year"></span> Liga Prime Level Up
+<div>
+<strong>LIGA PRIME <span style="color:#f20d32">LEVEL UP</span></strong>
 <br>JOGA. COMPETE. EVOLUI.
+</div>
+<div>
+© <span id="year"></span> Liga Prime Level Up
+</div>
 </footer>
 
 <script>
-/*
-DEMONSTRAÇÃO LOCAL.
-Não é autenticação segura para um site público.
-*/
+/* =====================================
+   LIGA PRIME LEVEL UP
+   SISTEMA DE ADMINISTRAÇÃO
+===================================== */
 
 const DEMO_PASSWORD = "LPLU2026";
 const STORAGE_KEY = "lplu_admin_data_v1";
 
 const emptyData = {
-leagues: [],
-teams: [],
-players: [],
-contracts: [],
-transfers: [],
-results: []
+ leagues: [],
+ teams: [],
+ players: [],
+ contracts: [],
+ transfers: [],
+ results: [],
+ registrations: []
 };
 
 function loadData() {
-try {
-return {
-...emptyData,
-...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}")
-};
-} catch {
-return {...emptyData};
-}
+ try {
+  return {
+   ...emptyData,
+   ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}")
+  };
+ } catch {
+  return {...emptyData};
+ }
 }
 
 let data = loadData();
 
 function saveData() {
-localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-renderAll();
+ localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+ renderAll();
 }
 
 function makeId() {
-return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+ return Date.now().toString(36) +
+ Math.random().toString(36).slice(2,8);
 }
 
 function getValue(id) {
-return document.getElementById(id).value.trim();
+ return document.getElementById(id).value.trim();
 }
 
-function addOption(select, value, label) {
-const option = document.createElement("option");
-option.value = value;
-option.textContent = label;
-select.appendChild(option);
+function addOption(select,value,label) {
+ const option = document.createElement("option");
+ option.value = value;
+ option.textContent = label;
+ select.appendChild(option);
 }
 
-function fillSelect(id, items, labelFunction, emptyLabel) {
-const select = document.getElementById(id);
-const previous = select.value;
+function fillSelect(id,items,labelFunction,emptyLabel) {
+ const select = document.getElementById(id);
+ const previous = select.value;
 
-select.replaceChildren();
+ select.replaceChildren();
+ addOption(select,"",emptyLabel);
 
-addOption(select, "", emptyLabel);
+ items.forEach(item => {
+  addOption(select,item.id,labelFunction(item));
+ });
 
-items.forEach(item => {
-addOption(select, item.id, labelFunction(item));
-});
-
-if (items.some(item => item.id === previous)) {
-select.value = previous;
-}
-}
-
-function showList(id, items, formatter, collection) {
-const container = document.getElementById(id);
-container.replaceChildren();
-
-if (!items.length) {
-const empty = document.createElement("p");
-empty.className = "muted";
-empty.textContent = "Ainda não existem registos.";
-container.appendChild(empty);
-return;
+ if(items.some(item => item.id === previous)) {
+  select.value = previous;
+ }
 }
 
-items.forEach(item => {
-const row = document.createElement("div");
-row.className = "admin-item";
+function showList(id,items,formatter,collection) {
+ const container = document.getElementById(id);
+ container.replaceChildren();
 
-const text = document.createElement("div");
-text.textContent = formatter(item);
+ if(!items.length) {
+  const empty = document.createElement("p");
+  empty.className = "muted";
+  empty.textContent = "Ainda não existem registos.";
+  container.appendChild(empty);
+  return;
+ }
 
-const edit = document.createElement("button");
-edit.className = "btn secondary";
-edit.textContent = "Editar";
-edit.onclick = () => editItem(collection, item.id);
+ items.forEach(item => {
+  const row = document.createElement("div");
+  row.className = "admin-item";
 
-const remove = document.createElement("button");
-remove.className = "btn danger";
-remove.textContent = "Eliminar";
-remove.onclick = () => deleteItem(collection, item.id);
+  const text = document.createElement("div");
+  text.textContent = formatter(item);
 
-row.append(text, edit, remove);
-container.appendChild(row);
-});
+  const edit = document.createElement("button");
+  edit.className = "btn secondary";
+  edit.textContent = "Editar";
+  edit.onclick = () => editItem(collection,item.id);
+
+  const remove = document.createElement("button");
+  remove.className = "btn danger";
+  remove.textContent = "Eliminar";
+  remove.onclick = () => deleteItem(collection,item.id);
+
+  row.append(text,edit,remove);
+  container.appendChild(row);
+ });
 }
 
-function editItem(collection, id) {
-const item = data[collection].find(x => x.id === id);
-if (!item) return;
+function editItem(collection,id) {
+ const item = data[collection].find(x => x.id === id);
+ if(!item) return;
 
-const fields = Object.keys(item).filter(k => k !== "id");
-const updated = {};
+ const fields = Object.keys(item).filter(k => k !== "id");
+ const updated = {};
 
-for (const field of fields) {
-const answer = prompt("Editar " + field + ":", item[field] ?? "");
-if (answer === null) return;
-updated[field] = answer;
+ for(const field of fields) {
+  const answer = prompt("Editar " + field + ":",item[field] ?? "");
+  if(answer === null) return;
+  updated[field] = answer;
+ }
+
+ Object.assign(item,updated);
+ saveData();
 }
 
-Object.assign(item, updated);
-saveData();
+function deleteItem(collection,id) {
+ if(!confirm("Tens a certeza de que queres eliminar este registo?")) return;
+
+ data[collection] = data[collection].filter(x => x.id !== id);
+ saveData();
 }
 
-function deleteItem(collection, id) {
-if (!confirm("Tens a certeza de que queres eliminar este registo?")) return;
-
-data[collection] = data[collection].filter(x => x.id !== id);
-saveData();
-}
+/* =====================================
+   RENDERIZAÇÃO
+===================================== */
 
 function renderAll() {
 
-showList("leagueList", data.leagues,
-x => `${x.name} | ${x.season} | ${x.format}`, "leagues");
+ showList("leagueList",data.leagues,
+ x => `${x.name} | ${x.season} | ${x.format}`,"leagues");
 
-showList("teamList", data.teams,
-x => `${x.name} | Liga: ${x.leagueName} | Capitão: ${x.captain}`, "teams");
+ showList("teamList",data.teams,
+ x => `${x.name} | Liga: ${x.leagueName} | Capitão: ${x.captain}`,"teams");
 
-showList("playerList", data.players,
-x => `${x.name} | ${x.position} | ${x.teamName}`, "players");
+ showList("playerList",data.players,
+ x => `${x.name} | ${x.position} | ${x.teamName}`,"players");
 
-showList("contractList", data.contracts,
-x => `${x.playerName} | ${x.teamName} | ${x.start || "Sem início"} até ${x.end || "Sem fim"} | ${x.status}`, "contracts");
+ showList("contractList",data.contracts,
+ x => `${x.playerName} | ${x.teamName} | ${x.start || "Sem início"} até ${x.end || "Sem fim"} | ${x.status}`,"contracts");
 
-showList("transferList", data.transfers,
-x => `${x.playerName}: ${x.fromName} → ${x.toName} | ${x.type} | ${x.status}`, "transfers");
+ showList("transferList",data.transfers,
+ x => `${x.playerName}: ${x.fromName} → ${x.toName} | ${x.type} | ${x.status}`,"transfers");
 
-showList("resultList", data.results,
-x => `${x.homeName} ${x.homeScore} - ${x.awayScore} ${x.awayName}`, "results");
+ showList("resultList",data.results,
+ x => `${x.homeName} ${x.homeScore} - ${x.awayScore} ${x.awayName}`,"results");
 
-fillSelect("teamLeague", data.leagues,
-x => x.name, "Escolher liga");
+ fillSelect("teamLeague",data.leagues,x=>x.name,"Escolher liga");
+ fillSelect("playerTeam",data.teams,x=>x.name,"Escolher equipa");
+ fillSelect("contractPlayer",data.players,x=>x.name,"Escolher jogador");
+ fillSelect("contractTeam",data.teams,x=>x.name,"Escolher equipa");
+ fillSelect("transferPlayer",data.players,x=>x.name,"Escolher jogador");
+ fillSelect("transferFrom",data.teams,x=>x.name,"Equipa de origem");
+ fillSelect("transferTo",data.teams,x=>x.name,"Nova equipa");
+ fillSelect("resultHome",data.teams,x=>x.name,"Equipa da casa");
+ fillSelect("resultAway",data.teams,x=>x.name,"Equipa visitante");
 
-fillSelect("playerTeam", data.teams,
-x => x.name, "Escolher equipa");
-
-fillSelect("contractPlayer", data.players,
-x => x.name, "Escolher jogador");
-
-fillSelect("contractTeam", data.teams,
-x => x.name, "Escolher equipa");
-
-fillSelect("transferPlayer", data.players,
-x => x.name, "Escolher jogador");
-
-fillSelect("transferFrom", data.teams,
-x => x.name, "Equipa de origem");
-
-fillSelect("transferTo", data.teams,
-x => x.name, "Nova equipa");
-
-fillSelect("resultHome", data.teams,
-x => x.name, "Equipa da casa");
-
-fillSelect("resultAway", data.teams,
-x => x.name, "Equipa visitante");
-
-renderPublic();
+ renderPublic();
 }
+
+/* =====================================
+   ÁREA PÚBLICA
+===================================== */
 
 function renderPublic() {
 
-const groups = {
-"Pro Clubs 11v11": document.getElementById("publicLeagues11"),
-"1v1": document.getElementById("publicLeagues1"),
-"2v2": document.getElementById("publicLeagues2"),
-"Call of Duty": document.getElementById("publicLeaguesCOD")
-};
+ const groups = {
+  "Pro Clubs 11v11":document.getElementById("publicLeagues11"),
+  "1v1":document.getElementById("publicLeagues1"),
+  "2v2":document.getElementById("publicLeagues2"),
+  "Call of Duty":document.getElementById("publicLeaguesCOD")
+ };
+
+ Object.values(groups).forEach(c=>c.replaceChildren());
 
-Object.values(groups).forEach(c => c.replaceChildren());
+ data.leagues.forEach(league=>{
+  const container = groups[league.format];
+  if(!container) return;
 
-data.leagues.forEach(league => {
+  const card = document.createElement("article");
+  card.className = "card";
 
-const container = groups[league.format];
-if (!container) return;
+  const tag = document.createElement("span");
+  tag.className = "tag";
+  tag.textContent = league.format;
 
-const card = document.createElement("article");
-card.className = "card";
+  const title = document.createElement("h3");
+  title.textContent = league.name;
 
-const tag = document.createElement("span");
-tag.className = "tag";
-tag.textContent = league.format;
+  const season = document.createElement("p");
+  season.textContent = "Época: " + (league.season || "A anunciar");
 
-const title = document.createElement("h3");
-title.textContent = league.name;
+  card.append(tag,title,season);
+  container.appendChild(card);
+ });
 
-const season = document.createElement("p");
-season.className = "muted";
-season.textContent = "Época: " + (league.season || "A anunciar");
+ Object.entries(groups).forEach(([format,container])=>{
+  if(!container.children.length) {
+   const p = document.createElement("p");
+   p.className = "muted";
+   p.textContent = "Ainda não existem competições nesta modalidade.";
+   container.appendChild(p);
+  }
+ });
+
+ /* EQUIPAS */
 
-card.append(tag, title, season);
-container.appendChild(card);
-});
+ const teams = document.getElementById("publicTeams");
+ teams.replaceChildren();
 
-Object.entries(groups).forEach(([format, container]) => {
+ if(!data.teams.length) {
+  teams.textContent = "Equipas a anunciar.";
+ }
 
-if (!container.children.length) {
-const p = document.createElement("p");
-p.className = "muted";
+ data.teams.forEach(team=>{
+  const card = document.createElement("article");
+  card.className = "card";
 
-p.textContent = format === "Call of Duty"
-? "Competições Call of Duty a anunciar."
-: "Ainda não existem competições nesta modalidade.";
+  const title = document.createElement("h3");
+  title.textContent = team.name;
 
-container.appendChild(p);
-}
-});
-
-const teams = document.getElementById("publicTeams");
-teams.replaceChildren();
-
-if (!data.teams.length) {
-teams.textContent = "Equipas a anunciar.";
-}
-
-data.teams.forEach(team => {
-
-const card = document.createElement("article");
-card.className = "card";
-
-const title = document.createElement("h3");
-title.textContent = team.name;
-
-const details = document.createElement("p");
-details.className = "muted";
-
-details.textContent =
-(team.leagueName || "Sem liga") +
-" | Capitão: " + (team.captain || "Por definir");
-
-card.append(title, details);
-teams.appendChild(card);
-});
-
-const transfers = document.getElementById("publicTransfers");
-transfers.replaceChildren();
-
-const confirmed = data.transfers.filter(x => x.status === "Confirmada");
-
-if (!confirmed.length) {
-transfers.textContent = "As movimentações oficiais serão anunciadas aqui.";
-}
-
-confirmed.forEach(x => {
-
-const card = document.createElement("div");
-card.className = "card";
-
-card.textContent =
-`${x.playerName}: ${x.fromName} → ${x.toName} (${x.type})`;
-
-transfers.appendChild(card);
-});
-
-const results = document.getElementById("publicResults");
-results.replaceChildren();
-
-if (!data.results.length) {
-results.textContent = "Ainda não existem resultados registados.";
-}
-
-data.results.forEach(x => {
-const p = document.createElement("p");
-p.textContent =
-`${x.homeName} ${x.homeScore} - ${x.awayScore} ${x.awayName}`;
-
-results.appendChild(p);
-});
-
-// CLASSIFICAÇÕES SEPARADAS POR MODALIDADE
-
-const targets = {
-"Pro Clubs 11v11": "standings11",
-"1v1": "standings1",
-"2v2": "standings2"
-};
-
-Object.entries(targets).forEach(([format, targetId]) => {
-
-const target = document.getElementById(targetId);
-const stats = new Map();
-
-data.results.forEach(match => {
-
-const home = data.teams.find(t => t.name === match.homeName);
-const away = data.teams.find(t => t.name === match.awayName);
-
-if (!home || !away) return;
-
-const hl = data.leagues.find(l => l.id === home.leagueId);
-const al = data.leagues.find(l => l.id === away.leagueId);
-
-if (!hl || !al || hl.id !== al.id || hl.format !== format || al.format !== format) return;
-
-const get = team => {
-
-if (!stats.has(team.id)) {
-stats.set(team.id, {
-name: team.name,
-played: 0,
-wins: 0,
-draws: 0,
-losses: 0,
-gf: 0,
-ga: 0,
-points: 0
-});
-}
-
-return stats.get(team.id);
-};
-
-const h = get(home);
-const v = get(away);
-
-const hg = Number(match.homeScore);
-const ag = Number(match.awayScore);
-
-h.played++;
-v.played++;
-
-h.gf += hg;
-h.ga += ag;
-
-v.gf += ag;
-v.ga += hg;
-
-if (hg > ag) {
-h.wins++;
-h.points += 3;
-v.losses++;
-}
-else if (hg < ag) {
-v.wins++;
-v.points += 3;
-h.losses++;
-}
-else {
-h.draws++;
-v.draws++;
-h.points++;
-v.points++;
-}
-
-});
-
-const rows = [...stats.values()].sort((a,b) =>
-b.points - a.points ||
-(b.gf - b.ga) - (a.gf - a.ga) ||
-b.gf - a.gf
-);
-
-target.replaceChildren();
-
-if (!rows.length) {
-target.textContent = "Ainda não existem resultados suficientes nesta modalidade.";
-return;
-}
-
-const table = document.createElement("table");
-
-table.innerHTML =
-"<thead><tr><th>#</th><th>Equipa</th><th>J</th><th>V</th><th>E</th><th>D</th><th>DG</th><th>Pts</th></tr></thead>";
-
-const tbody = document.createElement("tbody");
-
-rows.forEach((r,i) => {
-
-const tr = document.createElement("tr");
-
-[
-i + 1,
-r.name,
-r.played,
-r.wins,
-r.draws,
-r.losses,
-r.gf - r.ga,
-r.points
-].forEach(value => {
-
-const td = document.createElement("td");
-td.textContent = value;
-tr.appendChild(td);
-
-});
-
-tbody.appendChild(tr);
-});
-
-table.appendChild(tbody);
-target.appendChild(table);
-
-});
+  const details = document.createElement("p");
+  details.textContent =
+   (team.leagueName || "Sem liga") +
+   " | Capitão: " + (team.captain || "Por definir");
+
+  card.append(title,details);
+  teams.appendChild(card);
+ });
+
+ /* TRANSFERÊNCIAS */
+
+ const transfers = document.getElementById("publicTransfers");
+ transfers.replaceChildren();
+
+ const confirmed = data.transfers.filter(x=>x.status==="Confirmada");
+
+ if(!confirmed.length) {
+  transfers.textContent = "As movimentações oficiais serão anunciadas aqui.";
+ }
+
+ confirmed.forEach(x=>{
+  const card = document.createElement("div");
+  card.className = "card";
+  card.textContent =
+   `${x.playerName}: ${x.fromName} → ${x.toName} (${x.type})`;
+  transfers.appendChild(card);
+ });
+
+ /* RESULTADOS */
+
+ const results = document.getElementById("publicResults");
+ results.replaceChildren();
+
+ if(!data.results.length) {
+  results.textContent = "Ainda não existem resultados registados.";
+ }
+
+ data.results.forEach(x=>{
+  const p = document.createElement("p");
+  p.textContent =
+   `${x.homeName} ${x.homeScore} - ${x.awayScore} ${x.awayName}`;
+  results.appendChild(p);
+ });
+
+ /* CLASSIFICAÇÕES */
+
+ const targets = {
+  "Pro Clubs 11v11":"standings11",
+  "1v1":"standings1",
+  "2v2":"standings2"
+ };
+
+ Object.entries(targets).forEach(([format,targetId])=>{
+
+  const target = document.getElementById(targetId);
+  const stats = new Map();
+
+  data.results.forEach(match=>{
+
+   const home = data.teams.find(t=>t.id===match.homeId);
+   const away = data.teams.find(t=>t.id===match.awayId);
+
+   if(!home || !away) return;
+
+   const hl = data.leagues.find(l=>l.id===home.leagueId);
+   const al = data.leagues.find(l=>l.id===away.leagueId);
+
+   if(!hl || !al || hl.id!==al.id || hl.format!==format) return;
+
+   function get(team) {
+    if(!stats.has(team.id)) {
+     stats.set(team.id,{
+      name:team.name,
+      played:0,
+      wins:0,
+      draws:0,
+      losses:0,
+      gf:0,
+      ga:0,
+      points:0
+     });
+    }
+    return stats.get(team.id);
+   }
+
+   const h = get(home);
+   const v = get(away);
+
+   const hg = Number(match.homeScore);
+   const ag = Number(match.awayScore);
+
+   h.played++;
+   v.played++;
+
+   h.gf += hg;
+   h.ga += ag;
+   v.gf += ag;
+   v.ga += hg;
+
+   if(hg>ag) {
+    h.wins++;
+    h.points+=3;
+    v.losses++;
+   } else if(hg<ag) {
+    v.wins++;
+    v.points+=3;
+    h.losses++;
+   } else {
+    h.draws++;
+    v.draws++;
+    h.points++;
+    v.points++;
+   }
+
+  });
+
+  const rows = [...stats.values()].sort((a,b)=>
+   b.points-a.points ||
+   (b.gf-b.ga)-(a.gf-a.ga) ||
+   b.gf-a.gf
+  );
+
+  target.replaceChildren();
+
+  if(!rows.length) {
+   target.textContent =
+    "Ainda não existem resultados suficientes nesta modalidade.";
+   return;
+  }
+
+  const table = document.createElement("table");
+
+  table.innerHTML =
+   "<thead><tr><th>#</th><th>Equipa</th><th>J</th><th>V</th><th>E</th><th>D</th><th>DG</th><th>Pts</th></tr></thead>";
+
+  const tbody = document.createElement("tbody");
+
+  rows.forEach((r,i)=>{
+   const tr = document.createElement("tr");
+
+   [
+    i+1,
+    r.name,
+    r.played,
+    r.wins,
+    r.draws,
+    r.losses,
+    r.gf-r.ga,
+    r.points
+   ].forEach(value=>{
+    const td = document.createElement("td");
+    td.textContent = value;
+    tr.appendChild(td);
+   });
+
+   tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  target.appendChild(table);
+ });
 
 }
 
-/* LOGIN DE DEMONSTRAÇÃO */
+/* =====================================
+   LOGIN ADMINISTRADOR
+===================================== */
 
-document.getElementById("loginButton").onclick = () => {
+document.getElementById("loginButton").onclick = ()=>{
 
-if (getValue("adminPassword") === DEMO_PASSWORD) {
+ if(getValue("adminPassword")===DEMO_PASSWORD) {
 
-document.getElementById("adminLogin").hidden = true;
-document.getElementById("adminPanel").hidden = false;
-document.getElementById("loginError").textContent = "";
+  document.getElementById("adminLogin").hidden = true;
+  document.getElementById("adminPanel").hidden = false;
+  document.getElementById("loginError").textContent = "";
 
-renderAll();
+  renderAll();
 
-} else {
-
-document.getElementById("loginError").textContent =
-"Palavra-passe incorreta.";
-
-}
+ } else {
+  document.getElementById("loginError").textContent =
+   "Palavra-passe incorreta.";
+ }
 
 };
 
-document.getElementById("adminPassword").addEventListener("keydown", e => {
-if (e.key === "Enter") {
-document.getElementById("loginButton").click();
-}
+document.getElementById("adminPassword").addEventListener("keydown",e=>{
+ if(e.key==="Enter") {
+  document.getElementById("loginButton").click();
+ }
 });
 
-document.getElementById("logoutButton").onclick = () => {
+document.getElementById("logoutButton").onclick = ()=>{
 
-document.getElementById("adminPanel").hidden = true;
-document.getElementById("adminLogin").hidden = false;
-document.getElementById("adminPassword").value = "";
-
-};
-
-/* CRIAR LIGA */
-
-document.getElementById("leagueForm").onsubmit = e => {
-
-e.preventDefault();
-
-data.leagues.push({
-id: makeId(),
-name: getValue("leagueName"),
-season: getValue("leagueSeason"),
-format: getValue("leagueFormat")
-});
-
-e.target.reset();
-saveData();
+ document.getElementById("adminPanel").hidden = true;
+ document.getElementById("adminLogin").hidden = false;
+ document.getElementById("adminPassword").value = "";
 
 };
 
-/* CRIAR EQUIPA */
+/* =====================================
+   CRIAR LIGA
+===================================== */
 
-document.getElementById("teamForm").onsubmit = e => {
+document.getElementById("leagueForm").onsubmit = e=>{
+ e.preventDefault();
 
-e.preventDefault();
+ data.leagues.push({
+  id:makeId(),
+  name:getValue("leagueName"),
+  season:getValue("leagueSeason"),
+  format:getValue("leagueFormat")
+ });
 
-const league = data.leagues.find(
-x => x.id === getValue("teamLeague")
-);
-
-if (!league) {
-return alert("Cria ou escolhe primeiro uma liga.");
-}
-
-data.teams.push({
-id: makeId(),
-name: getValue("teamName"),
-leagueId: league.id,
-leagueName: league.name,
-captain: getValue("teamCaptain")
-});
-
-e.target.reset();
-saveData();
-
+ e.target.reset();
+ saveData();
 };
 
-/* CRIAR JOGADOR */
+/* =====================================
+   CRIAR EQUIPA
+===================================== */
 
-document.getElementById("playerForm").onsubmit = e => {
+document.getElementById("teamForm").onsubmit = e=>{
+ e.preventDefault();
 
-e.preventDefault();
+ const league = data.leagues.find(
+  x=>x.id===getValue("teamLeague")
+ );
 
-const team = data.teams.find(
-x => x.id === getValue("playerTeam")
-);
+ if(!league) {
+  return alert("Cria ou escolhe primeiro uma liga.");
+ }
 
-if (!team) {
-return alert("Cria ou escolhe primeiro uma equipa.");
-}
+ data.teams.push({
+  id:makeId(),
+  name:getValue("teamName"),
+  leagueId:league.id,
+  leagueName:league.name,
+  captain:getValue("teamCaptain")
+ });
 
-data.players.push({
-id: makeId(),
-name: getValue("playerName"),
-position: getValue("playerPosition"),
-teamId: team.id,
-teamName: team.name
-});
-
-e.target.reset();
-saveData();
-
+ e.target.reset();
+ saveData();
 };
 
-/* CONTRATOS */
+/* =====================================
+   CRIAR JOGADOR
+===================================== */
 
-document.getElementById("contractForm").onsubmit = e => {
+document.getElementById("playerForm").onsubmit = e=>{
+ e.preventDefault();
 
-e.preventDefault();
+ const team = data.teams.find(
+  x=>x.id===getValue("playerTeam")
+ );
 
-const player = data.players.find(
-x => x.id === getValue("contractPlayer")
-);
+ if(!team) {
+  return alert("Cria ou escolhe primeiro uma equipa.");
+ }
 
-const team = data.teams.find(
-x => x.id === getValue("contractTeam")
-);
+ data.players.push({
+  id:makeId(),
+  name:getValue("playerName"),
+  position:getValue("playerPosition"),
+  teamId:team.id,
+  teamName:team.name
+ });
 
-if (!player || !team) {
-return alert("Escolhe um jogador e uma equipa.");
-}
-
-data.contracts.push({
-id: makeId(),
-playerId: player.id,
-playerName: player.name,
-teamId: team.id,
-teamName: team.name,
-start: getValue("contractStart"),
-end: getValue("contractEnd"),
-status: getValue("contractStatus")
-});
-
-e.target.reset();
-saveData();
-
+ e.target.reset();
+ saveData();
 };
 
-/* TRANSFERÊNCIAS */
+/* =====================================
+   CONTRATOS
+===================================== */
 
-document.getElementById("transferForm").onsubmit = e => {
+document.getElementById("contractForm").onsubmit = e=>{
+ e.preventDefault();
 
-e.preventDefault();
+ const player = data.players.find(
+  x=>x.id===getValue("contractPlayer")
+ );
 
-const player = data.players.find(
-x => x.id === getValue("transferPlayer")
-);
+ const team = data.teams.find(
+  x=>x.id===getValue("contractTeam")
+ );
 
-const from = data.teams.find(
-x => x.id === getValue("transferFrom")
-);
+ if(!player || !team) {
+  return alert("Escolhe um jogador e uma equipa.");
+ }
 
-const to = data.teams.find(
-x => x.id === getValue("transferTo")
-);
+ data.contracts.push({
+  id:makeId(),
+  playerId:player.id,
+  playerName:player.name,
+  teamId:team.id,
+  teamName:team.name,
+  start:getValue("contractStart"),
+  end:getValue("contractEnd"),
+  status:getValue("contractStatus")
+ });
 
-if (!player || !from || !to) {
-return alert("Escolhe o jogador e as equipas.");
-}
-
-if (from.id === to.id) {
-return alert("As equipas têm de ser diferentes.");
-}
-
-data.transfers.push({
-id: makeId(),
-playerId: player.id,
-playerName: player.name,
-fromId: from.id,
-fromName: from.name,
-toId: to.id,
-toName: to.name,
-type: getValue("transferType"),
-status: getValue("transferStatus")
-});
-
-e.target.reset();
-saveData();
-
+ e.target.reset();
+ saveData();
 };
 
-/* RESULTADOS */
+/* =====================================
+   TRANSFERÊNCIAS
+===================================== */
 
-document.getElementById("resultForm").onsubmit = e => {
+document.getElementById("transferForm").onsubmit = e=>{
+ e.preventDefault();
 
-e.preventDefault();
+ const player = data.players.find(
+  x=>x.id===getValue("transferPlayer")
+ );
 
-const home = data.teams.find(
-x => x.id === getValue("resultHome")
-);
+ const from = data.teams.find(
+  x=>x.id===getValue("transferFrom")
+ );
 
-const away = data.teams.find(
-x => x.id === getValue("resultAway")
-);
+ const to = data.teams.find(
+  x=>x.id===getValue("transferTo")
+ );
 
-if (!home || !away) {
-return alert("Escolhe as duas equipas.");
-}
+ if(!player || !from || !to) {
+  return alert("Escolhe o jogador e as equipas.");
+ }
 
-if (home.id === away.id) {
-return alert("Escolhe duas equipas diferentes.");
-}
+ if(from.id===to.id) {
+  return alert("As equipas têm de ser diferentes.");
+ }
 
-data.results.push({
-id: makeId(),
-homeName: home.name,
-awayName: away.name,
-homeScore: Number(getValue("scoreHome")),
-awayScore: Number(getValue("scoreAway"))
-});
+ data.transfers.push({
+  id:makeId(),
+  playerId:player.id,
+  playerName:player.name,
+  fromId:from.id,
+  fromName:from.name,
+  toId:to.id,
+  toName:to.name,
+  type:getValue("transferType"),
+  status:getValue("transferStatus")
+ });
 
-e.target.reset();
-saveData();
-
+ e.target.reset();
+ saveData();
 };
 
-/* WHATSAPP OFICIAL */
+/* =====================================
+   RESULTADOS
+===================================== */
 
-document.getElementById("whatsappForm").onsubmit = e => {
+document.getElementById("resultForm").onsubmit = e=>{
+ e.preventDefault();
 
-e.preventDefault();
+ const home = data.teams.find(
+  x=>x.id===getValue("resultHome")
+ );
 
-const message =
-"LIGA PRIME LEVEL UP\n\n" +
-"Nome: " + getValue("contactName") + "\n" +
-"Email: " + getValue("contactEmail") + "\n" +
-"Assunto: " + getValue("contactSubject") + "\n" +
-"Mensagem: " + getValue("contactMessage");
+ const away = data.teams.find(
+  x=>x.id===getValue("resultAway")
+ );
 
-const url =
-"https://wa.me/33695872856?text=" +
-encodeURIComponent(message);
+ if(!home || !away) {
+  return alert("Escolhe as duas equipas.");
+ }
 
-window.open(url, "_blank");
+ if(home.id===away.id) {
+  return alert("Escolhe duas equipas diferentes.");
+ }
 
+ if(home.leagueId!==away.leagueId) {
+  return alert("As equipas têm de pertencer à mesma liga.");
+ }
+
+ data.results.push({
+  id:makeId(),
+  homeId:home.id,
+  awayId:away.id,
+  homeName:home.name,
+  awayName:away.name,
+  homeScore:Number(getValue("scoreHome")),
+  awayScore:Number(getValue("scoreAway"))
+ });
+
+ e.target.reset();
+ saveData();
 };
+
+/* =====================================
+   PRÉ-INSCRIÇÃO
+===================================== */
+
+document.getElementById("preRegistrationForm").onsubmit = e=>{
+ e.preventDefault();
+
+ const registration = {
+  id:makeId(),
+  name:getValue("preName"),
+  email:getValue("preEmail"),
+  type:getValue("preType"),
+  platform:getValue("prePlatform"),
+  date:new Date().toLocaleDateString("pt-PT")
+ };
+
+ data.registrations.push(registration);
+ saveData();
+
+ const message =
+  "NOVA PRÉ-INSCRIÇÃO LPLU\n\n"+
+  "Nome: "+registration.name+"\n"+
+  "Email: "+registration.email+"\n"+
+  "Modalidade: "+registration.type+"\n"+
+  "Plataforma: "+registration.platform;
+
+ const url =
+  "https://wa.me/33695872856?text="+
+  encodeURIComponent(message);
+
+ window.open(url,"_blank");
+
+ alert("Pré-inscrição guardada!");
+
+ e.target.reset();
+};
+
+/* =====================================
+   WHATSAPP OFICIAL
+===================================== */
+
+document.getElementById("whatsappForm").onsubmit = e=>{
+ e.preventDefault();
+
+ const message =
+  "LIGA PRIME LEVEL UP\n\n"+
+  "Nome: "+getValue("contactName")+"\n"+
+  "Email: "+getValue("contactEmail")+"\n"+
+  "Assunto: "+getValue("contactSubject")+"\n"+
+  "Mensagem: "+getValue("contactMessage");
+
+ const url =
+  "https://wa.me/33695872856?text="+
+  encodeURIComponent(message);
+
+ window.open(url,"_blank");
+};
+
+/* =====================================
+   ANO AUTOMÁTICO
+===================================== */
 
 document.getElementById("year").textContent =
-new Date().getFullYear();
+ new Date().getFullYear();
+
+/* =====================================
+   INICIAR SITE
+===================================== */
 
 renderAll();
 
@@ -1428,3 +1313,4 @@ renderAll();
 
 </body>
 </html>
+
