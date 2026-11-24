@@ -1,1 +1,547 @@
 
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111111">
+<title>Liga Prime Level Up</title>
+
+<style>
+:root{
+--bg:#090909;
+--panel:#171717;
+--red:#e32636;
+--silver:#c7cbd1;
+--muted:#9b9b9b;
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+background:linear-gradient(145deg,#090909,#1a1012);
+color:#f5f5f5;
+font:16px/1.5 Arial,sans-serif;
+}
+header{
+padding:28px 6%;
+border-bottom:1px solid #393939;
+background:#0d0d0df2;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:16px;
+flex-wrap:wrap;
+}
+.brand{
+font-weight:900;
+letter-spacing:1px;
+font-size:clamp(20px,4vw,30px);
+}
+.brand span{color:var(--red)}
+nav{display:flex;gap:16px;flex-wrap:wrap}
+a{color:var(--silver);text-decoration:none}
+a:hover{color:#fff}
+.language{
+background:#171717;
+color:white;
+border:1px solid #777;
+padding:10px;
+border-radius:5px;
+}
+.hero{
+padding:76px 6% 60px;
+text-align:center;
+background:radial-gradient(ellipse at center,#50151c 0%,#171011 42%,transparent 75%);
+}
+.kicker{
+color:var(--silver);
+letter-spacing:4px;
+text-transform:uppercase;
+font-size:12px;
+}
+.hero h1{
+font-size:clamp(36px,7vw,70px);
+line-height:1.02;
+margin:14px 0;
+}
+.hero h1 span{color:var(--red)}
+.hero p{
+color:#ddd;
+margin:12px auto 24px;
+max-width:650px;
+}
+.btn{
+display:inline-block;
+border:0;
+background:var(--red);
+color:white;
+padding:13px 20px;
+border-radius:5px;
+font-weight:800;
+cursor:pointer;
+}
+main{
+max-width:1100px;
+margin:auto;
+padding:30px 20px;
+}
+.section-title{font-size:26px;margin:10px 0 18px}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:16px;
+}
+.card{
+background:linear-gradient(150deg,#202020,#111);
+border:1px solid #3b3b3b;
+border-top:3px solid var(--red);
+border-radius:9px;
+padding:20px;
+}
+.card h3{margin:0 0 8px}
+.muted{color:var(--muted)}
+.tag{
+display:inline-block;
+color:var(--silver);
+border:1px solid #777;
+padding:3px 8px;
+border-radius:20px;
+font-size:12px;
+}
+table{
+width:100%;
+border-collapse:collapse;
+background:#151515;
+border-radius:8px;
+overflow:hidden;
+}
+th,td{
+text-align:left;
+padding:12px;
+border-bottom:1px solid #333;
+}
+th{color:var(--silver);background:#222}
+form{display:grid;gap:12px}
+input,select{
+width:100%;
+padding:12px;
+border-radius:5px;
+border:1px solid #555;
+background:#0c0c0c;
+color:#fff;
+}
+label{font-size:14px;color:#ddd}
+.notice{
+padding:12px;
+background:#241216;
+border-left:3px solid var(--red);
+color:#ddd;
+border-radius:4px;
+}
+footer{
+text-align:center;
+padding:28px;
+color:#888;
+border-top:1px solid #333;
+margin-top:30px;
+}
+@media(max-width:600px){
+header{padding:20px}
+nav{gap:10px;font-size:14px}
+.hero{padding:55px 20px}
+th,td{padding:9px;font-size:14px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="brand">LIGA PRIME <span>LEVEL UP</span></div>
+
+<nav>
+<a href="#torneios" data-i18n="tournaments">Torneios</a>
+<a href="#classificacao" data-i18n="ranking">Classificação</a>
+<a href="#calendario" data-i18n="calendar">Calendário</a>
+<a href="#inscricao" data-i18n="registration">Inscrição</a>
+</nav>
+
+<select class="language" id="languageSelector" aria-label="Idioma">
+<option value="pt">🇵🇹 Português</option>
+<option value="fr">🇫🇷 Français</option>
+<option value="en">🇬🇧 English</option>
+<option value="es">🇪🇸 Español</option>
+<option value="it">🇮🇹 Italiano</option>
+</select>
+</header>
+
+<section class="hero">
+<div class="kicker" data-i18n="competition">EA SPORTS FC 27 • Competição</div>
+
+<h1>
+<span data-i18n="play">JOGA.</span>
+<span data-i18n="compete">COMPETE.</span>
+<br>
+<span data-i18n="evolve">EVOLUI.</span>
+</h1>
+
+<p data-i18n="heroText">
+Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.
+</p>
+
+<a class="btn" href="#inscricao" data-i18n="join">INSCREVER-ME</a>
+</section>
+
+<main>
+
+<section id="torneios">
+<h2 class="section-title" data-i18n="tournaments">Torneios</h2>
+
+<div class="grid">
+
+<article class="card">
+<span class="tag">1 contra 1</span>
+<h3 data-i18n="tournament1">Torneio 1v1</h3>
+<p class="muted" data-i18n="description1">
+Compete individualmente e conquista o topo da classificação.
+</p>
+</article>
+
+<article class="card">
+<span class="tag">2 contra 2</span>
+<h3 data-i18n="tournament2">Torneio 2v2</h3>
+<p class="muted" data-i18n="description2">
+Forma a tua dupla, combina estratégias e vence em equipa.
+</p>
+</article>
+
+<article class="card">
+<span class="tag" data-i18n="season">Temporada</span>
+<h3 data-i18n="league">Liga competitiva</h3>
+<p class="muted" data-i18n="description3">
+Acompanha os resultados e luta pela melhor posição.
+</p>
+</article>
+
+</div>
+</section>
+
+<section id="classificacao" style="margin-top:38px">
+<h2 class="section-title" data-i18n="ranking">Classificação</h2>
+
+<div class="notice" data-i18n="rankingNotice">
+A classificação será atualizada quando a organização registar resultados oficiais.
+</div>
+
+<table style="margin-top:12px">
+<thead>
+<tr>
+<th>#</th>
+<th data-i18n="playerTeam">Jogador / Equipa</th>
+<th>J</th>
+<th data-i18n="wins">V</th>
+<th>Pts</th>
+</tr>
+</thead>
+
+<tbody>
+<tr><td>1</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>2</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>3</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="calendario" style="margin-top:38px">
+<h2 class="section-title" data-i18n="calendar">Calendário</h2>
+
+<div class="card">
+<h3 data-i18n="nextMatches">Próximos jogos</h3>
+<p class="muted" data-i18n="calendarNotice">
+Os jogos e horários serão anunciados pela organização após a abertura das inscrições.
+</p>
+</div>
+</section>
+
+<section id="inscricao" style="margin-top:38px">
+<h2 class="section-title" data-i18n="registration">Pré-inscrição</h2>
+
+<div class="card">
+<p class="muted" data-i18n="formNotice">
+Preenche os dados para manifestar interesse em participar.
+</p>
+
+<form id="signup">
+
+<label>
+<span data-i18n="nickname">Nome de jogador</span>
+<input name="player" required placeholder="O teu nickname">
+</label>
+
+<label>
+Email
+<input name="email" type="email" required placeholder="nome@email.com">
+</label>
+
+<label>
+<span data-i18n="competitionType">Tipo de competição</span>
+<select name="mode">
+<option>1v1</option>
+<option>2v2</option>
+</select>
+</label>
+
+<label>
+<span data-i18n="platform">Plataforma</span>
+<select name="platform">
+<option>PlayStation</option>
+<option>Xbox</option>
+<option>PC</option>
+</select>
+</label>
+
+<button class="btn" type="submit" data-i18n="send">
+Enviar pré-inscrição
+</button>
+
+<div id="message" class="muted" aria-live="polite"></div>
+</form>
+</div>
+</section>
+
+</main>
+
+<footer data-i18n="footer">
+© 2026 Liga Prime Level Up • Preto, vermelho e prateado
+</footer>
+
+<script>
+
+const translations = {
+
+pt:{
+tournaments:"Torneios",
+ranking:"Classificação",
+calendar:"Calendário",
+registration:"Pré-inscrição",
+competition:"EA SPORTS FC 27 • Competição",
+play:"JOGA.",
+compete:"COMPETE.",
+evolve:"EVOLUI.",
+heroText:"Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.",
+join:"INSCREVER-ME",
+tournament1:"Torneio 1v1",
+tournament2:"Torneio 2v2",
+description1:"Compete individualmente e conquista o topo da classificação.",
+description2:"Forma a tua dupla, combina estratégias e vence em equipa.",
+season:"Temporada",
+league:"Liga competitiva",
+description3:"Acompanha os resultados e luta pela melhor posição.",
+rankingNotice:"A classificação será atualizada quando a organização registar resultados oficiais.",
+playerTeam:"Jogador / Equipa",
+wins:"V",
+nextMatches:"Próximos jogos",
+calendarNotice:"Os jogos e horários serão anunciados pela organização após a abertura das inscrições.",
+formNotice:"Preenche os dados para manifestar interesse em participar.",
+nickname:"Nome de jogador",
+competitionType:"Tipo de competição",
+platform:"Plataforma",
+send:"Enviar pré-inscrição",
+footer:"© 2026 Liga Prime Level Up • Preto, vermelho e prateado",
+success:"Demonstração: os dados não foram enviados nem guardados."
+},
+
+fr:{
+tournaments:"Tournois",
+ranking:"Classement",
+calendar:"Calendrier",
+registration:"Pré-inscription",
+competition:"EA SPORTS FC 27 • Compétition",
+play:"JOUE.",
+compete:"CONCURRE.",
+evolve:"ÉVOLUE.",
+heroText:"Entre sur le terrain, défie les meilleurs et prouve ta valeur dans la Liga Prime Level Up.",
+join:"M'INSCRIRE",
+tournament1:"Tournoi 1v1",
+tournament2:"Tournoi 2v2",
+description1:"Affronte tes adversaires individuellement et atteins le sommet du classement.",
+description2:"Forme ton duo, combine tes stratégies et gagne en équipe.",
+season:"Saison",
+league:"Ligue compétitive",
+description3:"Suis les résultats et bats-toi pour la meilleure position.",
+rankingNotice:"Le classement sera mis à jour lorsque l'organisation enregistrera les résultats officiels.",
+playerTeam:"Joueur / Équipe",
+wins:"V",
+nextMatches:"Prochains matchs",
+calendarNotice:"Les matchs et les horaires seront annoncés après l'ouverture des inscriptions.",
+formNotice:"Remplis les informations pour manifester ton intérêt.",
+nickname:"Nom du joueur",
+competitionType:"Type de compétition",
+platform:"Plateforme",
+send:"Envoyer la pré-inscription",
+footer:"© 2026 Liga Prime Level Up",
+success:"Démonstration : les données n'ont pas été envoyées ni enregistrées."
+},
+
+en:{
+tournaments:"Tournaments",
+ranking:"Rankings",
+calendar:"Calendar",
+registration:"Registration",
+competition:"EA SPORTS FC 27 • Competition",
+play:"PLAY.",
+compete:"COMPETE.",
+evolve:"EVOLVE.",
+heroText:"Enter the field, challenge the best and prove your worth in Liga Prime Level Up.",
+join:"JOIN NOW",
+tournament1:"1v1 Tournament",
+tournament2:"2v2 Tournament",
+description1:"Compete individually and reach the top of the rankings.",
+description2:"Build your duo, combine strategies and win as a team.",
+season:"Season",
+league:"Competitive League",
+description3:"Follow the results and fight for the best position.",
+rankingNotice:"The rankings will be updated when the organization records official results.",
+playerTeam:"Player / Team",
+wins:"W",
+nextMatches:"Upcoming matches",
+calendarNotice:"Matches and schedules will be announced after registration opens.",
+formNotice:"Fill in your details to express your interest in participating.",
+nickname:"Player name",
+competitionType:"Competition type",
+platform:"Platform",
+send:"Submit registration",
+footer:"© 2026 Liga Prime Level Up",
+success:"Demo: your information has not been sent or saved."
+},
+
+es:{
+tournaments:"Torneos",
+ranking:"Clasificación",
+calendar:"Calendario",
+registration:"Inscripción",
+competition:"EA SPORTS FC 27 • Competición",
+play:"JUEGA.",
+compete:"COMPITE.",
+evolve:"EVOLUCIONA.",
+heroText:"Entra al campo, desafía a los mejores y demuestra tu valor en Liga Prime Level Up.",
+join:"INSCRIBIRME",
+tournament1:"Torneo 1v1",
+tournament2:"Torneo 2v2",
+description1:"Compite individualmente y alcanza el primer puesto de la clasificación.",
+description2:"Forma tu pareja, combina estrategias y gana en equipo.",
+season:"Temporada",
+league:"Liga competitiva",
+description3:"Sigue los resultados y lucha por la mejor posición.",
+rankingNotice:"La clasificación se actualizará cuando la organización registre los resultados oficiales.",
+playerTeam:"Jugador / Equipo",
+wins:"V",
+nextMatches:"Próximos partidos",
+calendarNotice:"Los partidos y horarios se anunciarán después de abrir las inscripciones.",
+formNotice:"Completa tus datos para mostrar tu interés en participar.",
+nickname:"Nombre de jugador",
+competitionType:"Tipo de competición",
+platform:"Plataforma",
+send:"Enviar preinscripción",
+footer:"© 2026 Liga Prime Level Up",
+success:"Demostración: los datos no se han enviado ni guardado."
+},
+
+it:{
+tournaments:"Tornei",
+ranking:"Classifica",
+calendar:"Calendario",
+registration:"Iscrizione",
+competition:"EA SPORTS FC 27 • Competizione",
+play:"GIOCA.",
+compete:"COMPETI.",
+evolve:"EVOLVI.",
+heroText:"Entra in campo, sfida i migliori e dimostra il tuo valore nella Liga Prime Level Up.",
+join:"ISCRIVITI",
+tournament1:"Torneo 1v1",
+tournament2:"Torneo 2v2",
+description1:"Competi individualmente e raggiungi la vetta della classifica.",
+description2:"Forma la tua coppia, combina le strategie e vinci in squadra.",
+season:"Stagione",
+league:"Lega competitiva",
+description3:"Segui i risultati e lotta per la migliore posizione.",
+rankingNotice:"La classifica verrà aggiornata quando l'organizzazione registrerà i risultati ufficiali.",
+playerTeam:"Giocatore / Squadra",
+wins:"V",
+nextMatches:"Prossime partite",
+calendarNotice:"Le partite e gli orari saranno annunciati dopo l'apertura delle iscrizioni.",
+formNotice:"Inserisci i tuoi dati per manifestare il tuo interesse a partecipare.",
+nickname:"Nome giocatore",
+competitionType:"Tipo di competizione",
+platform:"Piattaforma",
+send:"Invia pre-iscrizione",
+footer:"© 2026 Liga Prime Level Up",
+success:"Demo: i dati non sono stati inviati né salvati."
+}
+
+};
+
+function changeLanguage(lang){
+
+if(!translations[lang]) lang="pt";
+
+document.documentElement.lang=lang;
+
+document.querySelectorAll("[data-i18n]").forEach(element=>{
+const key=element.dataset.i18n;
+
+if(translations[lang][key]){
+element.textContent=translations[lang][key];
+}
+});
+
+document.getElementById("message").textContent="";
+
+try{
+localStorage.setItem("siteLanguage",lang);
+}catch(error){}
+}
+
+const selector=document.getElementById("languageSelector");
+
+let savedLanguage=null;
+
+try{
+savedLanguage=localStorage.getItem("siteLanguage");
+}catch(error){}
+
+const browserLanguage=
+(navigator.language || "pt").slice(0,2).toLowerCase();
+
+const initialLanguage=
+savedLanguage && translations[savedLanguage]
+?savedLanguage
+:translations[browserLanguage]
+?browserLanguage
+:"pt";
+
+selector.value=initialLanguage;
+changeLanguage(initialLanguage);
+
+selector.addEventListener("change",function(){
+changeLanguage(this.value);
+});
+
+document.getElementById("signup").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const lang=selector.value;
+
+document.getElementById("message").textContent=
+translations[lang].success;
+
+});
+
+</script>
+</body>
+</html>
+
+
+
+
