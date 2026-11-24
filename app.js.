@@ -1,1 +1,2 @@
 document.addEventListener(‘DOMContentLoaded’, function () { console.log(‘Liga Prime Level Up carregada’); }); 
+document.addEventListener(‘DOMContentLoaded’, function() { console.log(‘Liga Prime Level Up carregada’); });
