@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#111111">
 <title>Liga Prime Level Up</title>
-
+<a href="#admin">Administração</a>
 <style>
 :root {
   --bg: #090909;
@@ -114,6 +114,79 @@ a:hover {
   font-weight: 800;
   cursor: pointer;
 }
+
+<section id="admin" class="card">
+  <h2>ADMINISTRAÇÃO</h2>
+  <p>Painel de gestão da Liga Prime Level Up</p>
+
+  <div id="adminLogin">
+    <h3>Acesso reservado</h3>
+    <input id="adminPassword" type="password"
+      placeholder="Palavra-passe de demonstração">
+    <button class="btn" onclick="loginAdmin()">
+      ENTRAR
+    </button>
+    <p id="loginError"></p>
+  </div>
+
+  <div id="adminPanel" hidden>
+    <button onclick="logoutAdmin()">Terminar sessão</button>
+
+    <hr>
+    <h3>1. Criar uma liga</h3>
+    <input id="leagueName" placeholder="Nome da liga">
+    <input id="leagueSeason" placeholder="Época (ex.: 2026/2027)">
+    <button onclick="addLeague()">Criar liga</button>
+    <div id="leagueList"></div>
+
+    <hr>
+    <h3>2. Gerir equipas</h3>
+    <input id="teamName" placeholder="Nome da equipa">
+    <input id="teamLeague" placeholder="Nome da liga">
+    <input id="teamCaptain" placeholder="Capitão">
+    <button onclick="addTeam()">Adicionar equipa</button>
+    <div id="teamList"></div>
+
+    <hr>
+    <h3>3. Gerir jogadores</h3>
+    <input id="playerName" placeholder="Nickname do jogador">
+    <input id="playerPosition" placeholder="Posição">
+    <input id="playerTeam" placeholder="Equipa">
+    <button onclick="addPlayer()">Adicionar jogador</button>
+    <div id="playerList"></div>
+
+    <hr>
+    <h3>4. Contratos</h3>
+    <input id="contractPlayer" placeholder="Jogador">
+    <input id="contractTeam" placeholder="Equipa">
+    <input id="contractEnd" type="date">
+    <select id="contractStatus">
+      <option value="Ativo">Ativo</option>
+      <option value="Em renovação">Em renovação</option>
+      <option value="Terminado">Terminado</option>
+    </select>
+    <button onclick="addContract()">Registar contrato</button>
+    <div id="contractList"></div>
+
+    <hr>
+    <h3>5. Mercado de transferências</h3>
+    <input id="transferPlayer" placeholder="Jogador">
+    <input id="transferFrom" placeholder="Equipa de origem">
+    <input id="transferTo" placeholder="Nova equipa">
+    <select id="transferType">
+      <option>Transferência definitiva</option>
+      <option>Empréstimo</option>
+      <option>Agente livre</option>
+    </select>
+    <button onclick="addTransfer()">Registar transferência</button>
+    <div id="transferList"></div>
+
+    <hr>
+    <h3>6. Próximas funcionalidades</h3>
+    <p>Resultados, classificações automáticas, calendário,
+    inscrições, notícias, suspensões e gestão de árbitros.</p>
+  </div>
+</section>
 
 main {
   max-width: 1100px;
@@ -785,6 +858,125 @@ document.getElementById("whatsappForm")
 
     window.open(url, "_blank");
   });
+const ADMIN_DEMO_PASSWORD = "LPLU2026";
+
+let adminData = JSON.parse(
+  localStorage.getItem("lplu_admin_data") ||
+  '{"leagues":[],"teams":[],"players":[],"contracts":[],"transfers":[]}'
+);
+
+function saveAdmin() {
+  localStorage.setItem("lplu_admin_data", JSON.stringify(adminData));
+  renderAdmin();
+}
+
+function loginAdmin() {
+  if (document.getElementById("adminPassword").value === ADMIN_DEMO_PASSWORD) {
+    document.getElementById("adminLogin").hidden = true;
+    document.getElementById("adminPanel").hidden = false;
+    renderAdmin();
+  } else {
+    document.getElementById("loginError").textContent =
+      "Palavra-passe incorreta.";
+  }
+}
+
+function logoutAdmin() {
+  document.getElementById("adminLogin").hidden = false;
+  document.getElementById("adminPanel").hidden = true;
+  document.getElementById("adminPassword").value = "";
+}
+
+function value(id) {
+  return document.getElementById(id).value.trim();
+}
+
+function addLeague() {
+  if (!value("leagueName")) return alert("Indica o nome da liga.");
+  adminData.leagues.push({
+    name: value("leagueName"),
+    season: value("leagueSeason")
+  });
+  document.getElementById("leagueName").value = "";
+  document.getElementById("leagueSeason").value = "";
+  saveAdmin();
+}
+
+function addTeam() {
+  if (!value("teamName")) return alert("Indica o nome da equipa.");
+  adminData.teams.push({
+    name: value("teamName"),
+    league: value("teamLeague"),
+    captain: value("teamCaptain")
+  });
+  saveAdmin();
+}
+
+function addPlayer() {
+  if (!value("playerName")) return alert("Indica o jogador.");
+  adminData.players.push({
+    name: value("playerName"),
+    position: value("playerPosition"),
+    team: value("playerTeam")
+  });
+  saveAdmin();
+}
+
+function addContract() {
+  if (!value("contractPlayer")) return alert("Indica o jogador.");
+  adminData.contracts.push({
+    player: value("contractPlayer"),
+    team: value("contractTeam"),
+    end: value("contractEnd"),
+    status: value("contractStatus")
+  });
+  saveAdmin();
+}
+
+function addTransfer() {
+  if (!value("transferPlayer")) return alert("Indica o jogador.");
+  adminData.transfers.push({
+    player: value("transferPlayer"),
+    from: value("transferFrom"),
+    to: value("transferTo"),
+    type: value("transferType")
+  });
+  saveAdmin();
+}
+
+function renderAdmin() {
+  const sections = [
+    ["leagueList", "leagues", x => `${x.name} — ${x.season}`],
+    ["teamList", "teams", x => `${x.name} — ${x.league} — Capitão: ${x.captain}`],
+    ["playerList", "players", x => `${x.name} — ${x.position} — ${x.team}`],
+    ["contractList", "contracts", x => `${x.player} — ${x.team} — Até ${x.end} — ${x.status}`],
+    ["transferList", "transfers", x => `${x.player}: ${x.from} → ${x.to} (${x.type})`]
+  ];
+
+  sections.forEach(([elementId, key, format]) => {
+    const container = document.getElementById(elementId);
+    container.replaceChildren();
+
+    adminData[key].forEach((item, index) => {
+      const line = document.createElement("p");
+      const label = document.createElement("span");
+      label.textContent = format(item) + " ";
+
+      const remove = document.createElement("button");
+      remove.textContent = "Eliminar";
+      remove.onclick = () => {
+        if (confirm("Queres eliminar este registo?")) {
+          adminData[key].splice(index, 1);
+          saveAdmin();
+        }
+      };
+
+      line.append(label, remove);
+      container.appendChild(line);
+    });
+  });
+}
+
 </script>
 
 </body>
