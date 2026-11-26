@@ -1,1816 +1,329 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Liga Prime Level Up | LPLU</title>
-
 <style>
-:root {
-    --red: #ff202d;
-    --red2: #99000a;
-    --black: #050505;
-    --panel: #111111;
-    --silver: #c9c9c9;
-    --white: #ffffff;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #050505;
-    color: white;
-    min-height: 100vh;
-    position: relative;
-    isolation: isolate;
-}
-
-/* FUNDO GAMING */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    background: url("fundo-lplu.jpg") center center / cover no-repeat;
-}
-
-/* FUNDO ESCURECIDO */
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0,0,0,.82),
-            rgba(0,0,0,.91)
-        );
-}
-
-header, main, footer {
-    position: relative;
-}
-
-/* CABEÇALHO */
-header {
-    background: rgba(3,3,3,.96);
-    border-bottom: 2px solid var(--red);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 0 20px #ff202d35;
-}
-
-.header-content {
-    max-width: 1500px;
-    margin: auto;
-    padding: 12px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.logo-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-image {
-    width: 75px;
-    height: 75px;
-    object-fit: contain;
-}
-
-.logo-text {
-    font-weight: 900;
-    font-size: 21px;
-    letter-spacing: 1px;
-}
-
-.logo-text span {
-    color: var(--red);
-}
-
-.logo-text small {
-    display: block;
-    color: var(--silver);
-    font-size: 10px;
-    letter-spacing: 2px;
-    margin-top: 5px;
-}
-
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-}
-
-nav button {
-    color: white;
-    background: #151515;
-    border: 1px solid #333;
-    padding: 9px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: .2s;
-}
-
-nav button:hover,
-nav button.active {
-    background: var(--red);
-    border-color: var(--red);
-    box-shadow: 0 0 10px #ff202d55;
-}
-
-/* CONTEÚDO */
-main {
-    max-width: 1450px;
-    margin: auto;
-    padding: 25px 18px 50px;
-}
-
-.page {
-    display: none;
-    animation: fadeIn .25s ease;
-}
-
-.page.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* BANNER */
-.hero {
-    width: 100%;
-    border: 1px solid #681018;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 30px;
-    background: #111;
-}
-
-.hero img {
-    width: 100%;
-    display: block;
-    max-height: 600px;
-    object-fit: cover;
-}
-
-.hero-fallback {
-    display: none;
-    min-height: 300px;
-    padding: 35px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: radial-gradient(circle, #500810, #050505 70%);
-}
-
-.hero-fallback h1 {
-    font-size: clamp(30px, 5vw, 70px);
-    font-weight: 900;
-}
-
-.hero-fallback span {
-    color: var(--red);
-}
-
-.hero-fallback p {
-    margin-top: 15px;
-    letter-spacing: 4px;
-    color: silver;
-}
-
-/* TÍTULOS */
-.section-title {
-    font-size: 26px;
-    text-transform: uppercase;
-    border-left: 5px solid var(--red);
-    padding-left: 13px;
-    margin: 28px 0 18px;
-}
-
-.subtitle {
-    color: #ccc;
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-/* CARTÕES */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 18px;
-}
-
-.card {
-    background: linear-gradient(145deg, #191919, #080808);
-    border: 1px solid #333;
-    border-radius: 10px;
-    padding: 20px;
-    transition: .2s;
-    box-shadow: 0 5px 15px #0005;
-}
-
-.card:hover {
-    border-color: var(--red);
-    transform: translateY(-3px);
-}
-
-.card h3 {
-    margin-bottom: 10px;
-}
-
-.card p {
-    color: #bbb;
-    line-height: 1.6;
-}
-
-.price {
-    font-size: 24px;
-    color: var(--red);
-    font-weight: bold;
-    margin: 12px 0;
-}
-
-/* BOTÕES */
-.btn {
-    display: inline-block;
-    padding: 11px 17px;
-    margin-top: 10px;
-    color: white;
-    background: var(--red);
-    border: 1px solid var(--red);
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.btn:hover {
-    background: #c9000b;
-}
-
-.btn.secondary {
-    background: #222;
-    border-color: #555;
-}
-
-.btn.silver {
-    color: #111;
-    background: linear-gradient(135deg, #ddd, #888);
-    border-color: silver;
-}
-
-button {
-    font-family: inherit;
-}
-
-/* FORMULÁRIOS */
-form {
-    max-width: 800px;
-    background: #111;
-    padding: 22px;
-    border: 1px solid #333;
-    border-radius: 10px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    color: #ddd;
-    margin-top: 10px;
-}
-
-input, textarea, select {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0 15px;
-    background: #080808;
-    color: white;
-    border: 1px solid #444;
-    border-radius: 5px;
-    font-size: 15px;
-}
-
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-/* TABELAS */
-.table-wrap {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #101010;
-    margin-top: 15px;
-}
-
-th, td {
-    padding: 12px;
-    border: 1px solid #333;
-    text-align: left;
-}
-
-th {
-    background: #76000a;
-}
-
-tr:nth-child(even) {
-    background: #181818;
-}
-
-/* NOTÍCIAS */
-.news-item {
-    padding: 18px;
-    margin-bottom: 15px;
-    background: #151515;
-    border-left: 4px solid var(--red);
-    border-radius: 6px;
-}
-
-.news-item p {
-    color: #ccc;
-    line-height: 1.6;
-    margin-top: 8px;
-}
-
-.small {
-    color: #999;
-    font-size: 12px;
-    margin-top: 8px;
-}
-
-/* LOJA */
-.product-image {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 55px;
-    background: linear-gradient(135deg, #222, #080808);
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-.cart-box {
-    background: #140609;
-    border: 1px solid var(--red);
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 25px;
-}
-
-.cart-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #333;
-}
-
-.payment-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.payment-option {
-    background: #111;
-    border: 1px solid #444;
-    border-radius: 6px;
-    padding: 13px;
-}
-
-.payment-option input {
-    width: auto;
-    margin-right: 7px;
-}
-
-.notice {
-    padding: 15px;
-    background: #291800;
-    border: 1px solid #a76a00;
-    border-radius: 7px;
-    color: #ffdf9b;
-    margin: 15px 0;
-}
-
-/* MÚSICA */
-.music-card {
-    text-align: center;
-    border-color: var(--red);
-}
-
-.video-container {
-    max-width: 850px;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    margin: 20px auto;
-}
-
-.video-container iframe {
-    width: 100%;
-    height: 100%;
-    border: 2px solid var(--red);
-    border-radius: 10px;
-}
-
-/* ADMIN */
-.admin-panel {
-    padding: 20px;
-    background: #111;
-    border: 1px solid #500;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* RODAPÉ */
-footer {
-    background: #050505;
-    border-top: 2px solid var(--red);
-    text-align: center;
-    padding: 30px 15px;
-    color: #999;
-}
-
-footer strong {
-    color: var(--red);
-}
-
-/* MOBILE */
-@media(max-width: 750px) {
-
-    .header-content {
-        justify-content: center;
-    }
-
-    .logo-area {
-        justify-content: center;
-    }
-
-    .logo-image {
-        width: 55px;
-        height: 55px;
-    }
-
-    .logo-text {
-        font-size: 16px;
-    }
-
-    nav button {
-        padding: 8px 9px;
-        font-size: 11px;
-    }
-
-    main {
-        padding: 15px 10px 35px;
-    }
-
-    .section-title {
-        font-size: 21px;
-    }
-
-    th, td {
-        padding: 8px;
-        font-size: 12px;
-    }
+:root{
+ --red:#ff202d;--red2:#99000a;--black:#050505;
+ --panel:#111;--silver:#c9c9c9;--white:#fff
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#050505;color:white;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:var(--bg-image,linear-gradient(135deg,#180306,#050505 65%));background-position:center;background-size:cover}
+body:after{content:"";position:fixed;inset:0;z-index:-1;background:rgba(0,0,0,.88)}
+header{background:#030303f5;border-bottom:2px solid var(--red);position:sticky;top:0;z-index:99}
+.header{max-width:1500px;margin:auto;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px}
+.brand img{width:65px;height:65px;object-fit:contain}
+.brand span{color:var(--red)}
+.brand small{display:block;font-size:10px;letter-spacing:2px;color:#aaa;margin-top:5px}
+nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+button,.btn{font-family:inherit;cursor:pointer;border:1px solid #444;border-radius:5px;padding:10px 13px;color:white;background:#181818;font-weight:bold;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{background:var(--red);border-color:var(--red)}
+nav button.active{background:var(--red);border-color:var(--red)}
+main{max-width:1450px;margin:auto;padding:25px 16px 50px}
+.page{display:none}.page.active{display:block;animation:fade .2s}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+h1,h2,h3{margin-bottom:12px}
+.title{font-size:26px;text-transform:uppercase;border-left:5px solid var(--red);padding-left:13px;margin:25px 0 18px}
+.subtitle{color:#ccc;line-height:1.6;margin-bottom:20px}
+.hero{background:radial-gradient(circle,#500810,#050505 75%);border:1px solid #681018;border-radius:12px;padding:65px 20px;text-align:center;margin-bottom:25px}
+.hero h1{font-size:clamp(30px,5vw,65px)}
+.hero span{color:var(--red)}
+.hero p{color:#ccc;letter-spacing:4px;margin-top:15px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#191919,#080808);border:1px solid #333;border-radius:10px;padding:18px;transition:.2s}
+.card:hover{border-color:var(--red);transform:translateY(-2px)}
+.card p{color:#bbb;line-height:1.6}
+.price{font-size:24px;color:var(--red);font-weight:bold;margin:12px 0}
+.btn{margin-top:10px;background:var(--red);border-color:var(--red)}
+.btn.secondary{background:#222;border-color:#555}
+.btn.silver{color:#111;background:linear-gradient(135deg,#ddd,#888)}
+form,.adminbox{max-width:900px;background:#111;padding:20px;border:1px solid #333;border-radius:10px;margin:15px 0}
+label{display:block;color:#ddd;font-weight:bold;margin-top:10px}
+input,textarea,select{width:100%;padding:12px;margin:8px 0 15px;background:#080808;color:white;border:1px solid #444;border-radius:5px;font-size:15px}
+textarea{min-height:110px;resize:vertical}
+table{width:100%;border-collapse:collapse;background:#101010;margin-top:15px}
+th,td{padding:11px;border:1px solid #333;text-align:left}
+th{background:#76000a}
+tr:nth-child(even){background:#181818}
+.tablewrap{overflow-x:auto}
+.news{padding:18px;background:#151515;border-left:4px solid var(--red);border-radius:6px;margin-bottom:14px}
+.news p{color:#ccc;line-height:1.6;margin-top:8px}
+.small{font-size:12px;color:#999;margin-top:8px}
+.cart{background:#140609;border:1px solid var(--red);border-radius:10px;padding:20px;margin-top:25px}
+.cartrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #333}
+.payment{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:15px 0}
+.payment label{background:#151515;border:1px solid #444;border-radius:6px;padding:12px;margin:0}
+.payment input{width:auto}
+.notice{padding:15px;background:#291800;border:1px solid #a76a00;border-radius:7px;color:#ffdf9b;margin:15px 0}
+.live{border:1px solid #85000a}
+.livebadge{color:#ff3030;font-weight:bold}
+.hidden{display:none!important}
+footer{text-align:center;background:#050505;border-top:2px solid var(--red);padding:30px;color:#999}
+footer strong{color:var(--red)}
+.admin-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+.admin-tabs button{background:#222}
+@media(max-width:750px){
+ .header{justify-content:center}
+ .brand{font-size:16px}
+ .brand img{width:50px;height:50px}
+ nav button{padding:8px;font-size:11px}
+ main{padding:15px 10px 35px}
+ .title{font-size:21px}
+ th,td{padding:8px;font-size:12px}
 }
 </style>
 </head>
-
 <body>
 
-<!-- CABEÇALHO -->
 <header>
-<div class="header-content">
-
-    <div class="logo-area">
-
-        <img
-            src="logo-levelup.png"
-            alt="LEVEL UP E-SPORTS"
-            class="logo-image"
-            onerror="this.style.display='none'"
-        >
-
-        <div class="logo-text">
-            LIGA <span>PRIME</span> LEVEL UP
-            <small>COMPETIÇÃO · COMUNIDADE · GAMING</small>
-        </div>
-
-    </div>
-
-    <nav id="navigation">
-
-        <button class="active" data-page="home">Início</button>
-        <button data-page="news">Notícias</button>
-        <button data-page="tournaments">Torneios</button>
-        <button data-page="standings">Classificações</button>
-        <button data-page="calendar">Calendário</button>
-        <button data-page="teams">Equipas</button>
-        <button data-page="players">Jogadores</button>
-        <button data-page="transfers">Transferências</button>
-        <button data-page="results">Resultados</button>
-        <button data-page="signup">Inscrições</button>
-        <button data-page="shop">Loja</button>
-        <button data-page="contact">Contacto</button>
-        <button data-page="admin">Admin</button>
-
-    </nav>
-
+<div class="header">
+<div class="brand">
+<img id="logo" src="logo-levelup.png" alt="LPLU" onerror="this.style.display='none'">
+<div><span id="brandTitle">LIGA <span>PRIME</span> LEVEL UP</span>
+<small id="brandSubtitle">COMPETIÇÃO · COMUNIDADE · GAMING</small></div>
+</div>
+<nav id="nav"></nav>
 </div>
 </header>
 
-<main>
-
-<!-- =================================
-     INÍCIO
-================================= -->
-
-<section id="home" class="page active">
-
-    <div class="hero">
-
-        <img
-            src="banner-lplu.png"
-            alt="Liga Prime Level Up"
-            onerror="
-                this.style.display='none';
-                document.getElementById('heroFallback').style.display='flex';
-            "
-        >
-
-        <div id="heroFallback" class="hero-fallback">
-
-            <h1>
-                SENTE A EMOÇÃO<br>
-                <span>COMPETE EM PORTUGUÊS</span>
-            </h1>
-
-            <p>NA LIGA PRIME LEVEL UP</p>
-
-        </div>
-
-    </div>
-
-    <h2 class="section-title">Bem-vindo à LPLU</h2>
-
-    <p class="subtitle">
-        A Liga Prime Level Up é uma comunidade competitiva de gaming.
-        Junta-te à comunidade, representa a tua equipa e luta pela vitória.
-    </p>
-
-    <h2 class="section-title">Últimas notícias</h2>
-
-    <div id="homeNews"></div>
-
-    <h2 class="section-title">Música LPLU 🎵</h2>
-
-    <div class="card music-card">
-
-        <h3>🎧 Ambiente Liga Prime Level Up</h3>
-
-        <p>
-            Música para acompanhar a tua experiência no universo LPLU.
-        </p>
-
-        <div class="video-container">
-            <iframe
-                id="musicPlayer"
-                src=""
-                title="Música LPLU"
-                allow="autoplay; encrypted-media"
-                allowfullscreen>
-            </iframe>
-        </div>
-
-        <button class="btn" onclick="playRandomMusic()">
-            ▶ Reproduzir música
-        </button>
-
-        <button class="btn secondary" onclick="changeMusic()">
-            🔀 Música aleatória
-        </button>
-
-        <p class="small">
-            Se o navegador bloquear o som automático, carrega em Reproduzir música.
-        </p>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     NOTÍCIAS
-================================= -->
-
-<section id="news" class="page">
-
-    <h2 class="section-title">Notícias</h2>
-
-    <p class="subtitle">
-        Todas as novidades, anúncios, competições e notícias da LPLU.
-    </p>
-
-    <div id="allNews"></div>
-
-</section>
-
-<!-- =================================
-     TORNEIOS
-================================= -->
-
-<section id="tournaments" class="page">
-
-    <h2 class="section-title">Torneios</h2>
-
-    <p class="subtitle">Competições da Liga Prime Level Up.</p>
-
-    <div class="cards">
-
-        <div class="card">
-            <h3>🏆 Liga Prime</h3>
-            <p>Competição principal da liga.</p>
-            <p>Formato: Liga e Playoffs.</p>
-            <button class="btn" onclick="goTo('signup')">
-                Inscrever equipa
-            </button>
-        </div>
-
-        <div class="card">
-            <h3>⚔️ Torneio Cup</h3>
-            <p>Competição eliminatória.</p>
-            <p>Formato: Knockout.</p>
-            <button class="btn" onclick="goTo('signup')">
-                Participar
-            </button>
-        </div>
-
-        <div class="card">
-            <h3>🔥 Eventos especiais</h3>
-            <p>Eventos e torneios comunitários.</p>
-            <button class="btn" onclick="goTo('contact')">
-                Informações
-            </button>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     CLASSIFICAÇÕES
-================================= -->
-
-<section id="standings" class="page">
-
-    <h2 class="section-title">Classificações</h2>
-
-    <p class="subtitle">Tabela de classificação das equipas.</p>
-
-    <div class="table-wrap">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Equipa</th>
-                    <th>J</th>
-                    <th>V</th>
-                    <th>E</th>
-                    <th>D</th>
-                    <th>Pts</th>
-                </tr>
-            </thead>
-
-            <tbody id="standingsTable">
-                <tr>
-                    <td>1</td><td>Equipa 1</td>
-                    <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                </tr>
-                <tr>
-                    <td>2</td><td>Equipa 2</td>
-                    <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                </tr>
-                <tr>
-                    <td>3</td><td>Equipa 3</td>
-                    <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     CALENDÁRIO
-================================= -->
-
-<section id="calendar" class="page">
-
-    <h2 class="section-title">Calendário</h2>
-
-    <p class="subtitle">Jogos e eventos da competição.</p>
-
-    <div class="table-wrap">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Hora</th>
-                    <th>Jogo</th>
-                    <th>Competição</th>
-                </tr>
-            </thead>
-
-            <tbody id="calendarTable">
-                <tr>
-                    <td>A definir</td>
-                    <td>A definir</td>
-                    <td>Calendário em preparação</td>
-                    <td>LPLU</td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     EQUIPAS
-================================= -->
-
-<section id="teams" class="page">
-
-    <h2 class="section-title">Equipas</h2>
-
-    <p class="subtitle">Equipas da comunidade LPLU.</p>
-
-    <div class="cards" id="teamCards">
-
-        <div class="card">
-            <h3>Equipas LPLU</h3>
-            <p>As equipas serão anunciadas aqui.</p>
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     JOGADORES
-================================= -->
-
-<section id="players" class="page">
-
-    <h2 class="section-title">Jogadores</h2>
-
-    <p class="subtitle">Jogadores inscritos nas competições.</p>
-
-    <div class="table-wrap">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Jogador</th>
-                    <th>Equipa</th>
-                    <th>Plataforma</th>
-                </tr>
-            </thead>
-
-            <tbody id="playersTable">
-                <tr>
-                    <td>Em breve</td>
-                    <td>—</td>
-                    <td>—</td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     TRANSFERÊNCIAS
-================================= -->
-
-<section id="transfers" class="page">
-
-    <h2 class="section-title">Transferências</h2>
-
-    <p class="subtitle">Movimentos de jogadores entre equipas.</p>
-
-    <div class="table-wrap">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Jogador</th>
-                    <th>Equipa anterior</th>
-                    <th>Nova equipa</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
-
-            <tbody id="transfersTable">
-                <tr>
-                    <td colspan="4">Sem transferências anunciadas.</td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     RESULTADOS
-================================= -->
-
-<section id="results" class="page">
-
-    <h2 class="section-title">Resultados</h2>
-
-    <p class="subtitle">Resultados dos jogos disputados.</p>
-
-    <div class="table-wrap">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Equipa</th>
-                    <th>Resultado</th>
-                    <th>Adversário</th>
-                </tr>
-            </thead>
-
-            <tbody id="resultsTable">
-                <tr>
-                    <td colspan="4">Ainda não existem resultados publicados.</td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     INSCRIÇÕES
-================================= -->
-
-<section id="signup" class="page">
-
-    <h2 class="section-title">Inscrições LPLU</h2>
-
-    <p class="subtitle">
-        Preenche o formulário para inscreveres a tua equipa.
-    </p>
-
-    <form id="signupForm">
-
-        <label>Nome do responsável</label>
-        <input id="regName" required>
-
-        <label>Nome da equipa</label>
-        <input id="regTeam" required>
-
-        <label>Contacto Discord / WhatsApp</label>
-        <input id="regContact" required>
-
-        <label>Plataforma</label>
-        <select id="regPlatform">
-            <option>PlayStation</option>
-            <option>Xbox</option>
-            <option>PC</option>
-            <option>Outra</option>
-        </select>
-
-        <label>Jogo / competição</label>
-        <input id="regGame">
-
-        <label>Informações adicionais</label>
-        <textarea id="regMessage"></textarea>
-
-        <button class="btn" type="submit">
-            Enviar inscrição
-        </button>
-
-    </form>
-
-</section>
-
-<!-- =================================
-     LOJA
-================================= -->
-
-<section id="shop" class="page">
-
-    <h2 class="section-title">Loja LPLU</h2>
-
-    <p class="subtitle">
-        Produtos e artigos oficiais da comunidade.
-    </p>
-
-    <div id="products" class="cards"></div>
-
-    <div class="cart-box">
-
-        <h2>🛒 Carrinho de compras</h2>
-
-        <div id="cartItems"></div>
-
-        <h2 id="cartTotal" style="margin-top:15px;">
-            Total: 0,00 €
-        </h2>
-
-        <h3 class="section-title">Método de pagamento</h3>
-
-        <div class="payment-options">
-
-            <label class="payment-option">
-                <input type="radio" name="payment" value="MB WAY">
-                MB WAY
-            </label>
-
-            <label class="payment-option">
-                <input type="radio" name="payment" value="PayPal">
-                PayPal
-            </label>
-
-            <label class="payment-option">
-                <input type="radio" name="payment" value="Cartão bancário">
-                Cartão bancário
-            </label>
-
-            <label class="payment-option">
-                <input type="radio" name="payment" value="Transferência bancária">
-                Transferência bancária
-            </label>
-
-        </div>
-
-        <button class="btn" onclick="checkout()">
-            Finalizar encomenda
-        </button>
-
-        <div class="notice">
-            Os pagamentos são demonstrativos nesta versão.
-            Para pagamentos reais, será necessária integração com
-            um prestador de pagamentos e configuração da conta da organização.
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =================================
-     CONTACTO
-================================= -->
-
-<section id="contact" class="page">
-
-    <h2 class="section-title">Contacto</h2>
-
-    <p class="subtitle">Contacta a organização LPLU.</p>
-
-    <form id="contactForm">
-
-        <label>Nome</label>
-        <input id="contactName" required>
-
-        <label>Assunto</label>
-        <input id="contactSubject" required>
-
-        <label>Mensagem</label>
-        <textarea id="contactMessage" required></textarea>
-
-        <button class="btn" type="submit">
-            Enviar mensagem
-        </button>
-
-    </form>
-
-</section>
-
-<!-- =================================
-     ADMINISTRAÇÃO
-================================= -->
-
-<section id="admin" class="page">
-
-    <h2 class="section-title">Administração</h2>
-
-    <p class="subtitle">Painel de gestão LPLU.</p>
-
-    <div id="adminLogin">
-
-        <form id="loginForm">
-
-            <label>Palavra-passe de administrador</label>
-            <input type="password" id="adminPassword" required>
-
-            <button class="btn" type="submit">Entrar</button>
-
-        </form>
-
-    </div>
-
-    <div id="adminContent" class="hidden">
-
-        <div class="notice">
-            Painel administrativo de demonstração.
-        </div>
-
-        <button class="btn secondary" onclick="adminLogout()">
-            Terminar sessão
-        </button>
-
-        <!-- ADICIONAR NOTÍCIA -->
-        <h2 class="section-title">Publicar notícia</h2>
-
-        <form id="newsForm">
-
-            <label>Título</label>
-            <input id="newsTitle" required>
-
-            <label>Texto da notícia</label>
-            <textarea id="newsText" required></textarea>
-
-            <button class="btn" type="submit">
-                Publicar
-            </button>
-
-        </form>
-
-        <!-- ADICIONAR PRODUTO -->
-        <h2 class="section-title">Adicionar produto</h2>
-
-        <form id="productForm">
-
-            <label>Nome</label>
-            <input id="prodName" required>
-
-            <label>Descrição</label>
-            <textarea id="prodDescription"></textarea>
-
-            <label>Preço (€)</label>
-            <input id="prodPrice" type="number" step="0.01" min="0" required>
-
-            <label>Emoji do produto</label>
-            <input id="prodEmoji" placeholder="🎮">
-
-            <button class="btn" type="submit">
-                Adicionar produto
-            </button>
-
-        </form>
-
-        <!-- INSCRIÇÕES -->
-        <h2 class="section-title">Inscrições recebidas</h2>
-
-        <div id="adminRegistrations"></div>
-
-        <!-- NOTÍCIAS -->
-        <h2 class="section-title">Gerir notícias</h2>
-
-        <div id="adminNews"></div>
-
-        <!-- PRODUTOS -->
-        <h2 class="section-title">Gerir produtos</h2>
-
-        <div id="adminProducts"></div>
-
-    </div>
-
-</section>
-
-</main>
+<main id="main"></main>
 
 <footer>
-
-    <p><strong>LIGA PRIME LEVEL UP · LPLU</strong></p>
-
-    <p>Sente a emoção. Compete em português.</p>
-
-    <p>© 2026 Liga Prime Level Up</p>
-
+<strong id="footerTitle">LIGA PRIME LEVEL UP · LPLU</strong>
+<p id="footerSlogan">Sente a emoção. Compete em português.</p>
+<p id="footerCopyright">© 2026 Liga Prime Level Up</p>
 </footer>
 
 <script>
-
-/* =========================================
-   CONFIGURAÇÕES
-========================================= */
-
-const ADMIN_PASSWORD = "LPLU2026";
-
-/*
-   Palavra-passe de demonstração.
-   Não é segura para uma instalação pública real.
-*/
-
-const WHATSAPP_NUMBER = "33695872856";
-
-/* =========================================
-   DADOS LOCAIS
-========================================= */
-
-function loadData(key, fallback) {
-    try {
-        const value = localStorage.getItem(key);
-        return value ? JSON.parse(value) : fallback;
-    } catch (error) {
-        return fallback;
-    }
-}
-
-function saveData(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
-let news = loadData("lplu_news", [
-    {
-        title: "Bem-vindo à Liga Prime Level Up",
-        text: "A LPLU está preparada para receber jogadores e equipas. Acompanha as novidades da liga!",
-        date: new Date().toLocaleDateString("pt-PT")
-    }
-]);
-
-let products = loadData("lplu_products", [
-    {
-        id: 1,
-        name: "T-shirt LPLU",
-        description: "T-shirt oficial da comunidade.",
-        price: 15,
-        emoji: "👕"
-    },
-    {
-        id: 2,
-        name: "Caneca LPLU",
-        description: "Caneca da Liga Prime Level Up.",
-        price: 10,
-        emoji: "☕"
-    },
-    {
-        id: 3,
-        name: "Sweat LPLU",
-        description: "Sweatshirt da comunidade.",
-        price: 30,
-        emoji: "🧥"
-    }
-]);
-
-let registrations = loadData("lplu_registrations", []);
-let cart = loadData("lplu_cart", []);
-
-/* =========================================
-   NAVEGAÇÃO
-========================================= */
-
-function goTo(page) {
-
-    document.querySelectorAll(".page").forEach(section => {
-        section.classList.remove("active");
-    });
-
-    document.querySelectorAll("#navigation button").forEach(button => {
-        button.classList.remove("active");
-    });
-
-    const selectedPage = document.getElementById(page);
-
-    if (selectedPage) {
-        selectedPage.classList.add("active");
-    }
-
-    const selectedButton = document.querySelector(
-        '#navigation button[data-page="' + page + '"]'
-    );
-
-    if (selectedButton) {
-        selectedButton.classList.add("active");
-    }
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-document.querySelectorAll("#navigation button").forEach(button => {
-    button.addEventListener("click", function() {
-        goTo(this.dataset.page);
-    });
-});
-
-/* =========================================
-   NOTÍCIAS
-========================================= */
-
-function renderNews() {
-
-    const allNews = document.getElementById("allNews");
-    const homeNews = document.getElementById("homeNews");
-    const adminNews = document.getElementById("adminNews");
-
-    allNews.innerHTML = "";
-    homeNews.innerHTML = "";
-    adminNews.innerHTML = "";
-
-    if (news.length === 0) {
-
-        allNews.innerHTML = "<p>Sem notícias publicadas.</p>";
-        homeNews.innerHTML = "<p>Sem notícias publicadas.</p>";
-
-        return;
-    }
-
-    news.forEach((item, index) => {
-
-        const newsHTML = `
-            <div class="news-item">
-                <h3>${escapeHTML(item.title)}</h3>
-                <p>${escapeHTML(item.text)}</p>
-                <div class="small">${escapeHTML(item.date || "")}</div>
-            </div>
-        `;
-
-        allNews.innerHTML += newsHTML;
-
-        if (index < 3) {
-            homeNews.innerHTML += newsHTML;
-        }
-
-        adminNews.innerHTML += `
-            <div class="card">
-                <h3>${escapeHTML(item.title)}</h3>
-                <p>${escapeHTML(item.text)}</p>
-                <p class="small">${escapeHTML(item.date || "")}</p>
-
-                <button class="btn secondary"
-                    onclick="deleteNews(${index})">
-                    Eliminar notícia
-                </button>
-            </div>
-        `;
-    });
-}
-
-document.getElementById("newsForm").addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-    const title = document.getElementById("newsTitle").value.trim();
-    const text = document.getElementById("newsText").value.trim();
-
-    news.unshift({
-        title: title,
-        text: text,
-        date: new Date().toLocaleDateString("pt-PT")
-    });
-
-    saveData("lplu_news", news);
-
-    this.reset();
-
-    renderNews();
-
-    alert("Notícia publicada com sucesso!");
-});
-
-function deleteNews(index) {
-
-    if (!confirm("Tens a certeza que queres eliminar esta notícia?")) {
-        return;
-    }
-
-    news.splice(index, 1);
-
-    saveData("lplu_news", news);
-
-    renderNews();
-}
-
-/* =========================================
-   LOJA
-========================================= */
-
-function renderProducts() {
-
-    const container = document.getElementById("products");
-    const adminContainer = document.getElementById("adminProducts");
-
-    container.innerHTML = "";
-    adminContainer.innerHTML = "";
-
-    products.forEach(product => {
-
-        container.innerHTML += `
-            <div class="card">
-
-                <div class="product-image">
-                    ${escapeHTML(product.emoji || "🎮")}
-                </div>
-
-                <h3>${escapeHTML(product.name)}</h3>
-
-                <p>${escapeHTML(product.description || "")}</p>
-
-                <div class="price">
-                    ${Number(product.price).toFixed(2)} €
-                </div>
-
-                <button class="btn"
-                    onclick="addToCart(${product.id})">
-                    Adicionar ao carrinho
-                </button>
-
-            </div>
-        `;
-
-        adminContainer.innerHTML += `
-            <div class="card">
-
-                <h3>${escapeHTML(product.name)}</h3>
-
-                <p>Preço: ${Number(product.price).toFixed(2)} €</p>
-
-                <button class="btn secondary"
-                    onclick="deleteProduct(${product.id})">
-                    Eliminar produto
-                </button>
-
-            </div>
-        `;
-    });
-
-    renderCart();
-}
-
-document.getElementById("productForm").addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-    const name = document.getElementById("prodName").value.trim();
-    const description = document.getElementById("prodDescription").value.trim();
-    const price = Number(document.getElementById("prodPrice").value);
-    const emoji = document.getElementById("prodEmoji").value.trim() || "🎮";
-
-    if (!name || !Number.isFinite(price) || price < 0) {
-        alert("Verifica o nome e o preço do produto.");
-        return;
-    }
-
-    products.push({
-        id: Date.now(),
-        name,
-        description,
-        price,
-        emoji
-    });
-
-    saveData("lplu_products", products);
-
-    this.reset();
-
-    renderProducts();
-
-    alert("Produto adicionado à loja!");
-});
-
-function deleteProduct(id) {
-
-    if (!confirm("Eliminar este produto?")) return;
-
-    products = products.filter(product => product.id !== id);
-
-    saveData("lplu_products", products);
-
-    renderProducts();
-}
-
-function addToCart(id) {
-
-    const product = products.find(item => item.id === id);
-
-    if (!product) return;
-
-    const existing = cart.find(item => item.id === id);
-
-    if (existing) {
-        existing.quantity++;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: 1
-        });
-    }
-
-    saveData("lplu_cart", cart);
-
-    renderCart();
-
-    alert("Produto adicionado ao carrinho!");
-}
-
-function removeFromCart(id) {
-
-    cart = cart.filter(item => item.id !== id);
-
-    saveData("lplu_cart", cart);
-
-    renderCart();
-}
-
-function renderCart() {
-
-    const container = document.getElementById("cartItems");
-    const totalDisplay = document.getElementById("cartTotal");
-
-    container.innerHTML = "";
-
-    let total = 0;
-
-    if (cart.length === 0) {
-        container.innerHTML = "<p>O carrinho está vazio.</p>";
-    }
-
-    cart.forEach(item => {
-
-        const subtotal = item.price * item.quantity;
-
-        total += subtotal;
-
-        container.innerHTML += `
-            <div class="cart-row">
-
-                <div>
-                    ${escapeHTML(item.name)}
-                    × ${item.quantity}
-
-                    <div class="small">
-                        ${subtotal.toFixed(2)} €
-                    </div>
-                </div>
-
-                <button class="btn secondary"
-                    onclick="removeFromCart(${item.id})">
-                    Remover
-                </button>
-
-            </div>
-        `;
-    });
-
-    totalDisplay.textContent =
-        "Total: " + total.toFixed(2) + " €";
-}
-
-/* CHECKOUT DEMONSTRATIVO */
-
-function checkout() {
-
-    if (cart.length === 0) {
-        alert("O carrinho está vazio.");
-        return;
-    }
-
-    const selectedPayment = document.querySelector(
-        'input[name="payment"]:checked'
-    );
-
-    if (!selectedPayment) {
-        alert("Escolhe um método de pagamento.");
-        return;
-    }
-
-    let total = 0;
-
-    let message = "ENCOMENDA LPLU\n\n";
-
-    cart.forEach(item => {
-
-        const subtotal = item.price * item.quantity;
-
-        total += subtotal;
-
-        message +=
-            item.name +
-            " x " + item.quantity +
-            " = " + subtotal.toFixed(2) + " €\n";
-    });
-
-    message += "\nTotal: " + total.toFixed(2) + " €";
-    message += "\nPagamento escolhido: " + selectedPayment.value;
-    message += "\nPedido para confirmação.";
-
-    const url =
-        "https://wa.me/" +
-        WHATSAPP_NUMBER +
-        "?text=" +
-        encodeURIComponent(message);
-
-    window.open(url, "_blank");
-}
-
-/* =========================================
-   INSCRIÇÕES
-========================================= */
-
-document.getElementById("signupForm").addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-    const registration = {
-        name: document.getElementById("regName").value.trim(),
-        team: document.getElementById("regTeam").value.trim(),
-        contact: document.getElementById("regContact").value.trim(),
-        platform: document.getElementById("regPlatform").value,
-        game: document.getElementById("regGame").value.trim(),
-        message: document.getElementById("regMessage").value.trim(),
-        date: new Date().toLocaleDateString("pt-PT")
-    };
-
-    registrations.push(registration);
-
-    saveData("lplu_registrations", registrations);
-
-    const message =
-        "INSCRIÇÃO LPLU\n\n" +
-        "Responsável: " + registration.name + "\n" +
-        "Equipa: " + registration.team + "\n" +
-        "Contacto: " + registration.contact + "\n" +
-        "Plataforma: " + registration.platform + "\n" +
-        "Jogo: " + registration.game + "\n" +
-        "Mensagem: " + registration.message;
-
-    window.open(
-        "https://wa.me/" +
-        WHATSAPP_NUMBER +
-        "?text=" +
-        encodeURIComponent(message),
-        "_blank"
-    );
-
-    this.reset();
-
-    renderRegistrations();
-
-    alert("Inscrição guardada neste navegador!");
-});
-
-/* =========================================
-   CONTACTO
-========================================= */
-
-document.getElementById("contactForm").addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-    const name = document.getElementById("contactName").value.trim();
-    const subject = document.getElementById("contactSubject").value.trim();
-    const message = document.getElementById("contactMessage").value.trim();
-
-    const text =
-        "CONTACTO LPLU\n\n" +
-        "Nome: " + name + "\n" +
-        "Assunto: " + subject + "\n" +
-        "Mensagem: " + message;
-
-    window.open(
-        "https://wa.me/" +
-        WHATSAPP_NUMBER +
-        "?text=" +
-        encodeURIComponent(text),
-        "_blank"
-    );
-
-    this.reset();
-});
-
-/* =========================================
-   ADMINISTRAÇÃO
-========================================= */
-
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-
-    e.preventDefault();
-
-    const password = document.getElementById("adminPassword").value;
-
-    if (password === ADMIN_PASSWORD) {
-
-        document.getElementById("adminLogin").classList.add("hidden");
-
-        document.getElementById("adminContent").classList.remove("hidden");
-
-        renderRegistrations();
-        renderNews();
-        renderProducts();
-
-        alert("Sessão de demonstração iniciada!");
-
-    } else {
-
-        alert("Palavra-passe incorreta!");
-
-    }
-});
-
-function adminLogout() {
-
-    document.getElementById("adminLogin").classList.remove("hidden");
-
-    document.getElementById("adminContent").classList.add("hidden");
-
-    document.getElementById("adminPassword").value = "";
-}
-
-function renderRegistrations() {
-
-    const container = document.getElementById("adminRegistrations");
-
-    container.innerHTML = "";
-
-    if (registrations.length === 0) {
-        container.innerHTML = "<p>Sem inscrições recebidas.</p>";
-        return;
-    }
-
-    registrations.forEach((item, index) => {
-
-        container.innerHTML += `
-            <div class="card">
-
-                <h3>${escapeHTML(item.team)}</h3>
-
-                <p><strong>Responsável:</strong>
-                ${escapeHTML(item.name)}</p>
-
-                <p><strong>Contacto:</strong>
-                ${escapeHTML(item.contact)}</p>
-
-                <p><strong>Plataforma:</strong>
-                ${escapeHTML(item.platform)}</p>
-
-                <p><strong>Jogo:</strong>
-                ${escapeHTML(item.game)}</p>
-
-                <p><strong>Mensagem:</strong>
-                ${escapeHTML(item.message)}</p>
-
-                <p class="small">${escapeHTML(item.date)}</p>
-
-                <button class="btn secondary"
-                    onclick="deleteRegistration(${index})">
-                    Eliminar inscrição
-                </button>
-
-            </div>
-        `;
-    });
-}
-
-function deleteRegistration(index) {
-
-    if (!confirm("Eliminar esta inscrição?")) return;
-
-    registrations.splice(index, 1);
-
-    saveData("lplu_registrations", registrations);
-
-    renderRegistrations();
-}
-
-/* =========================================
-   MÚSICA YOUTUBE
-========================================= */
-
-/*
-   ID do vídeo enviado:
-   b-GMw-YRsMY
-
-   Para adicionar outras músicas:
-   basta adicionar outros IDs à playlist.
-*/
-
-const musicPlaylist = [
-    "b-GMw-YRsMY"
+/* =========================
+   CONFIGURAÇÕES E DADOS
+========================= */
+const ADMIN_PASSWORD="LPLU2026"; // Demonstração: não é seguro em site público
+const WHATSAPP="33695872856"; // Alterar para o WhatsApp da organização
+const PAGES=[
+ ["home","Início"],["news","Notícias"],["tournaments","Torneios"],
+ ["standings","Classificações"],["calendar","Calendário"],
+ ["teams","Equipas"],["players","Jogadores"],
+ ["transfers","Transferências"],["results","Resultados"],
+ ["live","LIVE"],["signup","Inscrições"],["shop","Loja"],
+ ["contact","Contacto"],["admin","Admin"]
 ];
-
-let currentMusic = -1;
-
-function playRandomMusic() {
-
-    if (!musicPlaylist.length) return;
-
-    let randomIndex = Math.floor(
-        Math.random() * musicPlaylist.length
-    );
-
-    if (
-        musicPlaylist.length > 1 &&
-        randomIndex === currentMusic
-    ) {
-        randomIndex =
-            (randomIndex + 1) % musicPlaylist.length;
-    }
-
-    currentMusic = randomIndex;
-
-    const videoID = musicPlaylist[currentMusic];
-
-    const player = document.getElementById("musicPlayer");
-
-    player.src =
-        "https://www.youtube.com/embed/" +
-        videoID +
-        "?autoplay=1&loop=1&playlist=" +
-        musicPlaylist.join(",") +
-        "&controls=1&playsinline=1";
+const DEFAULT={
+ settings:{
+  title:"LIGA PRIME LEVEL UP",subtitle:"COMPETIÇÃO · COMUNIDADE · GAMING",
+  slogan:"Sente a emoção. Compete em português.",
+  intro:"A Liga Prime Level Up é uma comunidade competitiva de gaming. Junta-te à comunidade, representa a tua equipa e luta pela vitória.",
+  logo:"logo-levelup.png",banner:"",background:"",
+  red:"#ff202d",red2:"#99000a",whatsapp:WHATSAPP,
+  footer:"© 2026 Liga Prime Level Up",
+  music:"b-GMw-YRsMY",
+  paypal:"",mbway:"",card:""
+ },
+ news:[{title:"Bem-vindo à Liga Prime Level Up",text:"A LPLU está preparada para receber jogadores e equipas. Acompanha as novidades!",date:new Date().toLocaleDateString("pt-PT")}],
+ products:[
+  {id:1,name:"T-shirt LPLU",description:"T-shirt oficial da comunidade.",price:15,emoji:"👕",stock:100,active:true},
+  {id:2,name:"Caneca LPLU",description:"Caneca Liga Prime Level Up.",price:10,emoji:"☕",stock:100,active:true},
+  {id:3,name:"Sweat LPLU",description:"Sweatshirt da comunidade.",price:30,emoji:"🧥",stock:100,active:true}
+ ],
+ lives:[],registrations:[],orders:[],teams:[],players:[],transfers:[],results:[],calendar:[],
+ standings:[],tournaments:[
+  {name:"Liga Prime",description:"Competição principal da liga.",format:"Liga e Playoffs"},
+  {name:"Torneio Cup",description:"Competição eliminatória.",format:"Knockout"},
+  {name:"Eventos especiais",description:"Eventos e torneios comunitários.",format:"A definir"}
+ ]
+};
+function load(){
+ try{
+  const old=JSON.parse(localStorage.getItem("lplu_all"));
+  if(old)return Object.assign({},DEFAULT,old,{settings:Object.assign({},DEFAULT.settings,old.settings||{})});
+ }catch(e){}
+ // Import older data keys, if present
+ const d=JSON.parse(JSON.stringify(DEFAULT));
+ try{d.news=JSON.parse(localStorage.getItem("lplu_news"))||d.news}catch(e){}
+ try{d.products=JSON.parse(localStorage.getItem("lplu_products"))||d.products}catch(e){}
+ try{d.registrations=JSON.parse(localStorage.getItem("lplu_registrations"))||[]}catch(e){}
+ try{d.cart=JSON.parse(localStorage.getItem("lplu_cart"))||[]}catch(e){}
+ return d;
 }
-
-function changeMusic() {
-    playRandomMusic();
+let data=load();
+let cart=data.cart||[];
+let admin=false;
+let page="home";
+function save(){data.cart=cart;localStorage.setItem("lplu_all",JSON.stringify(data))}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function money(n){return Number(n||0).toLocaleString("pt-PT",{style:"currency",currency:"EUR"})}
+function nav(){
+ document.getElementById("nav").innerHTML=PAGES.map(([id,label])=>
+ `<button data-page="${id}" class="${page===id?"active":""}" onclick="go('${id}')">${label}</button>`).join("");
 }
-
-/*
-   Tentativa de autoplay.
-   O navegador pode bloquear o áudio sem interação.
-*/
-
-window.addEventListener("load", function() {
-
-    setTimeout(function() {
-        playRandomMusic();
-    }, 1000);
-
-});
-
-/* =========================================
-   SEGURANÇA DE TEXTO / HTML
-========================================= */
-
-function escapeHTML(value) {
-
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+function go(p){page=p;render();window.scrollTo({top:0,behavior:"smooth"})}
+function applySettings(){
+ const s=data.settings;
+ document.documentElement.style.setProperty("--red",s.red||"#ff202d");
+ document.documentElement.style.setProperty("--red2",s.red2||"#99000a");
+ document.getElementById("brandTitle").innerHTML=esc(s.title||DEFAULT.settings.title);
+ document.getElementById("brandSubtitle").textContent=s.subtitle||"";
+ document.getElementById("logo").src=s.logo||"";
+ document.getElementById("footerTitle").textContent=s.title||DEFAULT.settings.title;
+ document.getElementById("footerSlogan").textContent=s.slogan||"";
+ document.getElementById("footerCopyright").textContent=s.footer||"";
+ if(s.background)document.body.style.setProperty("--bg-image",`url("${s.background}")`);
 }
-
-/* =========================================
-   INICIALIZAÇÃO
-========================================= */
-
-renderNews();
-renderProducts();
-renderCart();
-renderRegistrations();
-
+function table(headers,rows){
+ return `<div class="tablewrap"><table><thead><tr>${headers.map(x=>`<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function newsCards(list,adminMode=false){
+ if(!list.length)return "<p>Sem notícias publicadas.</p>";
+ return list.map((n,i)=>`<div class="news"><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p><div class="small">${esc(n.date||"")}</div>${adminMode?`<button class="btn secondary" onclick="del('news',${i})">Eliminar</button>`:""}</div>`).join("");
+}
+function renderHome(){
+ return `<div class="hero" ${data.settings.banner?`style="background-image:url('${esc(data.settings.banner)}');background-size:cover;background-position:center"`:""}>
+ <h1>${esc(data.settings.slogan||"SENTE A EMOÇÃO")}<br><span>COMPETE EM PORTUGUÊS</span></h1><p>NA LIGA PRIME LEVEL UP</p></div>
+ <h2 class="title">Bem-vindo à LPLU</h2><p class="subtitle">${esc(data.settings.intro)}</p>
+ <h2 class="title">Últimas notícias</h2>${newsCards(data.news.slice(0,3))}
+ <h2 class="title">Torneios</h2><div class="cards">${data.tournaments.map(t=>`<div class="card"><h3>🏆 ${esc(t.name)}</h3><p>${esc(t.description)}</p><p>Formato: ${esc(t.format)}</p><button class="btn" onclick="go('signup')">Inscrever equipa</button></div>`).join("")}</div>
+ <h2 class="title">Música LPLU 🎵</h2><div class="card"><p>Música para acompanhar o universo LPLU.</p>${data.settings.music?`<div style="aspect-ratio:16/9;max-width:850px;margin:20px auto"><iframe style="width:100%;height:100%;border:2px solid var(--red);border-radius:10px" src="https://www.youtube.com/embed/${esc(data.settings.music)}?playsinline=1" allowfullscreen></iframe></div>`:""}<p class="small">O navegador pode bloquear reprodução automática.</p></div>`;
+}
+function renderLives(){
+ const cards=data.lives.filter(x=>x.active!==false).map((l,i)=>`<div class="card live"><h3><span class="livebadge">🔴 LIVE</span> ${esc(l.player)}</h3><p>Equipa: ${esc(l.team||"—")}</p><p>Jogo: ${esc(l.game||"—")}</p><p>Plataforma: ${esc(l.platform||"—")}</p><a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">▶ Ver Live</a></div>`).join("");
+ return `<h2 class="title">🔴 Lives dos jogadores</h2><p class="subtitle">Estás a transmitir? Partilha a tua live com a comunidade.</p>
+ <form onsubmit="submitLive(event)"><label>Nome do jogador</label><input id="livePlayer" required><label>Equipa</label><input id="liveTeam"><label>Jogo / torneio</label><input id="liveGame"><label>Plataforma</label><select id="livePlatform"><option>Twitch</option><option>YouTube</option><option>Kick</option><option>Facebook</option><option>Outra</option></select><label>Link da transmissão</label><input id="liveUrl" type="url" placeholder="https://..." required><button class="btn">Enviar Live</button></form>
+ <h2 class="title">Transmissões ativas</h2><div class="cards">${cards||"<p>Não há lives submetidas neste momento.</p>"}</div>`;
+}
+function renderShop(){
+ const prods=data.products.filter(p=>p.active!==false);
+ return `<h2 class="title">Loja LPLU</h2><p class="subtitle">Produtos oficiais da comunidade.</p>
+ <div class="cards">${prods.map(p=>`<div class="card"><div style="height:120px;display:grid;place-items:center;font-size:55px;background:#171717;border-radius:8px">${esc(p.emoji||"🎮")}</div><h3>${esc(p.name)}</h3><p>${esc(p.description||"")}</p><p class="small">Stock: ${esc(p.stock??"—")}</p><div class="price">${money(p.price)}</div><button class="btn" onclick="addCart(${Number(p.id)})">Adicionar ao carrinho</button></div>`).join("")}</div>
+ <div class="cart"><h2>🛒 Carrinho de compras</h2>${renderCart()}
+ <h3 class="title">Método de pagamento</h3><form onsubmit="checkout(event)">
+ <div class="payment">
+ <label><input type="radio" name="pay" value="MB WAY" required> MB WAY</label>
+ <label><input type="radio" name="pay" value="PayPal"> PayPal</label>
+ <label><input type="radio" name="pay" value="Cartão bancário"> Cartão bancário</label>
+ </div><label>Nome do cliente</label><input id="buyerName" required>
+ <label>Contacto (telefone/email)</label><input id="buyerContact" required>
+ <label>Morada para envio (se aplicável)</label><textarea id="buyerAddress"></textarea>
+ <button class="btn">Finalizar encomenda</button></form>
+ <div class="notice">Checkout demonstrativo: a encomenda será enviada à organização por WhatsApp para confirmação. Não são processados pagamentos reais nesta versão.</div></div>`;
+}
+function renderCart(){
+ if(!cart.length)return "<p>O carrinho está vazio.</p>";
+ let total=0;
+ return cart.map((c,i)=>{let p=data.products.find(x=>x.id==c.id);if(!p)return "";let sub=p.price*c.qty;total+=sub;
+ return `<div class="cartrow"><div><strong>${esc(p.name)}</strong><p>${money(p.price)} × ${c.qty} = ${money(sub)}</p></div><div><button onclick="qty(${i},-1)">−</button> <button onclick="qty(${i},1)">+</button> <button onclick="removeCart(${i})">Remover</button></div></div>`}).join("")+`<h2 style="margin-top:15px">Total: ${money(total)}</h2>`;
+}
+function addCart(id){
+ const p=data.products.find(x=>x.id===id);if(!p)return;
+ const existing=cart.find(x=>x.id===id);
+ if(existing)existing.qty++;else cart.push({id,qty:1});
+ save();render();alert("Produto adicionado ao carrinho!");
+}
+function qty(i,n){cart[i].qty+=n;if(cart[i].qty<=0)cart.splice(i,1);save();render()}
+function removeCart(i){cart.splice(i,1);save();render()}
+function checkout(e){
+ e.preventDefault();if(!cart.length){alert("Carrinho vazio");return}
+ const pay=document.querySelector('input[name="pay"]:checked')?.value;if(!pay){alert("Escolhe pagamento");return}
+ const buyer={name:document.getElementById("buyerName").value,contact:document.getElementById("buyerContact").value,address:document.getElementById("buyerAddress").value};
+ let total=0,lines=[];
+ cart.forEach(c=>{const p=data.products.find(x=>x.id===c.id);if(!p)return;const sub=p.price*c.qty;total+=sub;lines.push(`${p.name} × ${c.qty} — ${money(sub)}`)});
+ const order={id:Date.now(),date:new Date().toLocaleString("pt-PT"),buyer,payment:pay,items:cart.map(c=>({...c})),total,status:"Pendente"};
+ data.orders.push(order);save();
+ const msg=`ENCOMENDA LPLU\nPedido: ${order.id}\nCliente: ${buyer.name}\nContacto: ${buyer.contact}\nMorada: ${buyer.address}\n\n${lines.join("\n")}\n\nTOTAL: ${money(total)}\nPagamento: ${pay}\nEstado: PENDENTE — aguarda confirmação.`;
+ window.open(`https://wa.me/${data.settings.whatsapp||WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank");
+ cart=[];save();render();alert("Encomenda registada. Aguarda confirmação da organização.");
+}
+function signup(){
+ return `<h2 class="title">Inscrições LPLU</h2><p class="subtitle">Preenche para inscrever a tua equipa.</p>
+ <form onsubmit="submitSignup(event)"><label>Nome do responsável</label><input id="regName" required><label>Nome da equipa</label><input id="regTeam" required><label>Contacto Discord / WhatsApp</label><input id="regContact" required><label>Plataforma</label><select id="regPlatform"><option>PlayStation</option><option>Xbox</option><option>PC</option><option>Outra</option></select><label>Jogo / competição</label><input id="regGame"><label>Informações adicionais</label><textarea id="regMessage"></textarea><button class="btn">Enviar inscrição</button></form>`;
+}
+function submitSignup(e){
+ e.preventDefault();const r={name:regName.value,team:regTeam.value,contact:regContact.value,platform:regPlatform.value,game:regGame.value,message:regMessage.value,date:new Date().toLocaleDateString("pt-PT")};
+ data.registrations.push(r);save();
+ const msg=`INSCRIÇÃO LPLU\nResponsável: ${r.name}\nEquipa: ${r.team}\nContacto: ${r.contact}\nPlataforma: ${r.platform}\nJogo: ${r.game}\nMensagem: ${r.message}`;
+ window.open(`https://wa.me/${data.settings.whatsapp||WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank");
+ e.target.reset();alert("Inscrição guardada neste navegador.");
+}
+function submitLive(e){
+ e.preventDefault();const url=liveUrl.value.trim();if(!/^https?:\/\//i.test(url)){alert("Link inválido");return}
+ data.lives.unshift({player:livePlayer.value,team:liveTeam.value,game:liveGame.value,platform:livePlatform.value,url,active:true,date:new Date().toLocaleString("pt-PT")});
+ save();render();alert("Live submetida! Está disponível no site.");
+}
+function renderAdmin(){
+ if(!admin)return `<h2 class="title">Administração</h2><p class="subtitle">Painel de gestão LPLU. Entra para gerir o site.</p><form onsubmit="login(event)"><label>Palavra-passe de administrador</label><input type="password" id="pass" required><button class="btn">Entrar</button></form><div class="notice">A palavra-passe de demonstração está no código JavaScript. Não usar este sistema de login em produção.</div>`;
+ return `<h2 class="title">Painel de Administração</h2><button class="btn secondary" onclick="logout()">Terminar sessão</button><div class="notice">Painel local de demonstração. As alterações guardam-se neste navegador.</div>
+ <div class="admin-tabs">${["site","news","products","lives","registrations","orders","teams","players","calendar","results","transfers","standings","tournaments"].map(k=>`<button onclick="adminTab('${k}')">${k.toUpperCase()}</button>`).join("")}</div><div id="adminArea"></div>`;
+}
+let atab="site";
+function adminTab(k){atab=k;drawAdminArea()}
+function drawAdminArea(){
+ const el=document.getElementById("adminArea");if(!el)return;
+ if(atab==="site"){
+ const s=data.settings;
+ el.innerHTML=`<h2 class="title">Personalizar site</h2><form onsubmit="saveSettings(event)">
+ <label>Nome do site</label><input name="title" value="${esc(s.title)}">
+ <label>Subtítulo do menu</label><input name="subtitle" value="${esc(s.subtitle)}">
+ <label>Slogan</label><input name="slogan" value="${esc(s.slogan)}">
+ <label>Texto da página inicial</label><textarea name="intro">${esc(s.intro)}</textarea>
+ <label>Logótipo (URL ou caminho de imagem)</label><input name="logo" value="${esc(s.logo)}">
+ <label>Banner (URL ou caminho de imagem)</label><input name="banner" value="${esc(s.banner)}">
+ <label>Fundo do site (URL ou caminho de imagem)</label><input name="background" value="${esc(s.background)}">
+ <label>Cor principal</label><input type="color" name="red" value="${esc(s.red)}">
+ <label>Cor secundária</label><input type="color" name="red2" value="${esc(s.red2)}">
+ <label>WhatsApp da organização (indicativo internacional, sem +)</label><input name="whatsapp" value="${esc(s.whatsapp)}">
+ <label>ID do vídeo YouTube para música</label><input name="music" value="${esc(s.music)}">
+ <label>Texto do rodapé</label><input name="footer" value="${esc(s.footer)}">
+ <button class="btn">Guardar alterações</button><button type="button" class="btn secondary" onclick="resetSettings()">Repor padrão</button></form>
+ <div class="notice">Podes usar caminhos de ficheiros, por exemplo logo-levelup.png ou banner-lplu.png, se estiverem na mesma pasta que o HTML.</div>`;
+ }else{
+ const arr=data[atab]||[];
+ el.innerHTML=`<h2 class="title">Gerir ${atab}</h2><p class="subtitle">Edita os dados em formato JSON. Esta opção permite modificar, adicionar ou eliminar qualquer parâmetro desta secção.</p><textarea id="jsonEditor" style="min-height:400px;font-family:monospace">${esc(JSON.stringify(arr,null,2))}</textarea><button class="btn" onclick="saveJSON('${atab}')">Guardar ${atab}</button><button class="btn secondary" onclick="drawAdminArea()">Cancelar alterações</button><div class="notice">Aviso: mantém o formato JSON válido. Os campos id, name, title, price, date, etc. podem ser modificados conforme a estrutura de cada registo.</div>`;
+ }
+}
+function saveSettings(e){
+ e.preventDefault();const f=new FormData(e.target);for(const [k,v] of f.entries())data.settings[k]=v;save();applySettings();render();alert("Configurações guardadas!");
+}
+function resetSettings(){if(confirm("Repor as configurações padrão?")){data.settings={...DEFAULT.settings};save();applySettings();render()}}
+function saveJSON(k){
+ try{data[k]=JSON.parse(document.getElementById("jsonEditor").value);save();render();alert("Dados guardados!")}
+ catch(e){alert("JSON inválido. Corrige os erros e tenta novamente.")}
+}
+function login(e){e.preventDefault();if(pass.value===ADMIN_PASSWORD){admin=true;render();drawAdminArea();}else alert("Palavra-passe incorreta")}
+function logout(){admin=false;render()}
+function del(k,i){if(confirm("Eliminar este registo?")){data[k].splice(i,1);save();render();drawAdminArea()}}
+function adminPanel(){
+ if(!admin)return "";
+ return `<div class="adminbox"><h2>Admin — Gestão rápida</h2><p>Para gestão avançada de qualquer parâmetro, utiliza os separadores JSON do painel Admin.</p><button class="btn" onclick="go('admin')">Abrir painel Admin</button></div>`;
+}
+function renderPage(){
+ switch(page){
+ case "home":return renderHome();
+ case "news":return `<h2 class="title">Notícias</h2>${newsCards(data.news)}`;
+ case "tournaments":return `<h2 class="title">Torneios</h2><div class="cards">${data.tournaments.map(t=>`<div class="card"><h3>${esc(t.name)}</h3><p>${esc(t.description)}</p><p>Formato: ${esc(t.format)}</p><button class="btn" onclick="go('signup')">Inscrever</button></div>`).join("")}</div>`;
+ case "standings":return `<h2 class="title">Classificações</h2>${table(["#","Equipa","J","V","E","D","Pts"],data.standings.map((r,i)=>[i+1,r.team||r.name,r.played||0,r.wins||0,r.draws||0,r.losses||0,r.points||0]))`;
+ case "calendar":return `<h2 class="title">Calendário</h2>${table(["Data","Hora","Jogo","Competição"],data.calendar.map(r=>[r.date,r.time,r.match,r.competition]))}`;
+ case "teams":return `<h2 class="title">Equipas</h2><div class="cards">${data.teams.map(t=>`<div class="card"><h3>${esc(t.name)}</h3><p>${esc(t.description||"")}</p></div>`).join("")||"<p>Equipas em breve.</p>"}</div>`;
+ case "players":return `<h2 class="title">Jogadores</h2>${table(["Jogador","Equipa","Plataforma"],data.players.map(r=>[r.name,r.team,r.platform]))}`;
+ case "transfers":return `<h2 class="title">Transferências</h2>${table(["Jogador","Equipa anterior","Nova equipa","Data"],data.transfers.map(r=>[r.player,r.from,r.to,r.date]))}`;
+ case "results":return `<h2 class="title">Resultados</h2>${table(["Data","Equipa","Resultado","Adversário"],data.results.map(r=>[r.date,r.team,r.score,r.opponent]))}`;
+ case "live":return renderLives();
+ case "signup":return signup();
+ case "shop":return renderShop();
+ case "contact":return `<h2 class="title">Contacto</h2><form onsubmit="contact(event)"><label>Nome</label><input id="cName" required><label>Assunto</label><input id="cSubject" required><label>Mensagem</label><textarea id="cMessage" required></textarea><button class="btn">Enviar mensagem</button></form>`;
+ case "admin":return renderAdmin();
+ default:return renderHome();
+ }
+}
+function contact(e){e.preventDefault();const msg=`CONTACTO LPLU\nNome: ${cName.value}\nAssunto: ${cSubject.value}\nMensagem: ${cMessage.value}`;window.open(`https://wa.me/${data.settings.whatsapp||WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank");e.target.reset()}
+function render(){
+ applySettings();nav();document.getElementById("main").innerHTML=PAGES.map(([id])=>`<section class="page ${id===page?"active":""}" id="${id}">${id===page?renderPage():""}</section>`).join("");
+ if(page==="admin"&&admin)drawAdminArea();
+}
+render();
 </script>
-
 </body>
 </html>
