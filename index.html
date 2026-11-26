@@ -3,153 +3,103 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#111111">
-<title>Liga Prime Level Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08080c">
+<title>Liga Prime Level Up | Official</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root{
---bg:#090909;
---panel:#171717;
---red:#e32636;
---silver:#c7cbd1;
---muted:#9b9b9b;
+:root {
+ --red:#f20d32;
+ --black:#08080c;
+ --panel:#14141b;
+ --white:#fff;
+ --muted:#aaa;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{
-margin:0;
-background:linear-gradient(145deg,#090909,#1a1012);
-color:#f5f5f5;
-font:16px/1.5 Arial,sans-serif;
+ margin:0;background:var(--black);color:white;
+ font-family:Arial,Helvetica,sans-serif;
 }
 header{
-padding:28px 6%;
-border-bottom:1px solid #393939;
-background:#0d0d0df2;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:16px;
-flex-wrap:wrap;
+ position:sticky;top:0;z-index:100;
+ background:#08080cf5;border-bottom:2px solid var(--red);
+ padding:14px 4%;display:flex;
+ justify-content:space-between;align-items:center;gap:15px;
+ flex-wrap:wrap;
 }
-.brand{
-font-weight:900;
-letter-spacing:1px;
-font-size:clamp(20px,4vw,30px);
-}
+.brand{font-size:23px;font-weight:1000;font-style:italic}
 .brand span{color:var(--red)}
-nav{display:flex;gap:16px;flex-wrap:wrap}
-a{color:var(--silver);text-decoration:none}
-a:hover{color:#fff}
-.language{
-background:#171717;
-color:white;
-border:1px solid #777;
-padding:10px;
-border-radius:5px;
+nav{display:flex;gap:7px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;padding:9px;font-size:13px}
+nav a:hover{color:var(--red)}
+button,.btn{
+ background:var(--red);color:white;border:0;
+ border-radius:7px;padding:11px 16px;
+ font-weight:bold;cursor:pointer;text-decoration:none;
 }
+button:hover,.btn:hover{filter:brightness(1.2)}
+.secondary{background:#333}
+.danger{background:#850019}
+main{max-width:1350px;margin:auto;padding:20px}
 .hero{
-padding:76px 6% 60px;
-text-align:center;
-background:radial-gradient(ellipse at center,#50151c 0%,#171011 42%,transparent 75%);
+ min-height:490px;display:flex;align-items:center;
+ padding:50px 5%;position:relative;
+ background-size:cover;background-position:center;
+ background-image:linear-gradient(90deg,#000d,#0005),url('');
+ border-bottom:3px solid var(--red);
 }
-.kicker{
-color:var(--silver);
-letter-spacing:4px;
-text-transform:uppercase;
-font-size:12px;
-}
-.hero h1{
-font-size:clamp(36px,7vw,70px);
-line-height:1.02;
-margin:14px 0;
-}
+.hero h1{font-size:clamp(42px,7vw,78px);font-style:italic;margin:10px 0}
 .hero h1 span{color:var(--red)}
-.hero p{
-color:#ddd;
-margin:12px auto 24px;
-max-width:650px;
+.hero p{font-size:19px;max-width:550px}
+.section{margin:40px 0}
+.section h2{
+ border-left:5px solid var(--red);padding-left:13px;
+ font-size:26px;font-style:italic;text-transform:uppercase;
 }
-.btn{
-display:inline-block;
-border:0;
-background:var(--red);
-color:white;
-padding:13px 20px;
-border-radius:5px;
-font-weight:800;
-cursor:pointer;
-}
-main{
-max-width:1100px;
-margin:auto;
-padding:30px 20px;
-}
-.section-title{font-size:26px;margin:10px 0 18px}
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:16px;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:17px}
 .card{
-background:linear-gradient(150deg,#202020,#111);
-border:1px solid #3b3b3b;
-border-top:3px solid var(--red);
-border-radius:9px;
-padding:20px;
+ background:linear-gradient(140deg,#17171e,#0c0c11);
+ border:1px solid #ffffff20;border-left:3px solid var(--red);
+ border-radius:12px;padding:17px;overflow:hidden;
 }
-.card h3{margin:0 0 8px}
+.card img{width:100%;max-height:190px;object-fit:cover;border-radius:7px}
+.card h3{margin:12px 0 6px}
 .muted{color:var(--muted)}
-.tag{
-display:inline-block;
-color:var(--silver);
-border:1px solid #777;
-padding:3px 8px;
-border-radius:20px;
-font-size:12px;
+.tag{color:#ff3657;font-size:12px;font-weight:bold}
+input,select,textarea{
+ width:100%;padding:12px;margin:6px 0 13px;
+ border:1px solid #444;background:#202027;
+ border-radius:7px;color:white;
 }
-table{
-width:100%;
-border-collapse:collapse;
-background:#151515;
-border-radius:8px;
-overflow:hidden;
+label{display:block;font-weight:bold;font-size:14px}
+form{display:grid;gap:5px}
+.news-feature{
+ display:grid;grid-template-columns:1.5fr 1fr;gap:15px;
 }
-th,td{
-text-align:left;
-padding:12px;
-border-bottom:1px solid #333;
+.live-frame{width:100%;aspect-ratio:16/9;border:0}
+.price{font-size:23px;color:#ff3657;font-weight:bold}
+.cart{
+ position:fixed;right:15px;bottom:15px;z-index:150;
+ background:#15151c;border:2px solid var(--red);
+ border-radius:12px;padding:15px;width:280px;
+ box-shadow:0 0 25px #000;
 }
-th{color:var(--silver);background:#222}
-form{display:grid;gap:12px}
-input,select{
-width:100%;
-padding:12px;
-border-radius:5px;
-border:1px solid #555;
-background:#0c0c0c;
-color:#fff;
-}
-label{font-size:14px;color:#ddd}
-.notice{
-padding:12px;
-background:#241216;
-border-left:3px solid var(--red);
-color:#ddd;
-border-radius:4px;
-}
-footer{
-text-align:center;
-padding:28px;
-color:#888;
-border-top:1px solid #333;
-margin-top:30px;
-}
-@media(max-width:600px){
-header{padding:20px}
-nav{gap:10px;font-size:14px}
-.hero{padding:55px 20px}
-th,td{padding:9px;font-size:14px}
+.cart[hidden],#admin[hidden]{display:none}
+.cart-items{max-height:180px;overflow:auto}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.admin-item{background:#252530;padding:12px;margin:8px 0;border-radius:8px}
+footer{padding:35px;text-align:center;background:#08080c;border-top:2px solid var(--red)}
+[hidden]{display:none!important}
+@media(max-width:650px){
+ header{position:relative;justify-content:center}
+ nav{justify-content:center}
+ .hero{min-height:380px}
+ .news-feature{grid-template-columns:1fr}
+ main{padding:12px}
+ .cart{width:calc(100% - 30px)}
 }
 </style>
 </head>
@@ -157,391 +107,869 @@ th,td{padding:9px;font-size:14px}
 <body>
 
 <header>
-<div class="brand">LIGA PRIME <span>LEVEL UP</span></div>
-
-<nav>
-<a href="#torneios" data-i18n="tournaments">Torneios</a>
-<a href="#classificacao" data-i18n="ranking">Classificação</a>
-<a href="#calendario" data-i18n="calendar">Calendário</a>
-<a href="#inscricao" data-i18n="registration">Inscrição</a>
-</nav>
-
-<select class="language" id="languageSelector" aria-label="Idioma">
-<option value="pt">🇵🇹 Português</option>
-<option value="fr">🇫🇷 Français</option>
-<option value="en">🇬🇧 English</option>
-<option value="es">🇪🇸 Español</option>
-<option value="it">🇮🇹 Italiano</option>
-</select>
+ <div class="brand">LIGA PRIME <span>LEVEL UP</span></div>
+ <nav id="mainMenu">
+  <a href="#inicio">Início</a>
+  <a href="#noticias">Notícias</a>
+  <a href="#lives">Lives</a>
+  <a href="#torneios">Torneios</a>
+  <a href="#classificacoes">Classificações</a>
+  <a href="#loja">Loja</a>
+  <a href="#contacto">Contacto</a>
+  <a href="#admin">Admin</a>
+ </nav>
 </header>
 
-<section class="hero">
-<div class="kicker" data-i18n="competition">EA SPORTS FC 27 • Competição</div>
-
-<h1>
-<span data-i18n="play">JOGA.</span>
-<span data-i18n="compete">COMPETE.</span>
-<br>
-<span data-i18n="evolve">EVOLUI.</span>
-</h1>
-
-<p data-i18n="heroText">
-Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.
-</p>
-
-<a class="btn" href="#inscricao" data-i18n="join">INSCREVER-ME</a>
+<section class="hero" id="inicio">
+ <div>
+  <div class="tag">EA SPORTS FC 27 • FORTNITE • COD • CS</div>
+  <h1>JOGA. COMPETE.<br><span>EVOLUI.</span></h1>
+  <p>A tua plataforma de competição gaming. Descobre torneios, acompanha transmissões e conquista o teu lugar.</p>
+  <a href="#torneios" class="btn">VER TORNEIOS</a>
+  <a href="#loja" class="btn secondary">LOJA OFICIAL</a>
+ </div>
 </section>
 
 <main>
 
-<section id="torneios">
-<h2 class="section-title" data-i18n="tournaments">Torneios</h2>
+<!-- NOTÍCIAS -->
 
-<div class="grid">
-
-<article class="card">
-<span class="tag">1 contra 1</span>
-<h3 data-i18n="tournament1">Torneio 1v1</h3>
-<p class="muted" data-i18n="description1">
-Compete individualmente e conquista o topo da classificação.
-</p>
-</article>
-
-<article class="card">
-<span class="tag">2 contra 2</span>
-<h3 data-i18n="tournament2">Torneio 2v2</h3>
-<p class="muted" data-i18n="description2">
-Forma a tua dupla, combina estratégias e vence em equipa.
-</p>
-</article>
-
-<article class="card">
-<span class="tag" data-i18n="season">Temporada</span>
-<h3 data-i18n="league">Liga competitiva</h3>
-<p class="muted" data-i18n="description3">
-Acompanha os resultados e luta pela melhor posição.
-</p>
-</article>
-
-</div>
+<section class="section" id="noticias">
+ <h2>📰 Últimas notícias</h2>
+ <div id="newsContainer" class="grid">
+  <p class="muted">A carregar notícias...</p>
+ </div>
 </section>
 
-<section id="classificacao" style="margin-top:38px">
-<h2 class="section-title" data-i18n="ranking">Classificação</h2>
+<!-- LIVES -->
 
-<div class="notice" data-i18n="rankingNotice">
-A classificação será atualizada quando a organização registar resultados oficiais.
-</div>
-
-<table style="margin-top:12px">
-<thead>
-<tr>
-<th>#</th>
-<th data-i18n="playerTeam">Jogador / Equipa</th>
-<th>J</th>
-<th data-i18n="wins">V</th>
-<th>Pts</th>
-</tr>
-</thead>
-
-<tbody>
-<tr><td>1</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
-<tr><td>2</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
-<tr><td>3</td><td>A definir</td><td>0</td><td>0</td><td>0</td></tr>
-</tbody>
-</table>
+<section class="section" id="lives">
+ <h2>🔴 LPLU LIVE</h2>
+ <div id="liveContainer" class="grid">
+  <p class="muted">Próximas transmissões a anunciar.</p>
+ </div>
 </section>
 
-<section id="calendario" style="margin-top:38px">
-<h2 class="section-title" data-i18n="calendar">Calendário</h2>
+<!-- TORNEIOS -->
 
-<div class="card">
-<h3 data-i18n="nextMatches">Próximos jogos</h3>
-<p class="muted" data-i18n="calendarNotice">
-Os jogos e horários serão anunciados pela organização após a abertura das inscrições.
-</p>
-</div>
+<section class="section" id="torneios">
+ <h2>🏆 Competições</h2>
+ <div class="grid">
+  <article class="card">
+   <h3>EA SPORTS FC 27</h3>
+   <p>Competições 1v1, 2v2 e Pro Clubs 11v11.</p>
+   <span class="tag">INSCRIÇÕES</span>
+  </article>
+  <article class="card">
+   <h3>FORTNITE</h3>
+   <p>Competições individuais e por equipas.</p>
+   <span class="tag">INSCRIÇÕES</span>
+  </article>
+  <article class="card">
+   <h3>CALL OF DUTY</h3>
+   <p>Desafios e torneios competitivos.</p>
+   <span class="tag">INSCRIÇÕES</span>
+  </article>
+  <article class="card">
+   <h3>COUNTER-STRIKE</h3>
+   <p>Competições e equipas.</p>
+   <span class="tag">INSCRIÇÕES</span>
+  </article>
+ </div>
 </section>
 
-<section id="inscricao" style="margin-top:38px">
-<h2 class="section-title" data-i18n="registration">Pré-inscrição</h2>
+<section class="section" id="classificacoes">
+ <h2>📊 Classificações</h2>
+ <div id="standingsContainer" class="card">
+  Classificações a anunciar.
+ </div>
+</section>
 
-<div class="card">
-<p class="muted" data-i18n="formNotice">
-Preenche os dados para manifestar interesse em participar.
-</p>
+<!-- LOJA -->
 
-<form id="signup">
+<section class="section" id="loja">
+ <h2>🛒 LPLU OFFICIAL STORE</h2>
+ <p class="muted">Produtos oficiais vendidos exclusivamente pela Liga Prime Level Up.</p>
+ <div id="productsContainer" class="grid">
+  <p>A carregar loja...</p>
+ </div>
+</section>
 
-<label>
-<span data-i18n="nickname">Nome de jogador</span>
-<input name="player" required placeholder="O teu nickname">
-</label>
+<!-- CONTACTO -->
 
-<label>
-Email
-<input name="email" type="email" required placeholder="nome@email.com">
-</label>
+<section class="section" id="contacto">
+ <h2>📩 Contactar a LPLU</h2>
+ <div class="card">
+  <form id="contactForm">
+   <label>Nome<input id="contactName" required></label>
+   <label>Email<input id="contactEmail" type="email" required></label>
+   <label>Mensagem<textarea id="contactMessage" required></textarea></label>
+   <button>Enviar pelo WhatsApp</button>
+  </form>
+ </div>
+</section>
 
-<label>
-<span data-i18n="competitionType">Tipo de competição</span>
-<select name="mode">
-<option>1v1</option>
-<option>2v2</option>
-</select>
-</label>
+<!-- ADMINISTRAÇÃO -->
 
-<label>
-<span data-i18n="platform">Plataforma</span>
-<select name="platform">
-<option>PlayStation</option>
-<option>Xbox</option>
-<option>PC</option>
-</select>
-</label>
+<section class="section" id="admin">
+ <h2>🔐 Administração LPLU</h2>
 
-<button class="btn" type="submit" data-i18n="send">
-Enviar pré-inscrição
-</button>
+ <div class="card" id="loginBox">
+  <h3>Acesso reservado</h3>
+  <form id="loginForm">
+   <label>Email de administrador<input id="adminEmail" type="email" required></label>
+   <label>Palavra-passe<input id="adminPassword" type="password" required></label>
+   <button>ENTRAR</button>
+  </form>
+  <p id="loginMessage" class="muted"></p>
+ </div>
 
-<div id="message" class="muted" aria-live="polite"></div>
-</form>
-</div>
+ <div id="admin" hidden></div>
+
+ <div id="adminDashboard" hidden>
+
+  <div class="card">
+   <h3>PAINEL DE CONTROLO</h3>
+   <p>Gestão da Liga Prime Level Up</p>
+   <button class="secondary" id="logout">TERMINAR SESSÃO</button>
+  </div>
+
+  <div class="admin-grid">
+
+   <!-- NOTICIAS -->
+
+   <div class="card">
+    <h3>Publicar notícia</h3>
+    <form id="newsForm">
+     <label>Título<input id="newsTitle" required></label>
+     <label>Resumo<input id="newsExcerpt"></label>
+     <label>Conteúdo<textarea id="newsContent"></textarea></label>
+     <label>Imagem URL<input id="newsImage" type="url"></label>
+     <label><input id="newsPublished" type="checkbox" checked style="width:auto"> Publicar imediatamente</label>
+     <button>PUBLICAR NOTÍCIA</button>
+    </form>
+    <div id="adminNews"></div>
+   </div>
+
+   <!-- LIVES -->
+
+   <div class="card">
+    <h3>Adicionar transmissão</h3>
+    <form id="liveForm">
+     <label>Nome da transmissão<input id="liveTitle" required></label>
+     <label>Plataforma
+      <select id="livePlatform">
+       <option>YouTube</option>
+       <option>Twitch</option>
+      </select>
+     </label>
+     <label>URL de incorporação<input id="liveUrl" type="url" required></label>
+     <label>Data<input id="liveDate" type="datetime-local"></label>
+     <label><input id="liveActive" type="checkbox" style="width:auto"> Transmissão ativa</label>
+     <button>ADICIONAR LIVE</button>
+    </form>
+    <div id="adminLives"></div>
+   </div>
+
+   <!-- PRODUTOS -->
+
+   <div class="card">
+    <h3>Adicionar produto LPLU</h3>
+    <form id="productForm">
+     <label>Nome<input id="productName" required></label>
+     <label>Descrição<textarea id="productDescription"></textarea></label>
+     <label>Preço em euros<input id="productPrice" type="number" min="0" step="0.01" required></label>
+     <label>Stock<input id="productStock" type="number" min="0" required></label>
+     <label>Imagem URL<input id="productImage" type="url"></label>
+     <button>ADICIONAR PRODUTO</button>
+    </form>
+    <div id="adminProducts"></div>
+   </div>
+
+   <!-- PERSONALIZACAO -->
+
+   <div class="card">
+    <h3>Personalizar página inicial</h3>
+    <form id="settingsForm">
+     <label>Título principal<input id="settingTitle"></label>
+     <label>Subtítulo<input id="settingSubtitle"></label>
+     <label>Imagem de fundo (URL)<input id="settingBackground" type="url"></label>
+     <label>Cor principal
+      <input id="settingColor" type="color" value="#f20d32">
+     </label>
+     <button>GUARDAR ALTERAÇÕES</button>
+    </form>
+   </div>
+
+   <!-- UPLOAD DE IMAGEM -->
+
+   <div class="card">
+    <h3>Carregar imagem de fundo</h3>
+    <form id="backgroundUploadForm">
+     <label>Escolher imagem
+      <input type="file" id="backgroundFile" accept="image/*" required>
+     </label>
+     <button>CARREGAR PARA SUPABASE</button>
+    </form>
+   </div>
+
+   <!-- MENU -->
+
+   <div class="card">
+    <h3>Adicionar opção ao menu</h3>
+    <form id="menuForm">
+     <label>Nome<input id="menuLabel" required></label>
+     <label>Endereço<input id="menuUrl" placeholder="#nova-seccao" required></label>
+     <button>ADICIONAR AO MENU</button>
+    </form>
+    <div id="adminMenu"></div>
+   </div>
+
+   <!-- ENCOMENDAS -->
+
+   <div class="card">
+    <h3>Encomendas</h3>
+    <button type="button" id="loadOrders">CONSULTAR ENCOMENDAS</button>
+    <div id="adminOrders"></div>
+   </div>
+
+  </div>
+ </div>
 </section>
 
 </main>
 
-<footer data-i18n="footer">
-© 2026 Liga Prime Level Up • Preto, vermelho e prateado
+<!-- CARRINHO -->
+
+<div class="cart">
+ <strong>🛒 CARRINHO LPLU</strong>
+ <div id="cartItems" class="cart-items">
+  <p class="muted">Carrinho vazio.</p>
+ </div>
+ <p>Total: <strong id="cartTotal">0,00 €</strong></p>
+ <button id="checkoutButton">FINALIZAR COMPRA</button>
+</div>
+
+<footer>
+ <h3>LIGA PRIME <span style="color:#f20d32">LEVEL UP</span></h3>
+ JOGA. COMPETE. EVOLUI.
+ <p>© <span id="year"></span> Liga Prime Level Up</p>
 </footer>
 
 <script>
+const SUPABASE_URL =
+ "https://pqxporftocwziktqgurc.supabase.co";
 
-const translations = {
+const SUPABASE_KEY =
+ "sb_publishable_xg0bxlZ-zd5IZCtz7TDY-g_s9t1xAoR";
 
-pt:{
-tournaments:"Torneios",
-ranking:"Classificação",
-calendar:"Calendário",
-registration:"Pré-inscrição",
-competition:"EA SPORTS FC 27 • Competição",
-play:"JOGA.",
-compete:"COMPETE.",
-evolve:"EVOLUI.",
-heroText:"Entra em campo, desafia os melhores e prova o teu valor na Liga Prime Level Up.",
-join:"INSCREVER-ME",
-tournament1:"Torneio 1v1",
-tournament2:"Torneio 2v2",
-description1:"Compete individualmente e conquista o topo da classificação.",
-description2:"Forma a tua dupla, combina estratégias e vence em equipa.",
-season:"Temporada",
-league:"Liga competitiva",
-description3:"Acompanha os resultados e luta pela melhor posição.",
-rankingNotice:"A classificação será atualizada quando a organização registar resultados oficiais.",
-playerTeam:"Jogador / Equipa",
-wins:"V",
-nextMatches:"Próximos jogos",
-calendarNotice:"Os jogos e horários serão anunciados pela organização após a abertura das inscrições.",
-formNotice:"Preenche os dados para manifestar interesse em participar.",
-nickname:"Nome de jogador",
-competitionType:"Tipo de competição",
-platform:"Plataforma",
-send:"Enviar pré-inscrição",
-footer:"© 2026 Liga Prime Level Up • Preto, vermelho e prateado",
-success:"Demonstração: os dados não foram enviados nem guardados."
-},
+const db = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
 
-fr:{
-tournaments:"Tournois",
-ranking:"Classement",
-calendar:"Calendrier",
-registration:"Pré-inscription",
-competition:"EA SPORTS FC 27 • Compétition",
-play:"JOUE.",
-compete:"CONCURRE.",
-evolve:"ÉVOLUE.",
-heroText:"Entre sur le terrain, défie les meilleurs et prouve ta valeur dans la Liga Prime Level Up.",
-join:"M'INSCRIRE",
-tournament1:"Tournoi 1v1",
-tournament2:"Tournoi 2v2",
-description1:"Affronte tes adversaires individuellement et atteins le sommet du classement.",
-description2:"Forme ton duo, combine tes stratégies et gagne en équipe.",
-season:"Saison",
-league:"Ligue compétitive",
-description3:"Suis les résultats et bats-toi pour la meilleure position.",
-rankingNotice:"Le classement sera mis à jour lorsque l'organisation enregistrera les résultats officiels.",
-playerTeam:"Joueur / Équipe",
-wins:"V",
-nextMatches:"Prochains matchs",
-calendarNotice:"Les matchs et les horaires seront annoncés après l'ouverture des inscriptions.",
-formNotice:"Remplis les informations pour manifester ton intérêt.",
-nickname:"Nom du joueur",
-competitionType:"Type de compétition",
-platform:"Plateforme",
-send:"Envoyer la pré-inscription",
-footer:"© 2026 Liga Prime Level Up",
-success:"Démonstration : les données n'ont pas été envoyées ni enregistrées."
-},
+let cart = [];
+let admin = false;
 
-en:{
-tournaments:"Tournaments",
-ranking:"Rankings",
-calendar:"Calendar",
-registration:"Registration",
-competition:"EA SPORTS FC 27 • Competition",
-play:"PLAY.",
-compete:"COMPETE.",
-evolve:"EVOLVE.",
-heroText:"Enter the field, challenge the best and prove your worth in Liga Prime Level Up.",
-join:"JOIN NOW",
-tournament1:"1v1 Tournament",
-tournament2:"2v2 Tournament",
-description1:"Compete individually and reach the top of the rankings.",
-description2:"Build your duo, combine strategies and win as a team.",
-season:"Season",
-league:"Competitive League",
-description3:"Follow the results and fight for the best position.",
-rankingNotice:"The rankings will be updated when the organization records official results.",
-playerTeam:"Player / Team",
-wins:"W",
-nextMatches:"Upcoming matches",
-calendarNotice:"Matches and schedules will be announced after registration opens.",
-formNotice:"Fill in your details to express your interest in participating.",
-nickname:"Player name",
-competitionType:"Competition type",
-platform:"Platform",
-send:"Submit registration",
-footer:"© 2026 Liga Prime Level Up",
-success:"Demo: your information has not been sent or saved."
-},
+const $ = id => document.getElementById(id);
 
-es:{
-tournaments:"Torneos",
-ranking:"Clasificación",
-calendar:"Calendario",
-registration:"Inscripción",
-competition:"EA SPORTS FC 27 • Competición",
-play:"JUEGA.",
-compete:"COMPITE.",
-evolve:"EVOLUCIONA.",
-heroText:"Entra al campo, desafía a los mejores y demuestra tu valor en Liga Prime Level Up.",
-join:"INSCRIBIRME",
-tournament1:"Torneo 1v1",
-tournament2:"Torneo 2v2",
-description1:"Compite individualmente y alcanza el primer puesto de la clasificación.",
-description2:"Forma tu pareja, combina estrategias y gana en equipo.",
-season:"Temporada",
-league:"Liga competitiva",
-description3:"Sigue los resultados y lucha por la mejor posición.",
-rankingNotice:"La clasificación se actualizará cuando la organización registre los resultados oficiales.",
-playerTeam:"Jugador / Equipo",
-wins:"V",
-nextMatches:"Próximos partidos",
-calendarNotice:"Los partidos y horarios se anunciarán después de abrir las inscripciones.",
-formNotice:"Completa tus datos para mostrar tu interés en participar.",
-nickname:"Nombre de jugador",
-competitionType:"Tipo de competición",
-platform:"Plataforma",
-send:"Enviar preinscripción",
-footer:"© 2026 Liga Prime Level Up",
-success:"Demostración: los datos no se han enviado ni guardado."
-},
-
-it:{
-tournaments:"Tornei",
-ranking:"Classifica",
-calendar:"Calendario",
-registration:"Iscrizione",
-competition:"EA SPORTS FC 27 • Competizione",
-play:"GIOCA.",
-compete:"COMPETI.",
-evolve:"EVOLVI.",
-heroText:"Entra in campo, sfida i migliori e dimostra il tuo valore nella Liga Prime Level Up.",
-join:"ISCRIVITI",
-tournament1:"Torneo 1v1",
-tournament2:"Torneo 2v2",
-description1:"Competi individualmente e raggiungi la vetta della classifica.",
-description2:"Forma la tua coppia, combina le strategie e vinci in squadra.",
-season:"Stagione",
-league:"Lega competitiva",
-description3:"Segui i risultati e lotta per la migliore posizione.",
-rankingNotice:"La classifica verrà aggiornata quando l'organizzazione registrerà i risultati ufficiali.",
-playerTeam:"Giocatore / Squadra",
-wins:"V",
-nextMatches:"Prossime partite",
-calendarNotice:"Le partite e gli orari saranno annunciati dopo l'apertura delle iscrizioni.",
-formNotice:"Inserisci i tuoi dati per manifestare il tuo interesse a partecipare.",
-nickname:"Nome giocatore",
-competitionType:"Tipo di competizione",
-platform:"Piattaforma",
-send:"Invia pre-iscrizione",
-footer:"© 2026 Liga Prime Level Up",
-success:"Demo: i dati non sono stati inviati né salvati."
+function element(tag,text,className){
+ const el=document.createElement(tag);
+ if(text!==undefined) el.textContent=text;
+ if(className) el.className=className;
+ return el;
 }
 
+function money(cents){
+ return (cents/100).toLocaleString("pt-PT",{
+  style:"currency",currency:"EUR"
+ });
+}
+
+/* =========================
+   NOTICIAS
+========================= */
+
+async function loadNews(){
+ const box=$("newsContainer");
+ box.replaceChildren();
+
+ const {data,error}=await db.from("news")
+  .select("*").eq("published",true)
+  .order("published_at",{ascending:false});
+
+ if(error){box.textContent="Não foi possível carregar notícias.";return;}
+
+ if(!data.length){box.textContent="Novidades a anunciar.";return;}
+
+ data.forEach(n=>{
+  const card=element("article",undefined,"card");
+
+  if(n.image_url){
+   const img=element("img");
+   img.src=n.image_url;
+   img.alt=n.title;
+   img.loading="lazy";
+   card.appendChild(img);
+  }
+
+  card.appendChild(element("span","LPLU NEWS","tag"));
+  card.appendChild(element("h3",n.title));
+  card.appendChild(element("p",n.excerpt||""));
+  card.appendChild(element("p",n.content||""));
+  box.appendChild(card);
+ });
+}
+
+/* =========================
+   LIVES
+========================= */
+
+async function loadLives(){
+ const box=$("liveContainer");
+ box.replaceChildren();
+
+ const {data,error}=await db.from("live_streams")
+  .select("*").eq("active",true)
+  .order("scheduled_at");
+
+ if(error){box.textContent="Erro ao carregar transmissões.";return;}
+
+ if(!data.length){box.textContent="Próximas transmissões a anunciar.";return;}
+
+ data.forEach(l=>{
+  const card=element("article",undefined,"card");
+  card.appendChild(element("h3",l.title));
+  card.appendChild(element("span",l.platform||"LPLU LIVE","tag"));
+
+  if(l.embed_url){
+   const frame=element("iframe");
+   frame.className="live-frame";
+   frame.src=l.embed_url;
+   frame.allow="autoplay; fullscreen; picture-in-picture";
+   frame.allowFullscreen=true;
+   frame.loading="lazy";
+   frame.referrerPolicy="strict-origin-when-cross-origin";
+   card.appendChild(frame);
+  }
+
+  box.appendChild(card);
+ });
+}
+
+/* =========================
+   LOJA
+========================= */
+
+async function loadProducts(){
+ const box=$("productsContainer");
+ box.replaceChildren();
+
+ const {data,error}=await db.from("products")
+  .select("*").eq("active",true).order("created_at",{ascending:false});
+
+ if(error){box.textContent="Erro ao carregar produtos.";return;}
+
+ if(!data.length){box.textContent="Novos produtos brevemente.";return;}
+
+ data.forEach(p=>{
+  const card=element("article",undefined,"card");
+
+  if(p.image_url){
+   const img=element("img");
+   img.src=p.image_url;
+   img.alt=p.name;
+   img.loading="lazy";
+   card.appendChild(img);
+  }
+
+  card.appendChild(element("h3",p.name));
+  card.appendChild(element("p",p.description||""));
+  card.appendChild(element("p",money(p.price_cents),"price"));
+  card.appendChild(element("p","Stock: "+p.stock));
+
+  const btn=element("button","ADICIONAR AO CARRINHO");
+
+  btn.disabled=p.stock<=0;
+  btn.onclick=()=>addToCart(p);
+
+  card.appendChild(btn);
+  box.appendChild(card);
+ });
+}
+
+/* =========================
+   CARRINHO
+========================= */
+
+function addToCart(p){
+ const item=cart.find(x=>x.id===p.id);
+
+ if(item){
+  if(item.quantity>=p.stock)return alert("Stock insuficiente.");
+  item.quantity++;
+ }else{
+  cart.push({
+   id:p.id,
+   name:p.name,
+   price_cents:p.price_cents,
+   stock:p.stock,
+   quantity:1
+  });
+ }
+
+ renderCart();
+}
+
+function renderCart(){
+ const box=$("cartItems");
+ box.replaceChildren();
+
+ let total=0;
+
+ if(!cart.length){
+  box.textContent="Carrinho vazio.";
+ }else{
+  cart.forEach(item=>{
+   total+=item.price_cents*item.quantity;
+
+   const row=element("div");
+   row.style.margin="8px 0";
+   row.appendChild(element("p",
+    item.name+" × "+item.quantity+" — "+
+    money(item.price_cents*item.quantity)));
+
+   const remove=element("button","−");
+   remove.className="secondary";
+   remove.onclick=()=>{
+    item.quantity--;
+    if(item.quantity<=0)cart=cart.filter(x=>x.id!==item.id);
+    renderCart();
+   };
+   row.appendChild(remove);
+   box.appendChild(row);
+  });
+ }
+
+ $("cartTotal").textContent=money(total);
+}
+
+/* =========================
+   PAGAMENTOS
+========================= */
+
+$("checkoutButton").onclick=async()=>{
+ if(!cart.length)return alert("O carrinho está vazio.");
+
+ const result=await fetch(
+  "/.netlify/functions/create-checkout",
+  {
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({
+    items:cart.map(x=>({
+     product_id:x.id,
+     quantity:x.quantity
+    }))
+   })
+  }
+ );
+
+ if(!result.ok){
+  alert("Pagamento ainda não configurado. Verifica a função de pagamento Netlify.");
+  return;
+ }
+
+ const response=await result.json();
+
+ if(response.url){
+  window.location.href=response.url;
+ }else{
+  alert("Não foi possível iniciar o pagamento.");
+ }
 };
 
-function changeLanguage(lang){
+/* =========================
+   LOGIN ADMIN
+========================= */
 
-if(!translations[lang]) lang="pt";
+$("loginForm").onsubmit=async e=>{
+ e.preventDefault();
 
-document.documentElement.lang=lang;
+ $("loginMessage").textContent="A verificar acesso...";
 
-document.querySelectorAll("[data-i18n]").forEach(element=>{
-const key=element.dataset.i18n;
+ const {data,error}=await db.auth.signInWithPassword({
+  email:$("adminEmail").value.trim(),
+  password:$("adminPassword").value
+ });
 
-if(translations[lang][key]){
-element.textContent=translations[lang][key];
+ if(error){
+  $("loginMessage").textContent="Dados de acesso inválidos.";
+  return;
+ }
+
+ const {data:isAdmin,error:checkError}=await db.rpc("is_admin");
+
+ if(checkError || isAdmin!==true){
+  await db.auth.signOut();
+  $("loginMessage").textContent="Esta conta não tem permissões de administrador.";
+  return;
+ }
+
+ admin=true;
+ $("loginBox").hidden=true;
+ $("adminDashboard").hidden=false;
+
+ await loadAdmin();
+};
+
+/* =========================
+   TERMINAR SESSÃO
+========================= */
+
+$("logout").onclick=async()=>{
+ await db.auth.signOut();
+ admin=false;
+ $("adminDashboard").hidden=true;
+ $("loginBox").hidden=false;
+};
+
+/* =========================
+   CRIAR NOTICIA
+========================= */
+
+$("newsForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(!admin)return;
+
+ const {error}=await db.from("news").insert({
+  title:$("newsTitle").value,
+  excerpt:$("newsExcerpt").value,
+  content:$("newsContent").value,
+  image_url:$("newsImage").value||null,
+  published:$("newsPublished").checked,
+  published_at:$("newsPublished").checked?new Date().toISOString():null
+ });
+
+ if(error)return alert(error.message);
+
+ e.target.reset();
+ await loadAdmin();
+ await loadNews();
+ alert("Notícia publicada.");
+};
+
+/* =========================
+   CRIAR LIVE
+========================= */
+
+$("liveForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(!admin)return;
+
+ const {error}=await db.from("live_streams").insert({
+  title:$("liveTitle").value,
+  platform:$("livePlatform").value,
+  embed_url:$("liveUrl").value,
+  scheduled_at:$("liveDate").value||null,
+  active:$("liveActive").checked
+ });
+
+ if(error)return alert(error.message);
+
+ e.target.reset();
+ await loadAdmin();
+ await loadLives();
+};
+
+/* =========================
+   CRIAR PRODUTO
+========================= */
+
+$("productForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(!admin)return;
+
+ const price=Math.round(Number($("productPrice").value)*100);
+ const stock=Number($("productStock").value);
+
+ if(!Number.isSafeInteger(price)||price<0||
+    !Number.isSafeInteger(stock)||stock<0){
+  return alert("Preço ou stock inválido.");
+ }
+
+ const {error}=await db.from("products").insert({
+  name:$("productName").value,
+  description:$("productDescription").value,
+  price_cents:price,
+  stock:stock,
+  image_url:$("productImage").value||null,
+  active:true
+ });
+
+ if(error)return alert(error.message);
+
+ e.target.reset();
+ await loadAdmin();
+ await loadProducts();
+ alert("Produto adicionado à loja LPLU.");
+};
+
+/* =========================
+   PERSONALIZAR SITE
+========================= */
+
+async function saveSetting(key,value){
+ const {error}=await db.from("site_settings").upsert({
+  setting_key:key,
+  setting_value:value,
+  updated_at:new Date().toISOString()
+ });
+ if(error)throw error;
 }
-});
 
-document.getElementById("message").textContent="";
+$("settingsForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(!admin)return;
 
-try{
-localStorage.setItem("siteLanguage",lang);
-}catch(error){}
+ try{
+  await saveSetting("home_title",$("settingTitle").value);
+  await saveSetting("home_subtitle",$("settingSubtitle").value);
+  await saveSetting("home_background",$("settingBackground").value);
+  await saveSetting("main_color",$("settingColor").value);
+
+  await loadSettings();
+  alert("Site atualizado.");
+ }catch(err){
+  alert(err.message);
+ }
+};
+
+/* =========================
+   CARREGAR IMAGEM
+========================= */
+
+$("backgroundUploadForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(!admin)return;
+
+ const file=$("backgroundFile").files[0];
+ if(!file)return;
+
+ if(!file.type.startsWith("image/")||file.size>8*1024*1024){
+  return alert("Escolhe uma imagem válida com menos de 8 MB.");
+ }
+
+ const extension=file.name.split(".").pop().toLowerCase();
+ const path="background/"+crypto.randomUUID()+"."+extension;
+
+ const {error}=await db.storage.from("lplu-media")
+  .upload(path,file,{upsert:false});
+
+ if(error)return alert(error.message);
+
+ const {data}=db.storage.from("lplu-media").getPublicUrl(path);
+
+ $("settingBackground").value=data.publicUrl;
+
+ try{
+  await saveSetting("home_background",data.publicUrl);
+  await loadSettings();
+  alert("Imagem de fundo atualizada.");
+ }catch(err){
+  alert(err.message);
+ }
+};
+
+/* =========================
+   MENU PERSONALIZADO
+========================= */
+
+$("menuForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(!admin)return;
+
+ const {error}=await db.from("site_menu_items").insert({
+  label:$("menuLabel").value,
+  url:$("menuUrl").value,
+  position:100,
+  visible:true
+ });
+
+ if(error)return alert(error.message);
+
+ e.target.reset();
+ await loadMenu();
+ await loadAdmin();
+};
+
+/* =========================
+   CARREGAR MENU
+========================= */
+
+async function loadMenu(){
+ const {data,error}=await db.from("site_menu_items")
+  .select("*").eq("visible",true).order("position");
+
+ if(error||!data.length)return;
+
+ const nav=$("mainMenu");
+ nav.replaceChildren();
+
+ data.forEach(item=>{
+  const a=element("a",item.label);
+  a.href=item.url;
+  nav.appendChild(a);
+ });
 }
 
-const selector=document.getElementById("languageSelector");
+/* =========================
+   CONFIGURAÇÕES PUBLICAS
+========================= */
 
-let savedLanguage=null;
+async function loadSettings(){
+ const {data,error}=await db.from("site_settings")
+  .select("*").like("setting_key","home_%");
 
-try{
-savedLanguage=localStorage.getItem("siteLanguage");
-}catch(error){}
+ if(error)return;
 
-const browserLanguage=
-(navigator.language || "pt").slice(0,2).toLowerCase();
+ const settings={};
+ data.forEach(x=>settings[x.setting_key]=x.setting_value);
 
-const initialLanguage=
-savedLanguage && translations[savedLanguage]
-?savedLanguage
-:translations[browserLanguage]
-?browserLanguage
-:"pt";
+ const title=typeof settings.home_title==="string"
+  ?settings.home_title:"JOGA. COMPETE. EVOLUI.";
 
-selector.value=initialLanguage;
-changeLanguage(initialLanguage);
+ const subtitle=typeof settings.home_subtitle==="string"
+  ?settings.home_subtitle:"A tua plataforma de competição gaming.";
 
-selector.addEventListener("change",function(){
-changeLanguage(this.value);
-});
+ const background=typeof settings.home_background==="string"
+  ?settings.home_background:"";
 
-document.getElementById("signup").addEventListener("submit",function(e){
+ $("inicio").querySelector("h1").textContent=title;
+ $("inicio").querySelector("p").textContent=subtitle;
 
-e.preventDefault();
+ if(background){
+  $("inicio").style.backgroundImage=
+   'linear-gradient(90deg,#000e,#0005),url("'+background.replace(/["\\]/g,"")+'")';
+ }
+}
 
-const lang=selector.value;
+/* =========================
+   ADMIN - LISTAGENS
+========================= */
 
-document.getElementById("message").textContent=
-translations[lang].success;
+async function adminList(table,target){
+ const box=$(target);
+ box.replaceChildren();
 
-});
+ const {data,error}=await db.from(table).select("*")
+  .order("created_at",{ascending:false});
 
+ if(error){box.textContent=error.message;return;}
+
+ data.forEach(item=>{
+  const row=element("div",undefined,"admin-item");
+  row.appendChild(element("strong",
+   item.title||item.name||item.label||item.customer_name||item.id));
+
+  const del=element("button","ELIMINAR");
+  del.className="danger";
+
+  del.onclick=async()=>{
+   if(!confirm("Confirmas a eliminação?"))return;
+
+   const {error}=await db.from(table).delete().eq("id",item.id);
+
+   if(error)return alert(error.message);
+
+   await loadAdmin();
+   await loadNews();
+   await loadLives();
+   await loadProducts();
+   await loadMenu();
+  };
+
+  row.appendChild(del);
+  box.appendChild(row);
+ });
+}
+
+async function loadAdmin(){
+ if(!admin)return;
+
+ await adminList("news","adminNews");
+ await adminList("live_streams","adminLives");
+ await adminList("products","adminProducts");
+ await adminList("site_menu_items","adminMenu");
+
+ await loadSettingsForm();
+}
+
+async function loadSettingsForm(){
+ const {data,error}=await db.from("site_settings").select("*");
+
+ if(error)return;
+
+ const s={};
+ data.forEach(x=>s[x.setting_key]=x.setting_value);
+
+ $("settingTitle").value=s.home_title||"";
+ $("settingSubtitle").value=s.home_subtitle||"";
+ $("settingBackground").value=s.home_background||"";
+ $("settingColor").value=s.main_color||"#f20d32";
+}
+
+$("loadOrders").onclick=async()=>{
+ if(!admin)return;
+ await adminList("orders","adminOrders");
+};
+
+/* =========================
+   INICIAR
+========================= */
+
+async function init(){
+ $("year").textContent=new Date().getFullYear();
+
+ await Promise.all([
+  loadNews(),
+  loadLives(),
+  loadProducts(),
+  loadSettings(),
+  loadMenu()
+ ]);
+
+ const {data}=await db.auth.getSession();
+
+ if(data.session){
+  const {data:isAdmin,error}=await db.rpc("is_admin");
+
+  if(!error&&isAdmin===true){
+   admin=true;
+   $("loginBox").hidden=true;
+   $("adminDashboard").hidden=false;
+   await loadAdmin();
+  }
+ }
+}
+
+$("contactForm").onsubmit=e=>{
+ e.preventDefault();
+
+ const msg=
+  "LIGA PRIME LEVEL UP\n"+
+  "Nome: "+$("contactName").value+"\n"+
+  "Email: "+$("contactEmail").value+"\n"+
+  "Mensagem: "+$("contactMessage").value;
+
+ window.open(
+  "https://wa.me/33695872856?text="+encodeURIComponent(msg),
+  "_blank"
+ );
+};
+
+init();
 </script>
+
 </body>
 </html>
-
-
-
-
