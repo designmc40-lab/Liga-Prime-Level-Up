@@ -1,30 +1,715 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Liga Prime Level Up — torneios, classificação e comunidade competitiva.">
-  <title>Liga Prime Level Up</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Liga Prime Level Up | Esports</title>
+
+<style>
+:root {
+  --red: #e3232d;
+  --silver: #c5c9d0;
+  --black: #090a0c;
+  --panel: #15171b;
+  --line: #35383e;
+  --muted: #aeb3bd;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: linear-gradient(#08090bdf,#08090bf0),
+  url('background.jpg') center/cover fixed;
+  color: #f4f5f7;
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #08090bf2;
+  border-bottom: 1px solid #4b4d52;
+  backdrop-filter: blur(12px);
+}
+
+.top {
+  max-width: 1240px;
+  margin: auto;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.logo {
+  width: 66px;
+  height: 66px;
+  object-fit: contain;
+}
+
+.brand {
+  font-weight: 950;
+  letter-spacing: .06em;
+  line-height: 1.05;
+}
+
+.brand span { color: var(--red); }
+
+.brand small {
+  display: block;
+  color: #c6c8ce;
+  font-size: 11px;
+  letter-spacing: .2em;
+  margin-top: 5px;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.nav button, .btn {
+  background: #191b20;
+  color: #eee;
+  border: 1px solid #464950;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.nav button:hover,
+.nav button.active,
+.btn.primary {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.nav button { font-size: 12px; }
+
+main {
+  max-width: 1240px;
+  margin: 24px auto;
+  padding: 0 18px;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.hero {
+  min-height: 250px;
+  border: 1px solid #4b4d52;
+  border-radius: 16px;
+  background:
+    linear-gradient(90deg,#08090cdd,#11111199),
+    url('background.jpg') center/cover;
+  display: flex;
+  align-items: center;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-size: clamp(32px,5vw,58px);
+  margin: 0;
+  line-height: .95;
+  text-transform: uppercase;
+}
+
+.hero h1 span { color: var(--red); }
+
+.hero p {
+  color: #c4c7cd;
+  max-width: 600px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 26px 0 15px;
+}
+
+.section-title h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 23px;
+}
+
+.section-title:after {
+  content: "";
+  height: 2px;
+  background: linear-gradient(90deg,var(--red),transparent);
+  flex: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 14px;
+}
+
+.card {
+  background: linear-gradient(145deg,#181a1f,#0e1013);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 22px #0005;
+}
+
+.card h3 { margin: 0 0 10px; }
+.muted { color: var(--muted); }
+
+.game-card {
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(145deg,#25272c,#101114);
+}
+
+.game-card h3 { font-size: 25px; }
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.tabs button {
+  border-radius: 999px;
+  background: #16181d;
+  border: 1px solid #4c5057;
+  color: #e8e8eb;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.tabs button.active {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 11px 9px;
+  border-bottom: 1px solid #303239;
+  text-align: left;
+}
+
+th {
+  color: #d9dce1;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: .08em;
+}
+
+tr:hover td { background: #ffffff08; }
+.table-wrap { overflow-x: auto; }
+
+.tag {
+  color: #fff;
+  background: #a51b23;
+  border-radius: 5px;
+  padding: 3px 7px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.news { border-left: 3px solid var(--red); }
+
+input, select, textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #484b52;
+  border-radius: 8px;
+  background: #0c0d10;
+  color: #fff;
+  margin: 6px 0 12px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #c5c8cf;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+  gap: 12px;
+}
+
+.btn { margin: 4px 3px 4px 0; }
+
+.admin-panel {
+  border: 1px solid #8d2028;
+  background: #1a1113;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.notice {
+  padding: 12px;
+  border: 1px solid #34363b;
+  background: #101216;
+  border-radius: 8px;
+  color: #c4c6cd;
+}
+
+.footer {
+  border-top: 1px solid #3a3d42;
+  margin-top: 40px;
+  padding: 22px;
+  color: #aaa;
+  text-align: center;
+}
+
+.live-frame {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 0;
+  border-radius: 12px;
+  background: #08090b;
+}
+
+.mini { font-size: 12px; }
+.danger { color: #ff747a; }
+</style>
 </head>
+
 <body>
-  <header class="topbar">
-    <a class="brand" href="#inicio" aria-label="Liga Prime Level Up, início"><span class="brand-mark">LP</span><span>LIGA PRIME <b>LEVEL UP</b></span></a>
-    <nav aria-label="Navegação principal"><a href="#torneios">Torneios</a><a href="#classificacao">Classificação</a><a href="#como-participar">Como participar</a></nav>
-    <a class="nav-cta" href="#participar">ENTRAR NA LIGA ↗</a>
-  </header>
-  <main>
-    <section class="hero" id="inicio">
-      <div class="hero-content"><p class="eyebrow">COMPETIÇÃO. COMUNIDADE. EVOLUÇÃO.</p><h1>SUBA DE<br><span>NÍVEL.</span></h1><p class="hero-copy">O próximo desafio começa aqui. Reúna sua equipe, entre na disputa e mostre do que você é capaz na Liga Prime Level Up.</p><div class="hero-actions"><a class="button primary" href="#participar">QUERO PARTICIPAR</a><a class="button secondary" href="#torneios">VER TORNEIOS</a></div></div>
-      <div class="hero-side" aria-hidden="true"><div class="orbit"></div><div class="hero-emblem">L<span>P</span></div><p>JOGUE COM<br><strong>PROPÓSITO</strong></p></div>
-    </section>
-    <section class="stats" aria-label="Destaques"><div><strong>01</strong><span>UMA COMUNIDADE</span></div><div><strong>∞</strong><span>DESAFIOS PELA FRENTE</span></div><div><strong>GG</strong><span>BOA SORTE E BOM JOGO</span></div></section>
-    <section class="section" id="torneios"><div class="section-heading"><div><p class="eyebrow">ESCOLHA SEU DESAFIO</p><h2>TORNEIOS <span>EM DESTAQUE</span></h2></div><p class="muted">A competição começa com você.</p></div><div class="cards"><article class="tournament-card featured"><span class="card-tag">LIGA PRIME · COMPETITIVO</span><div class="format">5<span>v</span>5</div><h3>DISPUTE SEU LUGAR</h3><p>Monte sua equipe e prepare-se para competir. Acompanhe por aqui as próximas inscrições e novidades da liga.</p><a href="#participar">SAIBA COMO PARTICIPAR <b>→</b></a></article><article class="tournament-card"><span class="card-tag">LEVEL UP · COMUNIDADE</span><div class="format">1<span>v</span>1</div><h3>EVOLUA A CADA PARTIDA</h3><p>Mostre sua habilidade, conheça outros jogadores e fique de olho nos próximos desafios da comunidade.</p><a href="#como-participar">COMO FUNCIONA <b>→</b></a></article></div></section>
-    <section class="section leaderboard" id="classificacao"><div class="section-heading"><div><p class="eyebrow">CADA PARTIDA CONTA</p><h2>CLASSIFI<span>CAÇÃO</span></h2></div><span class="status">ATUALIZAÇÕES EM BREVE</span></div><div class="table-wrap"><table><thead><tr><th>POS.</th><th>EQUIPE / JOGADOR</th><th>PONTOS</th><th>STATUS</th></tr></thead><tbody><tr><td>—</td><td class="player">A classificação será publicada aqui</td><td>—</td><td>A definir</td></tr></tbody></table></div></section>
-    <section class="join" id="participar"><div><p class="eyebrow">SUA PRÓXIMA PARTIDA COMEÇA AQUI</p><h2>PRONTO PARA <span>JOGAR?</span></h2><p>Acompanhe os canais oficiais da liga para novidades e inscrições.</p></div><a class="button primary" href="#como-participar">VER COMO PARTICIPAR ↗</a></section>
-    <section class="section" id="como-participar"><div class="section-heading"><div><p class="eyebrow">SIMPLES ASSIM</p><h2>COMO <span>PARTICIPAR</span></h2></div></div><div class="steps"><div><b>01</b><h3>FIQUE DE OLHO</h3><p>Acompanhe esta página e os canais oficiais para saber quando abrirem as inscrições.</p></div><div><b>02</b><h3>INSCREVA-SE</h3><p>Quando houver um torneio aberto, siga as instruções de inscrição divulgadas pela organização.</p></div><div><b>03</b><h3>ENTRE NA DISPUTA</h3><p>Prepare sua equipe, respeite os participantes e venha jogar. Boa sorte!</p></div></div></section>
-  </main>
-  <footer><p>© <span id="year"></span> Liga Prime Level Up. Todos os direitos reservados.</p><a href="#inicio">VOLTAR AO TOPO ↑</a></footer>
-</body>
-</html>
+
+<header>
+<div class="top">
+
+<img class="logo" src="logo.png" alt="Liga Prime Level Up">
+
+<div class="brand">
+LIGA PRIME <span>LEVEL UP</span>
+<small>ESPORTS • COMPETIÇÃO • COMUNIDADE</small>
+</div>
+
+<nav class="nav" id="nav">
+<button class="active" data-page="home">Notícias</button>
+<button data-page="fc">FC Esports</button>
+<button data-page="cod">Call of Duty</button>
+<button data-page="cs">CS</button>
+<button data-page="register">Inscrições</button>
+<button data-page="lives">Lives</button>
+<button data-page="contact">Contacto</button>
+<button data-page="admin">Admin</button>
+</nav>
+
+</div>
+</header>
+
+<main>
+
+<!-- PÁGINA PRINCIPAL / NOTÍCIAS -->
+
+<section class="page active" id="home">
+
+<div class="hero">
+<div>
+<h1>Joga. Compete.<br><span>Level Up.</span></h1>
+<p>
+Bem-vindo à Liga Prime Level Up — notícias,
+competições, rankings e transmissões da comunidade esports.
+</p>
+<button class="btn primary" onclick="go('register')">
+Inscrever jogador/equipa
+</button>
+</div>
+</div>
+
+<div class="section-title"><h2>Últimas notícias</h2></div>
+<div class="grid" id="newsList"></div>
+
+<div class="section-title"><h2>Modalidades</h2></div>
+
+<div class="grid">
+
+<div class="card game-card">
+<h3>FC Esports</h3>
+<p class="muted">Pro Clubs 11x11 • 1x1 • 2x2</p>
+<button class="btn" onclick="go('fc')">Abrir competições</button>
+</div>
+
+<div class="card game-card">
+<h3>Call of Duty</h3>
+<p class="muted">Classificações • Calendário • Lendários</p>
+<button class="btn" onclick="go('cod')">Abrir competições</button>
+</div>
+
+<div class="card game-card">
+<h3>Counter-Strike</h3>
+<p class="muted">Classificações • Calendário • Lendários</p>
+<button class="btn" onclick="go('cs')">Abrir competições</button>
+</div>
+
+</div>
+</section>
+
+<!-- FC ESPORTS -->
+
+<section class="page" id="fc">
+
+<div class="hero">
+<div>
+<h1>FC <span>Esports</span></h1>
+<p>Competições de FC: Pro Clubs 11x11, 1x1 e 2x2.</p>
+</div>
+</div>
+
+<div class="tabs" id="fctabs"></div>
+<div id="fcContent"></div>
+
+</section>
+
+<!-- CALL OF DUTY -->
+
+<section class="page" id="cod">
+
+<div class="hero">
+<div>
+<h1>Call of <span>Duty</span></h1>
+<p>Classificações, calendário competitivo e Hall of Fame.</p>
+</div>
+</div>
+
+<div class="tabs" id="codtabs"></div>
+<div id="codContent"></div>
+
+</section>
+
+<!-- COUNTER STRIKE -->
+
+<section class="page" id="cs">
+
+<div class="hero">
+<div>
+<h1><span>Counter-</span>Strike</h1>
+<p>Competições, tabelas, calendário e lendários.</p>
+</div>
+</div>
+
+<div class="tabs" id="cstabs"></div>
+<div id="csContent"></div>
+
+</section>
+
+<!-- INSCRIÇÕES -->
+
+<section class="page" id="register">
+
+<div class="section-title">
+<h2>Inscrição de jogadores & equipas</h2>
+</div>
+
+<div class="card">
+
+<p class="muted">
+Preenche os dados para pedir inscrição na Liga Prime Level Up.
+</p>
+
+<form id="regForm">
+
+<div class="form-grid">
+
+<div>
+<label>Nome / Nick *</label>
+<input required name="nick">
+</div>
+
+<div>
+<label>Email *</label>
+<input required type="email" name="email">
+</div>
+
+<div>
+<label>Modalidade</label>
+<select name="game">
+<option>FC Esports</option>
+<option>Call of Duty</option>
+<option>CS</option>
+</select>
+</div>
+
+<div>
+<label>Competição / formato</label>
+<input name="format" placeholder="11x11, 1x1, 2x2, COD, CS...">
+</div>
+
+<div>
+<label>Equipa (se aplicável)</label>
+<input name="team">
+</div>
+
+<div>
+<label>Plataforma / ID</label>
+<input name="platform">
+</div>
+
+</div>
+
+<label>Informação adicional</label>
+<textarea name="notes" rows="3"></textarea>
+
+<button class="btn primary">Enviar pedido</button>
+
+</form>
+
+<div id="regResult"></div>
+</div>
+</section>
+
+<!-- LIVES -->
+
+<section class="page" id="lives">
+
+<div class="section-title">
+<h2>Lives & transmissões</h2>
+</div>
+
+<div class="card">
+
+<p class="muted">
+Partilha um canal ou link de transmissão YouTube/Twitch.
+</p>
+
+<form id="liveForm">
+
+<div class="form-grid">
+
+<div>
+<label>Nome / equipa</label>
+<input name="owner" required>
+</div>
+
+<div>
+<label>Plataforma</label>
+<select name="platform">
+<option>YouTube</option>
+<option>Twitch</option>
+<option>Outro</option>
+</select>
+</div>
+
+<div>
+<label>Link da live</label>
+<input name="url" type="url" required placeholder="https://...">
+</div>
+
+</div>
+
+<button class="btn primary">Adicionar live</button>
+</form>
+</div>
+
+<div class="section-title"><h2>Em direto / canais</h2></div>
+<div id="liveList" class="grid"></div>
+
+</section>
+
+<!-- CONTACTO -->
+
+<section class="page" id="contact">
+
+<div class="section-title"><h2>Contacto</h2></div>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Fala com a Liga</h3>
+
+<p>Questões sobre inscrições, competições, resultados ou parcerias?</p>
+
+<p class="muted">
+Adiciona aqui o email oficial, Discord e redes sociais da Liga.
+</p>
+
+<form id="contactForm">
+
+<label>Nome</label>
+<input name="name" required>
+
+<label>Email</label>
+<input name="email" type="email" required>
+
+<label>Mensagem</label>
+<textarea name="message" rows="4" required></textarea>
+
+<button class="btn primary">Preparar mensagem</button>
+
+</form>
+
+<div id="contactResult"></div>
+</div>
+
+<div class="card">
+<h3>Redes & comunidade</h3>
+<p>Discord: <span class="muted">Adicionar link oficial</span></p>
+<p>Instagram: <span class="muted">Adicionar perfil</span></p>
+<p>YouTube / Twitch: <span class="muted">Adicionar canais oficiais</span></p>
+</div>
+
+</div>
+</section>
+
+<!-- ADMINISTRAÇÃO -->
+
+<section class="page" id="admin">
+
+<div class="section-title"><h2>Painel Admin — modo manual</h2></div>
+
+<div class="notice">
+Protótipo: as alterações são guardadas neste navegador (localStorage).
+Para produção, é necessário login protegido e base de dados partilhada.
+</div>
+
+<div class="admin-panel">
+
+<h3>Adicionar notícia</h3>
+
+<form id="newsForm">
+
+<label>Título</label>
+<input name="title" required>
+
+<label>Texto</label>
+<textarea name="text" required></textarea>
+
+<button class="btn primary">Publicar notícia</button>
+
+</form>
+</div>
+
+<div class="admin-panel">
+
+<h3>Editar classificação</h3>
+
+<div class="form-grid">
+
+<div>
+<label>Modalidade</label>
+<select id="admGame">
+<option value="fc">FC Esports</option>
+<option value="cod">Call of Duty</option>
+<option value="cs">CS</option>
+</select>
+</div>
+
+<div>
+<label>Competição</label>
+<select id="admComp"></select>
+</div>
+
+<div>
+<label>Nome</label>
+<input id="admTeam">
+</div>
+
+<div>
+<label>Pontos</label>
+<input id="admPoints" type="number" value="0">
+</div>
+
+</div>
+
+<button class="btn primary" id="addRank">
+Adicionar / atualizar equipa
+</button>
+
+</div>
+
+<div class="admin-panel">
+
+<h3>Adicionar jogo ao calendário</h3>
+
+<div class="form-grid">
+
+<div>
+<label>Modalidade</label>
+<select id="eventGame">
+<option value="fc">FC Esports</option>
+<option value="cod">Call of Duty</option>
+<option value="cs">CS</option>
+</select>
+</div>
+
+<div>
+<label>Competição</label>
+<select id="eventComp"></select>
+</div>
+
+<div>
+<label>Data</label>
+<input id="eventDate" type="date">
+</div>
+
+<div>
+<label>Jogo / adversários</label>
+<input id="eventMatch">
+</div>
+
+</div>
+
+<button class="btn primary" id="addEvent">Adicionar jogo</button>
+
+</div>
+
+<div class="admin-panel">
+
+<h3>Links musicais (ambiente do site)</h3>
+
+<label>Link de música / playlist</label>
+<input id="musicAdmin" placeholder="URL de YouTube...">
+
+<button class="btn" id="saveMusic">Guardar link música</button>
+
+<button class="btn" id="clearData">
+Limpar dados de demonstração/alterações
+</button>
+
+</div>
+</section>
+
+<!-- MÚSICA -->
+
+<div class="card" style="margin-top:24px">
+
+<label for="musicUrl">🎵 Música de fundo (opcional)</label>
+
+<div class="form-grid">
+<input id="musicUrl" placeholder="Link YouTube (vídeo ou playlist)">
+<button class="btn" id="musicBtn">Ouvir / parar</button>
+</div>
+
+<div id="musicPlayer"></div>
+
+<p class="mini muted">
+A reprodução só começa quando clicas — o navegador bloqueia autoplay com som.
+</p>
+
+</div>
+
+<div class="footer">
+LIGA PRIME LEVEL UP • ESPORTS •
+<span style="color:var(--red)">COMPETE COM RESPEITO</span>
+</div>
+
+</main>
